@@ -168,6 +168,50 @@
                     4. 周圍是否有放置警示錐
                 </div>
             </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('l7')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">7. 排障後，如何進行 Root Cause Analysis？</span>
+                    <i id="icon-l7" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-l7" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">外商思維：治本重於治標 (5 Whys)</span><br>
+                    <strong>回答：</strong>「排除當下 Error 後，我會運用 '5 Whys' 追問根本原因。例如機台漏氣，不能只換 O-ring，要追查是材質老化、人為鎖固扭力不對，還是供氣端壓力異常？最後必須將防呆機制更新到 SOP 中，確保 Issue 不再發生。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('l8')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">8. 遇到無法處理的問題，Escalation 準則？</span>
+                    <i id="icon-l8" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-l8" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-2">團隊合作與停損點</span><br>
+                    <strong>回答：</strong>「外商不鼓勵英雄主義。我的準則是『Time-box』：我會給自己設定 30-60 分鐘翻閱 Manual 與 Log 交叉比對。若毫無頭緒或涉及高風險工安，我會立刻停下手邊動作，帶上我已盤點出的『客觀數據與觀察』向上 Escalation (回報)，尋求資深學長或 Team Lead 支援，絕不盲目 Try and Error。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('l9')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">9. 裝機時，扭力扳手(Torque Wrench)不小心掉地上，還能用嗎？</span>
+                    <i id="icon-l9" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-l9" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-red-100 text-red-700 text-xs px-2 py-1 rounded mb-2">精密度與標準化天條</span><br>
+                    <strong>回答：</strong>「絕對不能繼續使用。ASML 機台對應力極度敏感，扭力扳手掉落後，其內部彈簧或感測器可能已偏移(失去 Calibration)。必須立刻掛上『停用標籤』繳回儀校部門，並換一支確認過校正期限的扳手來作業，絕不能憑感覺認為『摔得不重』就繼續用。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('l10')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">10. 拿到要安裝的精密零件，發現無塵袋破損，該如何處理？</span>
+                    <i id="icon-l10" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-l10" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">潔淨度 (Contamination) 意識</span><br>
+                    <strong>回答：</strong>「不能直接拆開安裝。無塵袋破損意味著可能已有 Particle (微粒) 污染。我會先將該零件隔離，拍照記錄破損狀況並保留批號，隨即回報 Team Lead 與物流部門確認是否能使用特殊清潔程序，或是必須直接申請退換料。在極紫外光(EUV)等級的環境，任何微粒都會造成嚴重良率問題。」
+                </div>
+            </div>
         </div>
 
         <!-- ================= TAB 3: 英文/動機 ================= -->
@@ -228,6 +272,62 @@
                 </div>
             </div>
 
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('m6')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">6. 外商重視 Speak-up，敢糾正資深學長嗎？</span>
+                    <i id="icon-m6" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-m6" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mb-2">必考文化題：基於事實的挑戰</span><br>
+                    <strong>回答：</strong>「絕對敢，但我會『對事不對人』。如果學長的做法與 SPEC 衝突，且有工安或良率風險，我會當下喊暫停 (Stop Line)。溝通時，我不會指責，而是拿出 Manual 詢問：『學長，手冊上寫的扭力值是 X，我們現在用的數值不同，請問這是有發布最新的 EC (工程變更) 嗎？』用數據和文件來發言，是保護彼此與機台的最佳方式。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('m7')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">7. 分享一個你過去「失敗」的經驗？</span>
+                    <i id="icon-m7" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-m7" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-2">Growth Mindset (成長型思維)</span><br>
+                    <strong>攻防策略：</strong>不要講無傷大雅的假缺點，要講真實挫折及反省。<br>
+                    <strong>回答：</strong>「剛接手專案時，我曾因過度自信，把各站點時程抓得太緊 (Happy flow)，導致某個供應商料件延遲時，整個專案差點開天窗。這讓我學到慘痛教訓：計畫永遠要有 Buffer (緩衝)，且必須提早設立『預警機制』，這也是我後來能在台積電順利控管裝機時程的關鍵。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('m8')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">8. 為何錄取你，而非年資更深的台積電設備？</span>
+                    <i id="icon-m8" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-m8" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">強調雙背景與高可塑性</span><br>
+                    <strong>回答：</strong>「資深工程師經驗豐富，但可能帶有難以改變的舊習慣 (Bad habits)。我的優勢在於『高可塑性』與『跨界整合』：我不但有台積電 2 奈米裝機的實戰節奏，更具備純機械系出身的組裝直覺(擁有CNC證照)。我不會用台積電的經驗來盲目套用，而是能用白紙般的心態嚴格服從 ASML Manual，同時具備 Fab 端使用者的同理心。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('m9')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">9. (EN) What do you know about our EUV / DUV systems?</span>
+                    <i id="icon-m9" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-m9" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">技術認知 (展現備戰狀態)</span><br>
+                    <strong>回答：</strong> "ASML is the undisputed leader in lithography. DUV systems use Deep Ultraviolet light to print features, while EUV uses a much shorter wavelength to create the most advanced chips, like the 2nm nodes I worked on at TSMC. UIR's role is critical because installing these massive, high-precision systems requires flawless execution."
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('m10')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">10. UIR 需要頻繁出差、支援外地/國外廠區，你接受嗎？</span>
+                    <i id="icon-m10" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-m10" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded mb-2">彈性與機動性 (Mobility)</span><br>
+                    <strong>回答：</strong>「完全接受，甚至非常期待！我的適應力極強，過去的求學與工作讓我頻繁在台北、台中、高雄、新竹之間移動。我深知 UIR 是跟著專案跑的特種部隊，若有機會派往海外廠區（如美國或歐洲）支援裝機，對我來說不僅是挑戰，更是學習原廠頂尖技術的絕佳機會，我隨時準備好行李待命。」
+                </div>
+            </div>
+
         </div>
 
         <!-- ================= TAB 4: 經歷深挖 ================= -->
@@ -276,6 +376,75 @@
                 </div>
             </div>
 
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('e5')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">5. 多項緊急任務衝突時，如何排定優先順序？</span>
+                    <i id="icon-e5" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-e5" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">Time Management & Prioritization</span><br>
+                    <strong>情境：</strong>裝機進度落後，同時另一台機台突發嚴重 Down 機。<br>
+                    <strong>回答：</strong>「我會採用『艾森豪矩陣 (Eisenhower Matrix)』加上工安考量。第一優先絕對是『有工安疑慮或阻礙全廠生產的 Critical Issue』。我會先將資源投入排解嚴重 Down 機；至於裝機進度落後，我會立即盤點剩餘工作量，透明化地向主管與客戶回報進度風險，並透過後續的加班排班把進度追回來。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('e6')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">6. 你有在常規工作外，主動發起過改善嗎？</span>
+                    <i id="icon-e6" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-e6" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mb-2">Ownership (當責) - 外商極度看重</span><br>
+                    <strong>回答：</strong>「在日月光與村田機械時，我的份內工作可能只是協助 Layout 或專案，但我發現跨部門間常因資訊不對等產生誤解。所以我『主動』統整了一份共通的視覺化追蹤表單。沒有人要求我做這件事，但這個舉動大幅減少了溝通的 Cycle time。在 UIR 也是，我不只想把螺絲鎖好，更希望能主動整理裝機易錯點分享給團隊。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('e7')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">7. 從甲方(台積電)轉為乙方(Vendor)，心態如何調適？</span>
+                    <i id="icon-e7" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-e7" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">同理心與雙贏思維</span><br>
+                    <strong>回答：</strong>「最大的調適是從『提出需求者』變成『提供解方者』。因為我當過甲方，我完全懂台積電面對良率與交期的龐大壓力。當客戶著急時，我不會覺得他們在刁難，而是能感同身受。這份同理心能讓我在面對客戶施壓時保持高情商，並用最專業的數據來安撫客戶，成為雙方信任的橋樑。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('e8')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">8. 請分享一個「極短時間內學會全新技術」的經驗</span>
+                    <i id="icon-e8" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-e8" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">Learning Agility (學習敏銳度)</span><br>
+                    <strong>S/T：</strong>在 TSMC 實習時，主管要求我從無到有建置 End Point 系統，但我當時對該軟體並不熟悉。<br>
+                    <strong>A：</strong>我把厚重的手冊進行『拆解』，先畫出系統底層邏輯的 Flowchart。遇到卡關不超過一小時，就整理好問題點與截圖去請教資深學長。<br>
+                    <strong>R：</strong>成功在極短時間內完成系統建置並獲得廠區佳作。這套『拆解文件+限時求救』的學習法，能幫助我快速吸收 ASML 龐大的機台知識。
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('e9')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">9. 履歷提到數據分析/Layout規劃，這對 UIR 有何幫助？</span>
+                    <i id="icon-e9" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-e9" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">系統化空間思維</span><br>
+                    <strong>回答：</strong>「UIR 的安裝牽涉龐大零件與動線。我在村田機械時，用 CAD 規劃 TSMC AP6B 的倉儲 Layout，這訓練了我對『空間佈局與動線優化』的敏銳度。面對 ASML 機台，我不只能按圖施工，還能運用這種空間思維，預判硬體干涉風險，提前規劃最順暢的組裝動線，從根本上減少 Cycle time。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('e10')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">10. 過去有沒有發現潛在危機並成功阻止的經驗？</span>
+                    <i id="icon-e10" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-e10" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-red-100 text-red-700 text-xs px-2 py-1 rounded mb-2">風險預判 (Risk Mitigation)</span><br>
+                    <strong>回答：</strong>「在擔任 PVD 設備工程師時，有次包商為趕進度，未確實等待氣體管線 Purge (吹掃) 完全，就準備拆卸。我憑藉對流程的熟悉，立刻上前喊暫停 (Stop Work Authority)，要求重新確認數值。雖然當下稍微延遲了進度，但成功阻止了極高風險的化學暴露意外。這展現了我對工安的絕不妥協。」
+                </div>
+            </div>
+
         </div>
 
         <!-- ================= TAB 5: 情境/提問 ================= -->
@@ -309,6 +478,83 @@
                 </button>
                 <div id="content-s3" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
                     <strong>回答：</strong>「工作時全力以赴；休假時能徹底抽離充電。UIR 工期趕，我能配合加班排班。休假我會騎公路車、保養車輛，在親近自然與動手拆裝中排解疲勞，以最佳狀態迎接挑戰。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('s5')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">4. 若外國主管/文件給的指示很模糊，怎麼辦？</span>
+                    <i id="icon-s5" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-s5" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-2">Dealing with Ambiguity (處理模糊地帶)</span><br>
+                    <strong>回答：</strong>「跨國協作中，語意落差很常見。遇到指示模糊，我絕對不會『自己猜測』然後硬做。我會先根據我的經驗擬定 A 和 B 兩個可行的方案，然後主動向主管/工程師確認：『根據我的理解，您的意思是 A 方案，對嗎？』透過封閉式問題與視覺化圖面，快速收斂模糊地帶。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('s6')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">5. 如何與不同背景或國籍的同事合作？</span>
+                    <i id="icon-s6" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-s6" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mb-2">Diversity & Inclusion (多元與共融)</span><br>
+                    <strong>回答：</strong>「保持『開放與尊重 (Open-minded & Respect)』。每個人受到的技術訓練與文化不同。合作時，我會先尋求『共同的語言』，也就是數據、SPEC 和工程圖面。遇到意見分歧時，我會先傾聽對方考量的出發點，然後以達成專案目標為前提，用客觀事實進行討論，而非主觀的個人偏好。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('s7')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">6. 接手上一班進度，發現現場與 Log 紀錄不符，怎麼辦？</span>
+                    <i id="icon-s7" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-s7" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-2">Trust, but verify (信任但必須驗證)</span><br>
+                    <strong>回答：</strong>「絕對不能直接依賴 Log 繼續往下做。我會立刻停下手邊動作，先聯絡上一班同仁釐清狀況。如果聯絡不上，我會『降級』回到上一個確實的檢查點 (Checkpoint)，親自用儀器或肉眼重新驗證狀態。裝機容不得一絲僥倖，必須確保基準點完全正確才能繼續。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('s8')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">7. 客戶長官施壓立刻復機，但你發現必須跑 4 小時校正？</span>
+                    <i id="icon-s8" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-s8" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mb-2">向上管理與抗壓性</span><br>
+                    <strong>回答：</strong>「品質與規格沒有妥協的餘地。我會語氣委婉但立場堅定地向長官說明：『長官，我非常理解目前產能的急迫性。但根據原廠規範，若跳過這 4 小時校正，可能會導致曝光偏移，造成後續數百萬 Wafer 報廢的嚴重風險。為了保護台積電的產品良率，這 4 小時是必須投資的時間。』透過強調『保障客戶利益』來爭取認同。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('s9')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">8. 裝機時發現荷蘭送來的關鍵零件短缺，進度卡死怎麼辦？</span>
+                    <i id="icon-s9" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-s9" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-2">Crisis Management (危機處理)</span><br>
+                    <strong>回答：</strong>「第一時間啟動『平行處理』。立刻回報 Team Lead 聯繫物流確認是否能從其他廠區緊急調料。同時，我不會在原地乾等，我會盤點整份安裝計畫，找出那些『不需要該零件也能提前執行的模組或配線作業』，將後續工作往前挪，極大化利用等待時間，降低整體 Delay。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('s10')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">9. 連續高壓裝機 12 小時，主管突然要你留下來支援緊急 Down 機？</span>
+                    <i id="icon-s10" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-s10" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-red-100 text-red-700 text-xs px-2 py-1 rounded mb-2">Care & Safety (關懷與安全邊界)</span><br>
+                    <strong>回答：</strong>「外商極度重視人員與機台安全。我會誠實評估自己的精神狀態。如果已極度疲勞，繼續操作幾百萬歐元的機台將有極高的出錯風險。我會坦白回報：『主管，為了安全，我目前的狀態不適合執行高精度排障。我可以在旁協助備料查手冊，但核心實作必須請精神充足的同事接手。』這才是守護團隊的負責任表現。」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('s11')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">10. 新版手冊(Manual)的做法，跟你 Mentor 教的舊習慣不同？</span>
+                    <i id="icon-s11" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-s11" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
+                    <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mb-2">Speak Up (勇敢發言) & 遵循規範</span><br>
+                    <strong>回答：</strong>「在 ASML，Manual 大於一切。我不會盲從學長的舊經驗，但我會採取『尊重且基於證據』的溝通。我會拿著最新版的手冊詢問 Mentor：『學長，我注意到系統上最新版步驟有更新，跟我們剛做的做法不同，請問最近是有發布新的工程變更(EC)嗎？我們是否該確認一下？』以此確保流程正確又不傷和氣。」
                 </div>
             </div>
 
