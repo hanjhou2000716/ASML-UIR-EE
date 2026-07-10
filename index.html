@@ -6,609 +6,801 @@
     <title>ASML UIR 面試攻防手冊 - Lyor Zhuang</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Hide scrollbar for tab navigation but keep functionality */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        body {
-            -webkit-tap-highlight-color: transparent;
-            background-color: #f8fafc;
-        }
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .tab-btn.active { border-bottom-color: #2563eb; color: #1e3a8a; font-weight: 600; background-color: #eff6ff; }
+        .card-content { transition: max-height 0.3s ease-out, padding 0.3s ease; max-height: 0; overflow: hidden; }
+        .card-content.open { max-height: 2000px; }
+        .highlight { font-weight: bold; color: #1e40af; }
+        .warning { font-weight: bold; color: #b91c1c; }
     </style>
 </head>
-<body class="text-slate-800 antialiased font-sans">
+<body class="bg-slate-50 text-slate-800 pb-20">
 
-    <!-- Header -->
-    <header class="bg-blue-900 text-white sticky top-0 z-50 shadow-md">
-        <div class="px-4 py-4 flex justify-between items-center">
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="px-4 py-4 border-b border-slate-100 flex items-center justify-between">
             <div>
-                <h1 class="text-lg font-bold tracking-wider">ASML UIR 面試手冊</h1>
-                <p class="text-xs text-blue-200">Lyor Zhuang | 北科機械 × 中山封測</p>
+                <h1 class="text-xl font-bold text-blue-900 leading-tight">ASML UIR 面試手冊</h1>
+                <p class="text-xs text-slate-500 mt-1">Candidate: Lyor Zhuang (莊瀚洲)</p>
             </div>
-            <i class="fas fa-rocket text-xl text-blue-300"></i>
+            <div class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">
+                Mobile Ready
+            </div>
         </div>
         
-        <!-- Tab Navigation -->
-        <nav class="flex overflow-x-auto no-scrollbar bg-white text-sm font-medium border-b shadow-sm">
-            <button onclick="switchTab('tab-scripts')" id="btn-tab-scripts" class="tab-btn flex-shrink-0 px-4 py-3 border-b-2 border-blue-600 text-blue-600 whitespace-nowrap focus:outline-none">
-                <i class="fas fa-file-alt mr-1"></i> 面試底稿
-            </button>
-            <button onclick="switchTab('tab-logic')" id="btn-tab-logic" class="tab-btn flex-shrink-0 px-4 py-3 border-b-2 border-transparent text-slate-500 whitespace-nowrap focus:outline-none">
-                <i class="fas fa-brain mr-1"></i> 專業邏輯
+        <!-- Tabs Navigation -->
+        <nav class="flex overflow-x-auto hide-scrollbar border-b border-slate-200">
+            <button onclick="switchTab('tab-logic')" id="btn-tab-logic" class="tab-btn active flex-shrink-0 px-4 py-3 border-b-2 border-transparent text-slate-500 whitespace-nowrap focus:outline-none">
+                <i class="fas fa-tools mr-1"></i> 專業/邏輯
             </button>
             <button onclick="switchTab('tab-motivation')" id="btn-tab-motivation" class="tab-btn flex-shrink-0 px-4 py-3 border-b-2 border-transparent text-slate-500 whitespace-nowrap focus:outline-none">
-                <i class="fas fa-bullseye mr-1"></i> 英文/動機
+                <i class="fas fa-bullseye mr-1"></i> 動機/英文
             </button>
-            <button onclick="switchTab('tab-exp')" id="btn-tab-exp" class="tab-btn flex-shrink-0 px-4 py-3 border-b-2 border-transparent text-slate-500 whitespace-nowrap focus:outline-none">
-                <i class="fas fa-tools mr-1"></i> 經歷深挖
+            <button onclick="switchTab('tab-experience')" id="btn-tab-experience" class="tab-btn flex-shrink-0 px-4 py-3 border-b-2 border-transparent text-slate-500 whitespace-nowrap focus:outline-none">
+                <i class="fas fa-briefcase mr-1"></i> 經歷深挖
             </button>
             <button onclick="switchTab('tab-scenario')" id="btn-tab-scenario" class="tab-btn flex-shrink-0 px-4 py-3 border-b-2 border-transparent text-slate-500 whitespace-nowrap focus:outline-none">
                 <i class="fas fa-comments mr-1"></i> 情境/提問
+            </button>
+            <button onclick="switchTab('tab-custom')" id="btn-tab-custom" class="tab-btn flex-shrink-0 px-4 py-3 border-b-2 border-transparent text-slate-500 whitespace-nowrap focus:outline-none">
+                <i class="fas fa-star mr-1"></i> 實戰中英攻防
             </button>
         </nav>
     </header>
 
     <!-- Main Content -->
-    <main class="p-4 pb-20 max-w-2xl mx-auto">
+    <main class="px-4 py-6 max-w-2xl mx-auto">
 
-        <!-- ================= TAB 1: 面試底稿 ================= -->
-        <div id="tab-scripts" class="tab-content space-y-4">
+        <!-- ================= TAB 1: 專業與邏輯測驗 ================= -->
+        <div id="tab-logic" class="tab-content space-y-3">
+            <h2 class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-2">專業知識與邏輯測驗 (10題)</h2>
             
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
-                <button onclick="toggleCard('script-cn')" class="w-full px-4 py-3 text-left font-bold bg-blue-50 text-blue-900 flex justify-between items-center focus:outline-none">
-                    <span>🇹🇼 中文版面試底稿 (約 2-3 分鐘)</span>
-                    <i id="icon-script-cn" class="fas fa-chevron-down transition-transform duration-300"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('l1')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">1. 英文技術文件 (SPEC) 閱讀</span>
+                    <i id="icon-l1" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-script-cn" class="px-4 py-4 text-slate-700 leading-relaxed text-sm hidden">
-                    <p>各位主管好，我是莊瀚洲(Lyor)。很榮幸今天能面試 ASML 高雄廠區的 UIR 工程師。</p>
-                    <p class="mt-2">針對這個職缺，我想從三個面向——<strong>學歷優勢、裝機實戰經歷、以及專案數據能力</strong>，來說明我為何是這個職位的絕佳人選。</p>
-                    <p class="mt-2"><strong>首先，在學歷優勢上，我具備「機械與半導體」的雙料背景。</strong><br>
-                    我大學畢業於北科大機械工程系，擁有 CNC 與車床等技術士證照，這賦予了我極強的硬體視圖、組裝與機械運作原理的直覺；隨後我取得了中山大學先進半導體封測研究所碩士。這樣的跨領域優勢，讓我既有扎實的機械硬體底子，又具備半導體的專業製程知識。面對 ASML 精密機台的硬體拆裝與系統校調時，我能比純機械或純製程背景的人更快上手，精準理解背後的設計邏輯。</p>
-                    <p class="mt-2"><strong>其次，是高度匹配的裝機與驗證 (Qualification) 經歷。</strong><br>
-                    UIR 工程師的核心任務是機台的安裝與升級。我上一份工作在台積電高雄 2 奈米廠擔任 PVD 設備工程師，負責 AMAT Endura 機台。這段期間，我不僅處理高壓的日常 Trouble-shooting，更直接負責了新廠機台的裝機時程控管與品質驗證。我非常熟悉晶圓廠內從機台移入、組裝、測試到最終交機量產的完整高壓節奏。這種確保機台「如期導入量產動能」的實戰經驗，讓我一進 ASML 就能立刻接軌 Install 與 Upgrade 的需求。</p>
-                    <p class="mt-2"><strong>第三，是獨立專案管理與數據優化能力。</strong><br>
-                    JD 中特別提到需要具備獨立作業、改善 Cycle time 以及應用數據分析軟體的能力。過去在日月光擔任產品工程師及村田機械擔任系統工程師時，我主導了新材料導入專案與建廠 Layout 規劃，培養了極強的跨部門溝通與獨立解決問題的能力。</p>
-                    <p class="mt-2"><strong>總結來說</strong>，我的機械與半導體學歷、在台積電的實際裝機經驗，以及數據分析與專案協調能力，完美對應了 UIR 工程師的職務需求。我非常有信心能為 ASML 高雄團隊帶來具體的貢獻。謝謝！</p>
+                <div id="content-l1" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 指定動作的下一步要做什麼？最後一個動作為何？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 攻防策略：大聲唸出關鍵字 (Before, After, Check)，用手指著流程圖。回答：「依據 SPEC，這步完成後的 Check-point 是...確認無誤後才能進行下一步。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
-                <button onclick="toggleCard('script-en')" class="w-full px-4 py-3 text-left font-bold bg-blue-50 text-blue-900 flex justify-between items-center focus:outline-none">
-                    <span>🇺🇸 English Script (Self-Introduction)</span>
-                    <i id="icon-script-en" class="fas fa-chevron-down transition-transform duration-300"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('l2')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">2. 介面除錯 (終端機 vs 機台 UI)</span>
+                    <i id="icon-l2" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-script-en" class="px-4 py-4 text-slate-700 leading-relaxed text-sm hidden">
-                    <p>Good morning/afternoon, hiring managers. My name is Lyor Zhuang. It is a great honor to interview for the Upgrade Install and Relocation (UIR) Engineer position at ASML Kaohsiung.</p>
-                    <p class="mt-2">I would like to highlight how my academic advantages, hands-on installation experience, and data-driven project skills make me an excellent fit for this role.</p>
-                    <p class="mt-2"><strong>First, my educational advantage lies in a dual background in mechanical engineering and semiconductors.</strong><br>
-                    I hold a Bachelor's in Mechanical Engineering from NTUT, which provided me with strong hardware fundamentals, machining skills, and an intuitive understanding of complex mechanical structures. I then earned my Master's in Advanced Semiconductor Packaging from NSYSU. This cross-disciplinary background enables me to quickly grasp both the physical assembly of ASML's precision equipment and the underlying semiconductor processes.</p>
-                    <p class="mt-2"><strong>Second, my direct experience highly matches your installation and qualification requirements.</strong><br>
-                    Most recently, as an Equipment Engineer at TSMC's 2nm fab in Kaohsiung, I managed AMAT Endura PVD systems. Beyond daily high-pressure troubleshooting, I took full ownership of controlling installation schedules and executing tool qualifications for the new fab. I am deeply familiar with the fast-paced fab environment—from uncrating and assembly to final testing and mass production readiness.</p>
-                    <p class="mt-2"><strong>Third, my project management and data optimization capabilities.</strong><br>
-                    In my previous roles as a Product Engineer at ASE and a System Engineer at Muratec, I managed new material introduction projects and executed fab layout planning, which honed my cross-functional communication and independent problem-solving skills.</p>
-                    <p class="mt-2"><strong>In conclusion</strong>, my mechanical and semiconductor background, proven track record in TSMC tool installations, and data-driven approach make me highly confident in my ability to excel as a UIR Engineer. Thank you for your time.</p>
+                <div id="content-l2" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 找出兩張圖片不一致的地方。</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 攻防策略：展現台積工程師的細心。說明你的觀察邏輯：「我會網格化掃視。先核對參數的數值與單位，接著確認軟體版本號，最後看連線狀態與 Error 燈號。」</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('l3')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">3. 螺絲鎖固邏輯 (法蘭片 Flange)</span>
+                    <i id="icon-l3" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-l3" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 帶有數字標示的圓形法蘭片，該如何鎖緊？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 攻防策略：拿出 CNC 證照的底氣。「必須採用<strong class="text-blue-700">對角線交叉鎖緊 (Cross-pattern)</strong>。順序鎖會導致應力集中、O-ring 變形洩漏。實務上我會分段上扭力 (手轉 -> 50% -> 100%)。」</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('l4')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">4. 閥門狀態確認 (Ball Valve)</span>
+                    <i id="icon-l4" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-l4" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 如何確認球閥是處於開一半的狀態？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 攻防策略：「不依賴肉眼目測。我會先打到最開，計算完全關閉需要的『總圈數』，接著再往回轉動『總圈數的一半』，確保精準。」</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('l5')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">5. 邏輯除錯 (發電機與筆電)</span>
+                    <i id="icon-l5" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-l5" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 發電機、2台筆電、2條線，其中一台無法充電，如何快速找問題？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 攻防策略：「單一變數控制。將無法充電的筆電換上另一條好線 (測線)；若仍不行，把好線換到發電機另一個孔 (測電源端) 進行交叉比對。」</p>
+                </div>
+            </div>
+
+            <!-- 新增的 5 題專業邏輯 -->
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('l6')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">6. 工安危機辨識 (A字梯)</span>
+                    <i id="icon-l6" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-l6" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 給予一張 A 字梯圖片，辨識潛在危險。</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 攻防策略：「1. 檢查中間拉桿是否扣緊。2. 梯腳防滑墊有無磨損。3. <span class="warning">最上方兩階嚴禁站立</span>。4. 周邊需有警示錐或人員戒護 (Buddy System)。」</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('l7')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">7. 鎖定標籤 (Lockout/Tagout - LOTO)</span>
+                    <i id="icon-l7" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-l7" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 裝機維修前，除了關閉電源，還需要做什麼確保工安？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 攻防策略：「在外商這是天條。必須執行 LOTO (Lockout/Tagout)，將能源閥門或開關上鎖，並掛上我的個人標籤，確保沒人能誤開電源。並且要用三用電表做最後的零電壓確認 (Zero Energy Verification)。」</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('l8')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">8. 模糊狀況排查 (Unknown Error)</span>
+                    <i id="icon-l8" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-l8" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 機台跳出一個你連看都沒看過的 Error Code，手冊上也寫得很模糊，你怎麼辦？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 攻防策略：展現處理模糊地帶的能力。「首先確保機台處於 Safe state。接著調閱歷史 Error Log，運用 5 Whys 分析法。如果卡關超過設定的 Time-box (例如 30 分鐘)，我會立刻帶著收集好的 Log 向上 Escalation 給二線支援，不逞英雄硬修。」</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('l9')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">9. 扭力扳手的使用常識</span>
+                    <i id="icon-l9" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-l9" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 使用扭力扳手鎖固精密零件時，有什麼要注意的？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 攻防策略：展現實作經驗。「聽到『喀』一聲就必須立刻停止，不能再用力。另外，使用前要確認扳手是否有在校驗期限內 (Calibration date)，用完後必須將刻度歸零，避免內部彈簧疲乏。」</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('l10')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">10. 無塵室污染控制 (Contamination)</span>
+                    <i id="icon-l10" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-l10" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 在無塵室內拆裝機台，如何避免 Particle 汙染？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 攻防策略：帶入台積電經驗。「拆卸下來的精密零件必須立刻放置於指定的無塵盒或使用無塵布包覆。工具使用前要用 IPA (異丙醇) 擦拭。如果在光學模組附近作業，動作必須放慢以減少擾流，嚴格遵守 ASML 的潔淨規範。」</p>
                 </div>
             </div>
         </div>
 
-        <!-- ================= TAB 2: 專業邏輯 ================= -->
-        <div id="tab-logic" class="tab-content space-y-3 hidden">
-            <!-- QA Item Template -->
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('l1')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">1. 英文技術文件閱讀 (指定動作的下一步/最後步驟)</span>
-                    <i id="icon-l1" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
-                </button>
-                <div id="content-l1" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-red-100 text-red-700 text-xs px-2 py-1 rounded mb-2">攻防策略：服從 SPEC，不靠感覺</span><br>
-                    <strong>回答：</strong>拿到文件先抓關鍵字 (Before, After, Must)。「根據 SPEC Section X，這一步完成後的 Check-point 確認無誤後，下一步才是 OOO。」
-                </div>
-            </div>
-
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('l2')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">2. 介面除錯與比對 (電腦終端機 vs 機台 UI)</span>
-                    <i id="icon-l2" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
-                </button>
-                <div id="content-l2" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">攻防策略：網格化掃描，展現實務經驗</span><br>
-                    <strong>回答：</strong>從左上到右下網格化掃視。「我會先核對參數數值、單位是否有落差，接著確認軟體版本號與連線狀態燈號是否一致。」
-                </div>
-            </div>
-
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('l3')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">3. 圓形法蘭片 (Flange) 該如何鎖固？</span>
-                    <i id="icon-l3" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
-                </button>
-                <div id="content-l3" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">攻防策略：展現北科機械+CNC硬底子</span><br>
-                    <strong>回答：</strong>必須採用<strong>對角線交叉鎖緊 (Cross-pattern)</strong>。如果順著圈鎖會導致應力集中，O-ring 變形導致洩漏。實務上會分階段上扭力：先全面手轉鎖上 → 扭力扳手 50% → 100%。
-                </div>
-            </div>
-
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('l4')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">4. 如何確認球閥 (Ball Valve) 開一半？</span>
-                    <i id="icon-l4" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
-                </button>
-                <div id="content-l4" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">防呆機制</span><br>
-                    <strong>回答：</strong>先將閥門完全打開，紀錄從全開到全關總共需要轉動多少圈，接著再往回轉動總圈數的一半，以此確保精準，絕不依賴肉眼目測。
-                </div>
-            </div>
-
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('l5')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">5. 邏輯題：1發電機、2筆電、2線，1台不充電</span>
-                    <i id="icon-l5" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
-                </button>
-                <div id="content-l5" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">交叉比對邏輯</span><br>
-                    <strong>回答：</strong>控制單一變數。先將壞筆電換上好的線(看是線還是筆電壞)；同時要考量供電端，將插頭換到發電機另一個孔位驗證是否為孔位輸出異常。
-                </div>
-            </div>
-            
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('l6')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">6. 工安危機辨識 (A字梯找碴)</span>
-                    <i id="icon-l6" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
-                </button>
-                <div id="content-l6" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-red-100 text-red-700 text-xs px-2 py-1 rounded mb-2">Safety First (外商天條)</span><br>
-                    <strong>掃描重點：</strong><br>
-                    1. 梯子中間拉桿/安全扣是否扣上<br>
-                    2. 梯腳是否有防滑墊<br>
-                    3. 頂端兩階是否站人 (嚴禁站立)<br>
-                    4. 周圍是否有放置警示錐
-                </div>
-            </div>
-
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('l7')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">7. 排障後，如何進行 Root Cause Analysis？</span>
-                    <i id="icon-l7" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
-                </button>
-                <div id="content-l7" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">外商思維：治本重於治標 (5 Whys)</span><br>
-                    <strong>回答：</strong>「排除當下 Error 後，我會運用 '5 Whys' 追問根本原因。例如機台漏氣，不能只換 O-ring，要追查是材質老化、人為鎖固扭力不對，還是供氣端壓力異常？最後必須將防呆機制更新到 SOP 中，確保 Issue 不再發生。」
-                </div>
-            </div>
-
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('l8')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">8. 遇到無法處理的問題，Escalation 準則？</span>
-                    <i id="icon-l8" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
-                </button>
-                <div id="content-l8" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-2">團隊合作與停損點</span><br>
-                    <strong>回答：</strong>「外商不鼓勵英雄主義。我的準則是『Time-box』：我會給自己設定 30-60 分鐘翻閱 Manual 與 Log 交叉比對。若毫無頭緒或涉及高風險工安，我會立刻停下手邊動作，帶上我已盤點出的『客觀數據與觀察』向上 Escalation (回報)，尋求資深學長或 Team Lead 支援，絕不盲目 Try and Error。」
-                </div>
-            </div>
-
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('l9')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">9. 裝機時，扭力扳手(Torque Wrench)不小心掉地上，還能用嗎？</span>
-                    <i id="icon-l9" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
-                </button>
-                <div id="content-l9" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-red-100 text-red-700 text-xs px-2 py-1 rounded mb-2">精密度與標準化天條</span><br>
-                    <strong>回答：</strong>「絕對不能繼續使用。ASML 機台對應力極度敏感，扭力扳手掉落後，其內部彈簧或感測器可能已偏移(失去 Calibration)。必須立刻掛上『停用標籤』繳回儀校部門，並換一支確認過校正期限的扳手來作業，絕不能憑感覺認為『摔得不重』就繼續用。」
-                </div>
-            </div>
-
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('l10')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">10. 拿到要安裝的精密零件，發現無塵袋破損，該如何處理？</span>
-                    <i id="icon-l10" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
-                </button>
-                <div id="content-l10" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">潔淨度 (Contamination) 意識</span><br>
-                    <strong>回答：</strong>「不能直接拆開安裝。無塵袋破損意味著可能已有 Particle (微粒) 污染。我會先將該零件隔離，拍照記錄破損狀況並保留批號，隨即回報 Team Lead 與物流部門確認是否能使用特殊清潔程序，或是必須直接申請退換料。在極紫外光(EUV)等級的環境，任何微粒都會造成嚴重良率問題。」
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= TAB 3: 英文/動機 ================= -->
+        <!-- ================= TAB 2: 動機與特質 ================= -->
         <div id="tab-motivation" class="tab-content space-y-3 hidden">
+            <h2 class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-2">動機與個人特質 (10題)</h2>
             
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('m1')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">1. 為什麼離開台積電？想來 ASML UIR？</span>
-                    <i id="icon-m1" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('m1')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">1. 為什麼離開台積電？ (推力與拉力)</span>
+                    <i id="icon-m1" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-m1" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-2">切忌抱怨，轉化為對硬體的熱忱</span><br>
-                    <strong>回答：</strong>「在台積 Fab22 建廠時，我發現最有成就感的不是機台進入量產後的 routine 維護，而是前期『裝機、測試到交機』的階段。ASML 的 UIR 職位專注於 Install 與 Upgrade，完美契合我想往設備最前線硬體技術深耕的目標。」
+                <div id="content-m1" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 <span class="warning">絕不抱怨高壓輪班！</span><br>「在台積 2 奈米建廠過程，我發現自己最有成就感的時刻是前期『裝機、測試到交機』。我享受親手調校精密設備。UIR 專注於 Install/Upgrade，完美契合我想往『最前線硬體技術深耕』的目標。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('m2')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">2. 沒有 ASML 經驗/科系不符能勝任嗎？</span>
-                    <i id="icon-m2" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('m2')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">2. 跨領域適應 (科系 vs 裝機)</span>
+                    <i id="icon-m2" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-m2" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">主打：純機制的硬體手感 + 先進製程的系統觀</span><br>
-                    <strong>回答：</strong>「關聯極高！我大學是純機械，擁有 CNC/車床證照，對鎖固應力、金屬加工有真實的肌肉記憶。加上我在台積 2 奈米廠親自負責 PVD 裝機驗證，無塵室作業與機台硬體拆裝對我來說如同呼吸般熟悉，能無縫接軌 UIR 節奏。」
+                <div id="content-m2" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「關聯極高！我碩士讀封測，但大學是純機械，且有 <strong class="text-blue-700">CNC 與車床證照</strong>。雙手對公差、應力有真實記憶。在台積負責 PVD 裝機，硬體拆裝如同呼吸般熟悉，能無縫接軌 UIR。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('m3')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">3. 朋友會怎麼說你的優點與缺點？</span>
-                    <i id="icon-m3" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('m3')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">3. 給我三個理由錄取你</span>
+                    <i id="icon-m3" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-m3" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <strong>優點：</strong>實作能力強、適應力極快(待過南北廠區)、邏輯嚴謹(愛追蹤數據)。<br><br>
-                    <strong>缺點：</strong>「我有時對『優化細節』較執著，例如想把機台參數調到最完美而多花時間。但我現在學會在『效率』與『完美』間設定停損點，以團隊專案時程(Cycle time)為第一優先。」
+                <div id="content-m3" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">
+                        1. <strong class="text-blue-700">雙引擎背景</strong>：機械硬底子 + 半導體製程觀。<br>
+                        2. <strong class="text-blue-700">實戰裝機力</strong>：台積 2 奈米建廠高壓歷練，能適應 UIR 時效。<br>
+                        3. <strong class="text-blue-700">跨部門溝通</strong>：村田建廠與日月光專案經驗，懂得整合廠務與製程需求。
+                    </p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('m4')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">4. (EN) What does UIR do? / What is maintenance?</span>
-                    <i id="icon-m4" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('m4')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">4. 你的優缺點是什麼？</span>
+                    <i id="icon-m4" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-m4" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <strong>UIR:</strong> "UIR is the frontline force that brings ASML's systems into mass production. It involves unpacking, hardware assembly, hook-up, and strict qualifications."<br><br>
-                    <strong>Maintenance:</strong> "It's divided into PM (Preventive) to replace parts before failure, and CM (Corrective) for troubleshooting. Good maintenance strictly follows manuals to minimize down-time."
+                <div id="content-m4" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">
+                        <strong class="text-blue-700">優點：</strong>實作能力強 (CNC)、抗壓與適應力快。<br>
+                        <strong class="text-blue-700">缺點：</strong>「有時對『優化細節』太執著。曾為了把參數調到最完美多花時間。現在學會以『團隊專案 Deadline』為第一優先，在完美與效率間設停損點。」
+                    </p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('m5')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">5. (EN) What did you do last weekend?</span>
-                    <i id="icon-m5" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('m5')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">5. 輪班、無塵服與外地支援？</span>
+                    <i id="icon-m5" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-m5" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">展現動手能力與紓壓方式</span><br>
-                    <strong>回答：</strong> "I spent time restoring my road bike. I enjoy doing my own maintenance, like adjusting gears. It helps me stay sharp mechanically and relax before returning to work."
+                <div id="content-m5" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「完全沒問題。在台積電 PVD 期間，無塵室和輪班就是我的日常。我平時有騎公路車健身的習慣，體能極佳，對跨廠區機動性充滿期待。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('m6')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">6. 外商重視 Speak-up，敢糾正資深學長嗎？</span>
-                    <i id="icon-m6" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <!-- 新增的 5 題動機特質 -->
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('m6')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">6. 面對權威文化 (Speak-up Culture)</span>
+                    <i id="icon-m6" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-m6" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mb-2">必考文化題：基於事實的挑戰</span><br>
-                    <strong>回答：</strong>「絕對敢，但我會『對事不對人』。如果學長的做法與 SPEC 衝突，且有工安或良率風險，我會當下喊暫停 (Stop Line)。溝通時，我不會指責，而是拿出 Manual 詢問：『學長，手冊上寫的扭力值是 X，我們現在用的數值不同，請問這是有發布最新的 EC (工程變更) 嗎？』用數據和文件來發言，是保護彼此與機台的最佳方式。」
+                <div id="content-m6" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 如果資深工程師或主管要求你省略某個工安步驟以趕上進度，你會怎麼做？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 外商必考題！「我會勇敢發聲 (Speak-up)。我會拿出 ASML 的 SPEC 委婉但堅定地向主管說明這個步驟背後的工安風險。如果溝通無效，我會行使『Stop Work Authority (停止作業權)』，因為機台損壞或人員受傷的代價遠大於短暫的時程延誤。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('m7')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">7. 分享一個你過去「失敗」的經驗？</span>
-                    <i id="icon-m7" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('m7')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">7. 面對失敗與挫折 (Resilience)</span>
+                    <i id="icon-m7" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-m7" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-2">Growth Mindset (成長型思維)</span><br>
-                    <strong>攻防策略：</strong>不要講無傷大雅的假缺點，要講真實挫折及反省。<br>
-                    <strong>回答：</strong>「剛接手專案時，我曾因過度自信，把各站點時程抓得太緊 (Happy flow)，導致某個供應商料件延遲時，整個專案差點開天窗。這讓我學到慘痛教訓：計畫永遠要有 Buffer (緩衝)，且必須提早設立『預警機制』，這也是我後來能在台積電順利控管裝機時程的關鍵。」
+                <div id="content-m7" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 分享一次你在工作上犯下嚴重錯誤的經驗，你學到什麼？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 展現 Growth Mindset (成長型思維)。「剛進台積電時，曾因為沒有仔細 Double-check 就回報機台已 ready，導致後續製程被 delay。我沒有推卸責任，立刻承認錯誤並協助排解。事後我給自己建立了一套『出機前 Checklist』機制，確保不再犯同樣的錯。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('m8')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">8. 為何錄取你，而非年資更深的台積電設備？</span>
-                    <i id="icon-m8" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('m8')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">8. 對 ASML 核心價值的理解</span>
+                    <i id="icon-m8" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-m8" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">強調雙背景與高可塑性</span><br>
-                    <strong>回答：</strong>「資深工程師經驗豐富，但可能帶有難以改變的舊習慣 (Bad habits)。我的優勢在於『高可塑性』與『跨界整合』：我不但有台積電 2 奈米裝機的實戰節奏，更具備純機械系出身的組裝直覺(擁有CNC證照)。我不會用台積電的經驗來盲目套用，而是能用白紙般的心態嚴格服從 ASML Manual，同時具備 Fab 端使用者的同理心。」
+                <div id="content-m8" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: ASML 的 3C (Challenge, Collaborate, Care)，你覺得你最符合哪一個？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「我最符合 <strong class="text-blue-700">Collaborate (協作)</strong>。在台積新廠裝機時，我必須在供應商 (AMAT) 和廠務端之間斡旋水電氣進度。我懂得如何把不同立場的人拉到同一陣線，用客觀數據解決爭議。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('m9')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">9. (EN) What do you know about our EUV / DUV systems?</span>
-                    <i id="icon-m9" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('m9')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">9. 跨國文化適應 (Diversity)</span>
+                    <i id="icon-m9" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-m9" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">技術認知 (展現備戰狀態)</span><br>
-                    <strong>回答：</strong> "ASML is the undisputed leader in lithography. DUV systems use Deep Ultraviolet light to print features, while EUV uses a much shorter wavelength to create the most advanced chips, like the 2nm nodes I worked on at TSMC. UIR's role is critical because installing these massive, high-precision systems requires flawless execution."
+                <div id="content-m9" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: UIR 常與外籍工程師共事，如果遇到溝通不良怎麼辦？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「工程語言是世界通用的。如果口語有障礙，我會立刻拿出現場的『工程圖 (Drawing)』、『數據 Log』或直接在白板上畫架構圖。重點是『對焦技術細節』，而非糾結於英文文法。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('m10')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">10. UIR 需要頻繁出差、支援外地/國外廠區，你接受嗎？</span>
-                    <i id="icon-m10" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('m10')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">10. 對於高技術文件閱讀的耐心</span>
+                    <i id="icon-m10" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-m10" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded mb-2">彈性與機動性 (Mobility)</span><br>
-                    <strong>回答：</strong>「完全接受，甚至非常期待！我的適應力極強，過去的求學與工作讓我頻繁在台北、台中、高雄、新竹之間移動。我深知 UIR 是跟著專案跑的特種部隊，若有機會派往海外廠區（如美國或歐洲）支援裝機，對我來說不僅是挑戰，更是學習原廠頂尖技術的絕佳機會，我隨時準備好行李待命。」
+                <div id="content-m10" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 裝機手冊都是幾百頁的英文 SPEC，你會覺得枯燥嗎？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「完全不會。我在中山大學研究所時，閱讀大量原文書籍和 Paper 來優化封裝散熱材料 (TIM) 就是我的日常。我習慣透過關鍵字搜尋與建立自己的 SOP 筆記來消化龐大資訊。」</p>
                 </div>
             </div>
-
         </div>
 
-        <!-- ================= TAB 4: 經歷深挖 ================= -->
-        <div id="tab-exp" class="tab-content space-y-3 hidden">
-            
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('e1')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">1. 遇過最大的挑戰以及你如何解決？(STAR)</span>
-                    <i id="icon-e1" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+        <!-- ================= TAB 3: 經歷深挖 ================= -->
+        <div id="tab-experience" class="tab-content space-y-3 hidden">
+            <h2 class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-2">專案與經歷深挖 (STAR 原則) (10題)</h2>
+
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('e1')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">1. 遇過最大挑戰？如何解決？</span>
+                    <i id="icon-e1" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-e1" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">使用台積2奈米裝機經驗</span><br>
-                    <strong>S/T：</strong>在 Fab22 面臨新廠機台導入時程極度緊湊，必須如期完成 PVD 裝機驗證(Qual)。<br>
-                    <strong>A：</strong>主動當橋樑，每天與廠務(Facility)、Vendor(AMAT)對焦水電氣進度。遇 Trouble 時，親自看 Error log 比對線路與機構。<br>
-                    <strong>R：</strong>成功如期完成驗證導入量產動能。培養了高壓下的排障抗壓性。
+                <div id="content-e1" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100"><strong class="text-blue-700">台積電 PVD 裝機專案：</strong>時程緊縮且多廠商共用無塵室。我建立「進度追蹤表」，每天召集簡短會議對焦水電氣進度。遇到 Error 不全靠 Vendor，親自看 Log 比對圖面，最終如期完成 Qual。</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('e2')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">2. 跨部門溝通時最困難的是什麼？</span>
-                    <i id="icon-e2" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('e2')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">2. 跨部門溝通最困難的事？</span>
+                    <i id="icon-e2" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-e2" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <strong>回答：</strong>「是『讓不同立場的人達成共識』。廠務端在意安全規範，生產端在意產能。我在村田建廠規劃時的做法是『用圖面/數據說話』，畫出具體 Layout 把雙方痛點量化，找出安全與效率的折衷交集點。」
+                <div id="content-e2" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「讓不同立場的人達成共識。在村田機械規劃 Layout 時，產線要產能、廠務顧工安。我用 CAD 畫出 3D 圖，把痛點量化，用『圖面與客觀數據』找到折衷方案，成功破局。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('e3')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">3. 工作中最有成就感的事情？</span>
-                    <i id="icon-e3" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('e3')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">3. 工作中最有成就感的事？</span>
+                    <i id="icon-e3" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-e3" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <strong>回答：</strong>「在村田機械實習時，我從無到有使用 CAD 畫出 TSMC AP6B 的自動化倉儲 Layout。看著圖紙設計變成無塵室實際運作的系統，『把虛擬化為實體』的成就感無與倫比。」
+                <div id="content-e3" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「在台積電實習期間，從無到有建置 End Point 系統。把虛擬的製程概念化為實際的硬體系統，這『將抽象轉化為實體』的過程讓我無比自豪。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('e4')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">4. 你的經驗能帶給團隊什麼 (即戰力)？</span>
-                    <i id="icon-e4" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('e4')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">4. 前公司想改變卻無能為力的事？</span>
+                    <i id="icon-e4" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-e4" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <strong>回答：</strong>「『無縫接軌的裝機戰力』與『Fab 端的使用者思維』。我知道客戶端(TSMC)真正在意什麼、如何檢視機台品質。這能幫助 UIR 團隊在交機驗證時更順暢、減少認知落差。」
+                <div id="content-e4" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 展現彈性。「大公司的老舊 IT 系統很難直接改變。但我不會抱怨，而是『在既有框架下找解方』，自己建立 Excel 巨集來優化當站的效率。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('e5')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">5. 多項緊急任務衝突時，如何排定優先順序？</span>
-                    <i id="icon-e5" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <!-- 新增的經歷深挖題 -->
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('e5')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">5. 多重任務衝突 (Prioritization)</span>
+                    <i id="icon-e5" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-e5" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">Time Management & Prioritization</span><br>
-                    <strong>情境：</strong>裝機進度落後，同時另一台機台突發嚴重 Down 機。<br>
-                    <strong>回答：</strong>「我會採用『艾森豪矩陣 (Eisenhower Matrix)』加上工安考量。第一優先絕對是『有工安疑慮或阻礙全廠生產的 Critical Issue』。我會先將資源投入排解嚴重 Down 機；至於裝機進度落後，我會立即盤點剩餘工作量，透明化地向主管與客戶回報進度風險，並透過後續的加班排班把進度追回來。」
+                <div id="content-e5" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 如果手上同時有機台 Alarm、客戶急催進度、還有例行報表要交，你怎麼排優先順序？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 展現管理思維。「1. 任何涉及『工安』或會導致機台重大損壞的 Alarm 優先。2. 處理會『卡住全線產能』的客戶急件。3. 最後才是例行報表。處理急件時我會同步回報主管，讓團隊知道我的 current status。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('e6')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">6. 你有在常規工作外，主動發起過改善嗎？</span>
-                    <i id="icon-e6" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('e6')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">6. 當責文化 (Ownership) 實例</span>
+                    <i id="icon-e6" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-e6" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mb-2">Ownership (當責) - 外商極度看重</span><br>
-                    <strong>回答：</strong>「在日月光與村田機械時，我的份內工作可能只是協助 Layout 或專案，但我發現跨部門間常因資訊不對等產生誤解。所以我『主動』統整了一份共通的視覺化追蹤表單。沒有人要求我做這件事，但這個舉動大幅減少了溝通的 Cycle time。在 UIR 也是，我不只想把螺絲鎖好，更希望能主動整理裝機易錯點分享給團隊。」
+                <div id="content-e6" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 舉一個你做過「超越份內工作 (Go extra mile)」的例子？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「在日月光做產品工程師時，除了完成主管交辦的材料測試，我主動聯絡成大與中山的實驗室，推動了 High-K TIM (散熱材料) 的產學專案優化。這不在我的 KPI 內，但我認為這能徹底解決產線長期的熱傳導痛點。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('e7')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">7. 從甲方(台積電)轉為乙方(Vendor)，心態如何調適？</span>
-                    <i id="icon-e7" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('e7')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">7. 衝突與妥協 (Negotiation)</span>
+                    <i id="icon-e7" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-e7" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">同理心與雙贏思維</span><br>
-                    <strong>回答：</strong>「最大的調適是從『提出需求者』變成『提供解方者』。因為我當過甲方，我完全懂台積電面對良率與交期的龐大壓力。當客戶著急時，我不會覺得他們在刁難，而是能感同身受。這份同理心能讓我在面對客戶施壓時保持高情商，並用最專業的數據來安撫客戶，成為雙方信任的橋樑。」
+                <div id="content-e7" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 曾與同事或供應商有過激烈爭執嗎？最後如何收場？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「對事不對人。曾與供應商對於機台移入時程有落差。我沒有用情緒壓壓迫，而是攤開甘特圖與廠務規範，明確告知『這不是刁難，是廠規限制』。用客觀數據溝通後，對方欣然配合。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('e8')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">8. 請分享一個「極短時間內學會全新技術」的經驗</span>
-                    <i id="icon-e8" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('e8')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">8. CNC 經驗如何轉換到 ASML？</span>
+                    <i id="icon-e8" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-e8" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">Learning Agility (學習敏銳度)</span><br>
-                    <strong>S/T：</strong>在 TSMC 實習時，主管要求我從無到有建置 End Point 系統，但我當時對該軟體並不熟悉。<br>
-                    <strong>A：</strong>我把厚重的手冊進行『拆解』，先畫出系統底層邏輯的 Flowchart。遇到卡關不超過一小時，就整理好問題點與截圖去請教資深學長。<br>
-                    <strong>R：</strong>成功在極短時間內完成系統建置並獲得廠區佳作。這套『拆解文件+限時求救』的學習法，能幫助我快速吸收 ASML 龐大的機台知識。
+                <div id="content-e8" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「CNC 加工最講究的就是『精密公差』與『絕對服從圖面』。ASML 機台的光學模組需要微米級的精準度，我在 CNC 培養出的金屬切削手感與測量習慣，能確保我在操作特殊治具組裝時，不會施加錯誤應力破壞零件。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('e9')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">9. 履歷提到數據分析/Layout規劃，這對 UIR 有何幫助？</span>
-                    <i id="icon-e9" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('e9')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">9. 在台積電學到最重要的一課？</span>
+                    <i id="icon-e9" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-e9" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mb-2">系統化空間思維</span><br>
-                    <strong>回答：</strong>「UIR 的安裝牽涉龐大零件與動線。我在村田機械時，用 CAD 規劃 TSMC AP6B 的倉儲 Layout，這訓練了我對『空間佈局與動線優化』的敏銳度。面對 ASML 機台，我不只能按圖施工，還能運用這種空間思維，預判硬體干涉風險，提前規劃最順暢的組裝動線，從根本上減少 Cycle time。」
+                <div id="content-e9" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「是『系統性 Troubleshooting』的能力。台積電節奏極快，遇到問題不能瞎猜，必須『Data-driven』。看 Log、比對 Baseline、隔離變因，這套邏輯讓我在面對 ASML 複雜機台時能保持冷靜。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('e10')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">10. 過去有沒有發現潛在危機並成功阻止的經驗？</span>
-                    <i id="icon-e10" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('e10')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">10. 給 UIR 團隊帶來的即戰力？</span>
+                    <i id="icon-e10" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-e10" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-red-100 text-red-700 text-xs px-2 py-1 rounded mb-2">風險預判 (Risk Mitigation)</span><br>
-                    <strong>回答：</strong>「在擔任 PVD 設備工程師時，有次包商為趕進度，未確實等待氣體管線 Purge (吹掃) 完全，就準備拆卸。我憑藉對流程的熟悉，立刻上前喊暫停 (Stop Work Authority)，要求重新確認數值。雖然當下稍微延遲了進度，但成功阻止了極高風險的化學暴露意外。這展現了我對工安的絕不妥協。」
+                <div id="content-e10" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「『Fab 端的使用者思維』。我知道客戶端（TSMC）真正在意什麼、他們廠務 hook-up 的潛規則。這能幫助 UIR 團隊在交機驗證時避開地雷，大幅減少雙方認知落差造成的 delay。」</p>
                 </div>
             </div>
-
         </div>
 
-        <!-- ================= TAB 5: 情境/提問 ================= -->
+        <!-- ================= TAB 4: 情境與行為 ================= -->
         <div id="tab-scenario" class="tab-content space-y-3 hidden">
+            <h2 class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-2">情境應變與行為考題 (10題)</h2>
             
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('s1')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">1. 有步驟可省略讓工作更快，你會做嗎？</span>
-                    <i id="icon-s1" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('s1')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">1. 有步驟可省略以加快工作？</span>
+                    <i id="icon-s1" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-s1" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-red-100 text-red-700 text-xs px-2 py-1 rounded mb-2">終極陷阱題！絕不可省略</span><br>
-                    <strong>回答：</strong>「絕對不行。任何省略都可能造成嚴重工安或機台損壞。如果步驟真的冗長，我會 100% 遵守 SPEC 做完，然後循『工程變更 (EC)』的正當管道向上提案，官方未修改前絕不私自省略。」
+                <div id="content-s1" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100"><strong class="warning">陷阱題！絕對不可！</strong>「ASML 視工安與品質為天條。如果步驟多餘，我會依循『工程變更 (EC)』提案給總部。在官方修改手冊前，絕對 100% 按表操課。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('s2')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">2. 新訓跟不上進度 / 工作跟想的不同？</span>
-                    <i id="icon-s2" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('s2')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">2. 新人訓練跟不上進度？</span>
+                    <i id="icon-s2" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-s2" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <strong>回答：</strong>「遇到落差我會立刻調整心態。跟不上時，下班重新梳理筆記、對照 Manual。將盲點『具體條列化』，隔天利用空檔向 Mentor 尋求精準指導，絕不把問題留到上機實作才爆發。」
+                <div id="content-s2" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「主動利用下班重新梳理筆記、對照 Manual。隔天利用空檔向 Mentor『精準提問』，絕不把問題留到上機實作時才爆發。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('s3')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">3. 理想的 WLB (Work-Life Balance)？</span>
-                    <i id="icon-s3" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('s3')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">3. 面對高壓如何排解？</span>
+                    <i id="icon-s3" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-s3" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <strong>回答：</strong>「工作時全力以赴；休假時能徹底抽離充電。UIR 工期趕，我能配合加班排班。休假我會騎公路車、保養車輛，在親近自然與動手拆裝中排解疲勞，以最佳狀態迎接挑戰。」
+                <div id="content-s3" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「『解決根本原因』。技術上的不確定性是壓力來源，我會翻手冊、問前輩，問題解了壓力就沒了。休假時則透過騎公路車徹底轉換狀態。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('s5')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">4. 若外國主管/文件給的指示很模糊，怎麼辦？</span>
-                    <i id="icon-s5" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('s4')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">4. 同事上班偷懶怎麼處理？</span>
+                    <i id="icon-s4" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-s5" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-2">Dealing with Ambiguity (處理模糊地帶)</span><br>
-                    <strong>回答：</strong>「跨國協作中，語意落差很常見。遇到指示模糊，我絕對不會『自己猜測』然後硬做。我會先根據我的經驗擬定 A 和 B 兩個可行的方案，然後主動向主管/工程師確認：『根據我的理解，您的意思是 A 方案，對嗎？』透過封閉式問題與視覺化圖面，快速收斂模糊地帶。」
+                <div id="content-s4" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「若是團隊裝機，他的行為會導致時程延誤或工安風險。我會先善意提醒共同進度；若危及工安，我會秉持專業向 Team Lead 客觀反映。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('s6')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">5. 如何與不同背景或國籍的同事合作？</span>
-                    <i id="icon-s6" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <!-- 新增的情境題 -->
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('s5')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">5. 安全與產能的抉擇 (Safety vs Output)</span>
+                    <i id="icon-s5" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-s6" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mb-2">Diversity & Inclusion (多元與共融)</span><br>
-                    <strong>回答：</strong>「保持『開放與尊重 (Open-minded & Respect)』。每個人受到的技術訓練與文化不同。合作時，我會先尋求『共同的語言』，也就是數據、SPEC 和工程圖面。遇到意見分歧時，我會先傾聽對方考量的出發點，然後以達成專案目標為前提，用客觀事實進行討論，而非主觀的個人偏好。」
+                <div id="content-s5" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 客戶(如台積電)長官在現場施壓，要求機台必須今晚復機，但你發現某個氣體管線有微小洩漏疑慮，你會怎麼做？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 強調底線。「<strong class="text-blue-700">Safety First, no compromise.</strong> 我會頂住壓力，向客戶長官明確說明氣體洩漏可能導致整片 Fab 的災難。我會回報 ASML 主管介入協調，在未完成測漏 (Leak test) 前，絕不放行機台。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('s7')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">6. 接手上一班進度，發現現場與 Log 紀錄不符，怎麼辦？</span>
-                    <i id="icon-s7" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('s6')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">6. 進來跟你想的不一樣怎麼辦？</span>
+                    <i id="icon-s6" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-s7" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-2">Trust, but verify (信任但必須驗證)</span><br>
-                    <strong>回答：</strong>「絕對不能直接依賴 Log 繼續往下做。我會立刻停下手邊動作，先聯絡上一班同仁釐清狀況。如果聯絡不上，我會『降級』回到上一個確實的檢查點 (Checkpoint)，親自用儀器或肉眼重新驗證狀態。裝機容不得一絲僥倖，必須確保基準點完全正確才能繼續。」
+                <div id="content-s6" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「半導體設備本來就充滿預料之外的挑戰。我有強大適應力，如果遇到落差，我會主動找資深學長請教，重新解構問題。有機械底層邏輯在，沒有過不去的坎。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('s8')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">7. 客戶長官施壓立刻復機，但你發現必須跑 4 小時校正？</span>
-                    <i id="icon-s8" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('s7')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">7. 處理呆板枯燥的 Routine Work</span>
+                    <i id="icon-s7" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-s8" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mb-2">向上管理與抗壓性</span><br>
-                    <strong>回答：</strong>「品質與規格沒有妥協的餘地。我會語氣委婉但立場堅定地向長官說明：『長官，我非常理解目前產能的急迫性。但根據原廠規範，若跳過這 4 小時校正，可能會導致曝光偏移，造成後續數百萬 Wafer 報廢的嚴重風險。為了保護台積電的產品良率，這 4 小時是必須投資的時間。』透過強調『保障客戶利益』來爭取認同。」
+                <div id="content-s7" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: UIR 有時候也是枯燥的重複鎖螺絲、接管線，你能忍受嗎？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「對機械人來說，這不是枯燥，是『基本功的累積』。像我考 CNC 時，每天反覆操作，這是在建立肌肉記憶。越枯燥的基礎，越是關鍵時刻不犯錯的保證。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('s9')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">8. 裝機時發現荷蘭送來的關鍵零件短缺，進度卡死怎麼辦？</span>
-                    <i id="icon-s9" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('s8')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">8. 被分配到不喜歡的站點/模組</span>
+                    <i id="icon-s8" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-s9" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-2">Crisis Management (危機處理)</span><br>
-                    <strong>回答：</strong>「第一時間啟動『平行處理』。立刻回報 Team Lead 聯繫物流確認是否能從其他廠區緊急調料。同時，我不會在原地乾等，我會盤點整份安裝計畫，找出那些『不需要該零件也能提前執行的模組或配線作業』，將後續工作往前挪，極大化利用等待時間，降低整體 Delay。」
+                <div id="content-s8" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-2"><span class="highlight">Q: 如果你被分派去處理你極度不熟悉的模組，你會排斥嗎？</span></p>
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「把它當成拓寬技能樹的機會。我是個渴望高技術環境的人，越不熟悉代表成長空間越大。我會以最快速度 K 完 Manual，並向該模組的 Expert 請教。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('s10')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">9. 連續高壓裝機 12 小時，主管突然要你留下來支援緊急 Down 機？</span>
-                    <i id="icon-s10" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('s9')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">9. 在團隊中扮演的角色</span>
+                    <i id="icon-s9" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-s10" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-red-100 text-red-700 text-xs px-2 py-1 rounded mb-2">Care & Safety (關懷與安全邊界)</span><br>
-                    <strong>回答：</strong>「外商極度重視人員與機台安全。我會誠實評估自己的精神狀態。如果已極度疲勞，繼續操作幾百萬歐元的機台將有極高的出錯風險。我會坦白回報：『主管，為了安全，我目前的狀態不適合執行高精度排障。我可以在旁協助備料查手冊，但核心實作必須請精神充足的同事接手。』這才是守護團隊的負責任表現。」
+                <div id="content-s9" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">💡 「我通常是『潤滑劑』與『執行者』。專案初期我能跨部門溝通對焦資源；到了落地執行階段，我會穿上無塵服，帶頭確保硬體組裝準確到位。」</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-slate-200">
-                <button onclick="toggleCard('s11')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">10. 新版手冊(Manual)的做法，跟你 Mentor 教的舊習慣不同？</span>
-                    <i id="icon-s11" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+            <div class="bg-white rounded shadow-sm border border-slate-200">
+                <button onclick="toggleCard('s10')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">10. 職涯規劃 (短期/中期/長期)</span>
+                    <i id="icon-s10" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
                 </button>
-                <div id="content-s11" class="px-4 pb-4 text-slate-600 text-sm hidden border-t border-slate-100 pt-3 mt-1">
-                    <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mb-2">Speak Up (勇敢發言) & 遵循規範</span><br>
-                    <strong>回答：</strong>「在 ASML，Manual 大於一切。我不會盲從學長的舊經驗，但我會採取『尊重且基於證據』的溝通。我會拿著最新版的手冊詢問 Mentor：『學長，我注意到系統上最新版步驟有更新，跟我們剛做的做法不同，請問最近是有發布新的工程變更(EC)嗎？我們是否該確認一下？』以此確保流程正確又不傷和氣。」
+                <div id="content-s10" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    <p class="mt-1 bg-blue-50 p-2 rounded text-blue-900 border border-blue-100">
+                        <strong class="text-blue-700">短期 (半年)：</strong>通過工安訓練，獨立完成基礎模組組裝。<br>
+                        <strong class="text-blue-700">中期 (1-2年)：</strong>成為獨立作業主力，能快速排除硬體異常。<br>
+                        <strong class="text-blue-700">長期 (3年以上)：</strong>成為 Mentor，帶領新人，甚至爭取去荷蘭總部受訓，把最新技術帶回台灣。
+                    </p>
                 </div>
             </div>
-
-            <div class="bg-blue-50 rounded border border-blue-200 mt-6">
-                <button onclick="toggleCard('s4')" class="w-full px-4 py-3 text-left font-bold text-blue-900 flex justify-between items-start focus:outline-none">
-                    <span class="pr-4">🔥 霸氣反問環節 (面試尾聲必問)</span>
-                    <i id="icon-s4" class="fas fa-chevron-down text-blue-400 mt-1 transition-transform"></i>
-                </button>
-                <div id="content-s4" class="px-4 pb-4 text-blue-800 text-sm hidden border-t border-blue-100 pt-3 mt-1 space-y-3">
-                    <p><strong>1. 結合前東家：</strong>「過去我在台積電對接 Vendor，現在想轉到 ASML。依主管經驗，擁有 Fab 經驗的工程師加入 UIR，通常在哪個環節 (與廠務協調/Troubleshooting) 能發揮最大化學效應？」</p>
-                    <p><strong>2. 展現即戰力：</strong>「為了在報到後用最短時間成為團隊即戰力，您建議我在這段空窗期，可以優先研讀哪類技術知識或設備原理？」</p>
-                    <p><strong>3. 探聽文化：</strong>「團隊在大型專案中是如何協作的？遇到卡關時大家會互相幫忙嗎？」</p>
-                </div>
-            </div>
-
         </div>
+
+        <!-- ================= TAB 5: 霸氣反問 (提問環節) ================= -->
+        <div id="tab-custom" class="tab-content space-y-3 hidden">
+            <h2 class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-2">面試尾聲：提問清單 (10題)</h2>
+            <p class="text-sm text-slate-500 mb-4">💡 挑選 2-3 題詢問，展現積極度與格局。</p>
+
+            <div class="bg-blue-50 rounded border border-blue-200">
+                <button onclick="toggleCard('q1')" class="w-full px-4 py-3 text-left font-bold text-blue-900 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">1. 結合前東家背景 (強烈推薦)</span>
+                    <i id="icon-q1" class="fas fa-chevron-down text-blue-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-q1" class="card-content px-4 pb-4 text-blue-800 text-sm border-t border-blue-100 mt-1">
+                    「過去我在台積電對接 Vendor，現在想轉到 ASML。依主管經驗，擁有 Fab 經驗的工程師加入 UIR，通常在哪個環節 (與廠務協調/Troubleshooting) 能發揮最大化學效應？」
+                </div>
+            </div>
+
+            <div class="bg-blue-50 rounded border border-blue-200">
+                <button onclick="toggleCard('q2')" class="w-full px-4 py-3 text-left font-bold text-blue-900 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">2. 展現即戰力 (強烈推薦)</span>
+                    <i id="icon-q2" class="fas fa-chevron-down text-blue-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-q2" class="card-content px-4 pb-4 text-blue-800 text-sm border-t border-blue-100 mt-1">
+                    「為了在報到後用最短時間成為團隊即戰力，您建議我在這段空窗期，可以優先研讀哪類技術知識或設備原理？」
+                </div>
+            </div>
+
+            <div class="bg-blue-50 rounded border border-blue-200">
+                <button onclick="toggleCard('q3')" class="w-full px-4 py-3 text-left font-bold text-blue-900 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">3. 探聽團隊文化</span>
+                    <i id="icon-q3" class="fas fa-chevron-down text-blue-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-q3" class="card-content px-4 pb-4 text-blue-800 text-sm border-t border-blue-100 mt-1">
+                    「UIR 需要極佳的團隊合作，在大型專案中團隊是如何協作的？遇到卡關時大家會互相幫忙嗎？」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('q4')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">4. 實務挑戰</span>
+                    <i id="icon-q4" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-q4" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    「在裝機過程遇過最具挑戰的事情是什麼？團隊最後如何克服？」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('q5')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">5. 職涯發展徑路</span>
+                    <i id="icon-q5" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-q5" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    「在 UIR 起步的人，未來在公司內部的職涯發展通常為何？」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('q6')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">6. 主管個人經驗</span>
+                    <i id="icon-q6" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-q6" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    「您在 ASML 工作中，最有成就感或印象最深刻的一件事是什麼？」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('q7')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">7. 徵求 Feedback (必問)</span>
+                    <i id="icon-q7" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-q7" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    「針對今天的面試，我有哪些需要改進的地方，或是您對我的經歷有任何疑慮嗎？」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('q8')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">8. 培訓與 Mentor 制度</span>
+                    <i id="icon-q8" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-q8" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    「請問公司對 UIR 新人的教育訓練制度為何？初期下現場會有資深工程師 (Mentor) 帶領嗎？」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('q9')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">9. 日常裝機節奏</span>
+                    <i id="icon-q9" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-q9" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    「請問 UIR 團隊目前在高雄廠區的日常裝機節奏與週期大概是怎麼樣的？」
+                </div>
+            </div>
+
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('q10')" class="w-full px-4 py-3 text-left font-medium text-slate-700 flex justify-between items-center focus:outline-none">
+                    <span class="pr-4">10. 對未來的期望</span>
+                    <i id="icon-q10" class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                </button>
+                <div id="content-q10" class="card-content px-4 pb-4 text-slate-600 text-sm border-t border-slate-100 mt-1">
+                    「對於剛加入團隊的新人，主管通常會期待他在前三個月達成什麼樣的目標？」
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 6: 實戰中英攻防 (客製化版) ================= -->
+        <div id="tab-custom-script" class="tab-content space-y-4 hidden">
+            <h2 class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-yellow-500 pl-2">🌟 實戰中英攻防劇本</h2>
+            
+            <!-- Elevator Pitch -->
+            <div class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg shadow-sm border border-yellow-200 overflow-hidden mb-6">
+                <button onclick="toggleCard('c-pitch')" class="w-full px-4 py-3 text-left font-bold text-yellow-900 flex justify-between items-center focus:outline-none">
+                    <span>✨ 1-Minute Elevator Pitch (一分鐘電梯簡報)</span>
+                    <i id="icon-c-pitch" class="fas fa-chevron-down transition-transform duration-300"></i>
+                </button>
+                <div id="content-c-pitch" class="card-content px-4 pb-4 text-slate-800 leading-relaxed text-sm border-t border-yellow-200 space-y-3 mt-1">
+                    <p class="mt-2"><strong class="text-amber-700">[Greeting & Introduction]</strong><br>
+                    Good morning/afternoon interviewers. My name is Lyor Zhuang.<br>
+                    <span class="text-slate-500">(各位面試官早安/午安，我是莊瀚洲。)</span></p>
+                    
+                    <p><strong class="text-amber-700">[Education & Core Skills]</strong><br>
+                    I hold a Master's in Semiconductor Packaging from NSYSU and a Bachelor's in Mechanical Engineering from NTUT. My training focused heavily on precision machining and semiconductor equipment.<br>
+                    <span class="text-slate-500">(我擁有中山半導體封測碩士與北科大機械工程學士。我的訓練非常著重於精密加工與半導體設備。)</span></p>
+
+                    <p><strong class="text-amber-700">[Work Experience]</strong><br>
+                    I have practical engineering experience working as a PVD Equipment Engineer at TSMC's 2nm Fab. This taught me how to control installation schedules, conduct tool qualifications, and strictly follow fab safety rules.<br>
+                    <span class="text-slate-500">(我曾在台積電 2 奈米廠擔任 PVD 設備工程師。這教會了我如何控管裝機時程、執行機台驗證，並嚴格遵守廠務工安規範。)</span></p>
+
+                    <p><strong class="text-amber-700">[The "Wow" Factor: Precision & Safety Mindset]</strong><br>
+                    One of my strongest core values is precision and safety. Holding CNC machining licenses, I deeply understand the absolute importance of strictly following SOPs and precision tolerances. I know ASML never compromises on safety, and this matches my mindset perfectly.<br>
+                    <span class="text-slate-500">(我最強烈的核心價值觀之一就是精準與安全。擁有 CNC 加工技術士證照，我深刻理解嚴格遵守 SOP 與精密公差的絕對重要性。我知道 ASML 對工安絕不妥協，這與我的心態完美契合。)</span></p>
+
+                    <p><strong class="text-amber-700">[Why ASML & Closing]</strong><br>
+                    I am eager to join ASML because I thrive in a highly technical frontline environment. I am ready to contribute to your UIR team. Thank you for your time.<br>
+                    <span class="text-slate-500">(我非常渴望加入 ASML，因為我喜歡在高技術密度的前線環境中成長。我已經準備好為貴團隊貢獻。感謝各位的時間。)</span></p>
+                </div>
+            </div>
+
+            <!-- Phase 1: Intro -->
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('c1')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">第一階段：簡單自我介紹與核心思維</span>
+                    <i id="icon-c1" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-c1" class="card-content px-4 pb-4 text-slate-700 text-sm border-t border-slate-100 mt-1 space-y-2">
+                    <p class="mt-2 font-bold text-blue-800">Q1: 請你做個簡單的自我介紹。 (Please introduce yourself.)</p>
+                    <p>Hello interviewers, my name is Lyor Zhuang. I am a person who values mechanical discipline and practical details. <span class="text-slate-500">(各位面試官好，我是莊瀚洲。我是一個重視機械紀律與實作細節的人。)</span></p>
+                    <p>I graduated from NTUT in Mechanical Engineering and hold a Master's from NSYSU. I also hold CNC and Lathe machining licenses. <span class="text-slate-500">(我畢業於北科大機械系，並取得中山大學碩士。我也擁有 CNC 與車床的加工技術士證照。)</span></p>
+                    <p>Although I have a strong mechanical background, I worked as a PVD Equipment Engineer at TSMC's 2nm Fab. In a high-pressure environment, I learned troubleshooting and schedule management. <span class="text-slate-500">(雖然我有很強的機械背景，但我曾在台積電 2 奈米廠擔任 PVD 設備工程師。在高壓環境下，我學會了除錯與時程控管。)</span></p>
+                    <p>You might wonder how CNC machining relates to ASML. Actually, CNC requires extreme precision, strict SOPs, and reading complex hardware drawings. This is exactly like the hardware logic of ASML machines. <span class="text-slate-500">(主管可能會好奇 CNC 加工與 ASML 機台的關聯。其實 CNC 需要極度精準、嚴格的 SOP，以及閱讀複雜硬體圖面的能力。這跟 ASML 機台的硬體邏輯完全一樣。)</span></p>
+                    <p>I believe my hands-on skills will help me learn UIR tasks very fast. <span class="text-slate-500">(我相信我的實作能力能讓我極快上手 UIR 的任務。)</span></p>
+                </div>
+            </div>
+
+            <!-- Phase 2: Motivation -->
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('c2')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">第二階段：動機與職務認知</span>
+                    <i id="icon-c2" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-c2" class="card-content px-4 pb-4 text-slate-700 text-sm border-t border-slate-100 mt-1 space-y-4">
+                    <div class="mt-2">
+                        <p class="font-bold text-blue-800">Q2: 為什麼想離開現在的環境，來 ASML 應徵 UIR？ (Why ASML and UIR?)</p>
+                        <p>I chose ASML for three main reasons. First, I want a "high-tech learning environment". Second, ASML provides a "global working environment." Third, ASML has a "problem-solving culture." <span class="text-slate-500">(我選擇 ASML 有三個原因：渴望高技術密度學習環境、國際化工作環境，以及解決問題的工程文化。)</span></p>
+                        <p>UIR focuses on installing equipment, fixing frontline problems, and system integration. This perfectly matches my passion for hands-on engineering, compared to routine maintenance. <span class="text-slate-500">(UIR 專注於前線裝機、排障與系統整合。相比於例行維護，這與我熱衷實作工程的熱情完美契合。)</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-2">
+                        <p class="font-bold text-blue-800">Q3: 分享你在台積電的工作經驗，對 UIR 有何幫助？ (How does your TSMC experience help UIR?)</p>
+                        <p>At TSMC, I was responsible for AMAT Endura PVD machines. For precise installation, I tracked schedules and coordinated with the facility team. This trained me to communicate across departments. <span class="text-slate-500">(在台積電，我負責 AMAT PVD 機台。為確保裝機，我控管時程並與廠務協調。這訓練了我跨部門溝通的能力。)</span></p>
+                        <p>For safety discipline, I strictly followed the Fab's safety rules. I am very used to cleanroom rules, so I can easily adapt to ASML's customer sites. <span class="text-slate-500">(在工安紀律上，我嚴格遵守廠規。我非常習慣無塵室規範，能輕鬆適應客戶端環境。)</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-2">
+                        <p class="font-bold text-blue-800">Q4: 你對 CS-UIR 這個職務了解有多少？ (What do you know about the CS-UIR role?)</p>
+                        <p>As far as I know, UIR is responsible for installing machines, upgrading modules, and relocating equipment. We must strictly follow ASML's Way of Working (WoW). <span class="text-slate-500">(據我了解，UIR 負責裝機、升級與移機。我們必須嚴格遵守 ASML 的 WoW 標準流程。)</span></p>
+                        <p>I studied mechanical engineering and CNC machining, so I know hardware structures very well. With my hands-on experience, I am very confident in the precision needed for UIR. <span class="text-slate-500">(我讀機械工程且具備 CNC 訓練，所以我非常了解硬體結構。憑藉實作經驗，我對 UIR 所需的精準度非常有信心。)</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3: Projects -->
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('c3')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">第三階段：專案與解決問題能力</span>
+                    <i id="icon-c3" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-c3" class="card-content px-4 pb-4 text-slate-700 text-sm border-t border-slate-100 mt-1 space-y-4">
+                    <div class="mt-2">
+                        <p class="font-bold text-blue-800">Q5: 請介紹你負責的專案，你扮演什麼角色？ (Tell us about your project and your role.)</p>
+                        <p>My most relevant project was establishing an End Point system from scratch during my TSMC ETC department internship. <span class="text-slate-500">(我最相關的專案是在台積電蝕刻部實習時，從無到有建置 End Point 系統。)</span></p>
+                        <p>In this team, I was responsible for system planning and equipment integration. This project taught me how to turn an abstract process idea into a real hardware system. This is very similar to how a UIR engineer understands different tool modules. <span class="text-slate-500">(我負責系統規劃與設備整合。這教會我如何將抽象製程轉化為真實硬體系統，這跟 UIR 工程師理解機台模組的邏輯非常相似。)</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-2">
+                        <p class="font-bold text-blue-800">Q6: 做專案時遇過什麼困難？如何解決？ (Did you face any challenges? How did you solve them?)</p>
+                        <p>During my ASE internship researching High-K TIM, the biggest challenge was that the bonding reliability failed after thermal cycling tests, causing micro-cracks. <span class="text-slate-500">(在日月光研究散熱材料時，最大挑戰是熱循環測試後可靠度失效，產生微裂紋。)</span></p>
+                        <p>My solution was to conduct material analysis to check the internal structure. Then, I optimized the Indium alloy parameters to find the most stable combination. This built my habit of "finding the root cause and letting data speak," which is great for UIR Troubleshooting. <span class="text-slate-500">(我進行材料分析檢查內部，並優化銦合金參數找到穩定組合。這養成了我「找出根本原因並讓數據說話」的習慣，對 UIR 除錯極有幫助。)</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 4: Traits & Safety -->
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('c4')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">第四階段：個人特質、工安意識與適應力</span>
+                    <i id="icon-c4" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-c4" class="card-content px-4 pb-4 text-slate-700 text-sm border-t border-slate-100 mt-1 space-y-4">
+                    <div class="mt-2">
+                        <p class="font-bold text-blue-800">Q7: 你覺得你具備什麼特質適合這個職位？ (What personal traits make you a good fit?)</p>
+                        <p>I have strong "resilience" and an "exploring spirit." For resilience, I adapted quickly to TSMC's 2nm high-pressure fab. For the exploring spirit, I constantly cross fields—from mechanical engineering to semiconductor packaging. <span class="text-slate-500">(我具備「韌性」與「探索精神」。我能適應台積高壓建廠，且不斷跨足機械與半導體封測領域。)</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-2">
+                        <p class="font-bold text-blue-800">Q8: 在無塵室環境，你如何確保作業安全？ (How do you ensure safety in a cleanroom?)</p>
+                        <p>Besides my TSMC fab experience, my CNC machining training taught me the most important rules: "Buddy Check" and "Strictly follow SOP." In machining, breaking rules can cause severe injuries. I will use the "Stop Work Authority" spirit to work with my team and keep everyone safe. <span class="text-slate-500">(除了台積經驗，CNC 訓練教了我「同伴檢查」與「嚴守 SOP」。加工中破壞規則會導致重傷。我會用「停止作業權限」的精神來確保團隊安全。)</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-2">
+                        <p class="font-bold text-blue-800">Q9: 你的優缺點是什麼？ (What are your strengths and weaknesses?)</p>
+                        <p>My strengths are "strong hands-on skills" and "high safety awareness." My weakness is that I am less familiar with advanced optical physics theoretical calculations. However, I will use ASML's training system and study English Manuals hard to build up my knowledge. <span class="text-slate-500">(優點是實作強、工安意識高。缺點是對進階光學物理理論較不熟。但我會透過公司訓練與苦讀手冊來補足。)</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-2">
+                        <p class="font-bold text-blue-800">Q10: 學校最擅長與最不擅長的學科？ (Best and worst subjects in school?)</p>
+                        <p>My best subjects are Engineering Drawing and Machining Practice. My worst subject is theoretical math. However, I make up for this by doing hands-on practice. This built my habit of "doing things by hand and speaking with data." <span class="text-slate-500">(最擅長工程圖學與加工實習。最不擅長理論數學。但我透過動手實作彌補，養成了「動手做並讓數據說話」的習慣。)</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-2">
+                        <p class="font-bold text-blue-800">Q11: UIR 需輪班、穿無塵服或支援外地，願意嗎？ (Willing to work shifts and travel?)</p>
+                        <p>No problem at all. As an equipment engineer at TSMC, I am totally used to the cleanroom environment and flexible shifts. I work out regularly, doing road biking, so my physical fitness is great. <span class="text-slate-500">(完全沒問題。身為台積設備，我完全習慣無塵室與輪班。我經常騎公路車健身，體能狀態極佳。)</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-2">
+                        <p class="font-bold text-blue-800">Q12: 面對高壓環境如何排解壓力？ (How do you handle stress?)</p>
+                        <p>I handle stress in two ways: "physical release" (road biking) and "solving the root cause." The best way to relieve stress is to face it directly. I will calm down, read the Manual, or discuss with seniors. <span class="text-slate-500">(我用兩種方式：體能釋放(公路車)與解決根本原因。舒壓最好方式是直接面對，我會靜下心看手冊或跟前輩討論。)</span></p>
+                    </div>
+                    <div class="border-t border-slate-100 pt-2">
+                        <p class="font-bold text-blue-800">Q13: 跟同事技術意見不合怎麼辦？ (How do you resolve technical conflicts?)</p>
+                        <p>My core rule is: "Focus on the issue, not the person, and let data and SOP speak." I will listen to their ideas first, then open the engineering drawings or ASML's WoW process to check together. <span class="text-slate-500">(核心原則：對事不對人，讓數據和 SOP 說話。我會先聽對方想法，再打開工程圖或 WoW 流程一起核對。)</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 5: Career Plan -->
+            <div class="bg-white rounded border border-slate-200">
+                <button onclick="toggleCard('c5')" class="w-full px-4 py-3 text-left font-medium text-slate-800 flex justify-between items-start focus:outline-none">
+                    <span class="pr-4">第五階段：未來職涯規劃</span>
+                    <i id="icon-c5" class="fas fa-chevron-down text-slate-400 mt-1 transition-transform"></i>
+                </button>
+                <div id="content-c5" class="card-content px-4 pb-4 text-slate-700 text-sm border-t border-slate-100 mt-1 space-y-2">
+                    <p class="mt-2 font-bold text-blue-800">Q14: 進入 UIR 團隊後，你的職涯規劃是什麼？ (What is your career plan?)</p>
+                    <p><strong>Short-term (within 6 months):</strong> Pass ASML's safety training and independently finish basic module assembly. <span class="text-slate-500">(短期半年：通過工安訓練，獨立完成基礎模組組裝。)</span></p>
+                    <p><strong>Medium-term (1 to 2 years):</strong> Become an "Independent" key player and quickly solve hardware errors. <span class="text-slate-500">(中期一到兩年：成為獨立作業主力，快速解決硬體異常。)</span></p>
+                    <p><strong>Long-term (over 3 years):</strong> Become a "Mentor" in the team to help solve complex projects. <span class="text-slate-500">(長期三年以上：成為團隊導師，協助解決複雜專案。)</span></p>
+                </div>
+            </div>
+        </div>
+
     </main>
 
-    <!-- Scripts for Interaction -->
     <script>
+        // Tab switching logic
         function switchTab(tabId) {
             // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(el => {
-                el.classList.add('hidden');
-            });
-            
-            // Reset all tab buttons styling
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            // Remove active class from all buttons
             document.querySelectorAll('.tab-btn').forEach(el => {
-                el.classList.remove('border-blue-600', 'text-blue-600');
+                el.classList.remove('active', 'border-blue-600', 'text-blue-800', 'font-bold');
                 el.classList.add('border-transparent', 'text-slate-500');
             });
-
-            // Show selected tab content
-            document.getElementById(tabId).classList.remove('hidden');
             
-            // Highlight selected tab button
+            // Show selected tab content
+            if (tabId === 'tab-custom') {
+                document.getElementById('tab-custom-script').classList.remove('hidden');
+            } else {
+                document.getElementById(tabId).classList.remove('hidden');
+            }
+            
+            // Add active class to clicked button
             const activeBtn = document.getElementById('btn-' + tabId);
             activeBtn.classList.remove('border-transparent', 'text-slate-500');
-            activeBtn.classList.add('border-blue-600', 'text-blue-600');
-            
-            // Scroll tab into view if needed (smoothly)
-            activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            activeBtn.classList.add('active', 'border-blue-600', 'text-blue-800', 'font-bold');
         }
 
+        // Accordion toggle logic
         function toggleCard(id) {
             const content = document.getElementById('content-' + id);
             const icon = document.getElementById('icon-' + id);
             
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.style.transform = 'rotate(180deg)';
-            } else {
-                content.classList.add('hidden');
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
                 icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
             }
         }
     </script>
