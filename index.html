@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
     <title>Lyor Zhuang - 終極面試攻防系統</title>
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="面試攻防">
+    <link rel="apple-touch-icon" href="interview-app.jpg">
+    <!-- 單檔內嵌 Manifest JSON (定義 APP 名稱與圖示，供 Android 加到主畫面使用) -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%E7%B5%82%E6%A5%B5%E9%9D%A2%E8%A9%A6%E6%94%BB%E9%98%B2%E7%B3%BB%E7%B5%B1%22%2C%22short_name%22%3A%22%E9%9D%A2%E8%A9%A6%E6%94%BB%E9%98%B2%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8fafc%22%2C%22theme_color%22%3A%22%232563eb%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22interview-app.jpg%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fjpeg%22%7D%5D%7D">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -103,7 +111,7 @@
             body { background-color: #ffffff; color: #000000; padding: 0; margin: 0; }
             header, nav, .fab-menu, .btn-press i.fa-chevron-down, .practice-tools { display: none !important; }
             .company-section.hidden { display: none !important; }
-            .sub-content.hidden { display: block !important; margin-bottom: 2rem; } /* Print all sub-tabs of current company */
+            .sub-content.hidden { display: block !important; margin-bottom: 2rem; }
             .accordion-wrapper { grid-template-rows: 1fr !important; }
             .accordion-inner { opacity: 1 !important; transform: none !important; }
             .qa-card { box-shadow: none !important; border: 1px solid #e5e7eb !important; margin-bottom: 0.5rem !important; break-inside: avoid; }
@@ -128,9 +136,7 @@
         
         <div class="px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shadow-md">
-                    <span class="text-white font-extrabold text-lg">LZ</span>
-                </div>
+                <img src="interview-app.jpg" onerror="this.outerHTML='<div class=\'w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shadow-md\'><span class=\'text-white font-extrabold text-lg\'>LZ</span></div>'" class="w-10 h-10 rounded-xl shadow-md object-cover" alt="Logo">
                 <div>
                     <h1 class="text-lg font-black text-slate-900 tracking-tight leading-tight">終極面試攻防系統</h1>
                     <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Lyor Zhuang • Multi-Offer Ready</p>
@@ -157,7 +163,7 @@
     <main class="px-4 py-5 max-w-2xl mx-auto" id="main-container">
 
         <!-- ========================================================= -->
-        <!--                      COMPANY 1: ASML (100% COMPLETE)      -->
+        <!--                      COMPANY 1: ASML                      -->
         <!-- ========================================================= -->
         <div id="section-asml" class="company-section block">
             <nav class="flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4">
@@ -639,6 +645,7 @@
         <!--                      COMPANY 2: SWANCOR (上緯研發)        -->
         <!-- ========================================================= -->
         <div id="section-swancor" class="company-section hidden">
+            
             <nav class="flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4">
                 <button onclick="switchSubTab('swancor', 'script')" id="tab-swancor-script" class="btn-press sub-tab-btn swancor-theme active flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-scroll"></i> 專屬劇本</button>
                 <button onclick="switchSubTab('swancor', 'tech')" id="tab-swancor-tech" class="btn-press sub-tab-btn swancor-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-vial"></i> 專業邏輯</button>
@@ -831,6 +838,7 @@
         <!--                      COMPANY 3: SKYEUV (輝虹機構)         -->
         <!-- ========================================================= -->
         <div id="section-skyeuv" class="company-section hidden">
+            
             <nav class="flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4">
                 <button onclick="switchSubTab('skyeuv', 'script')" id="tab-skyeuv-script" class="btn-press sub-tab-btn skyeuv-theme active flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-scroll"></i> 專屬劇本</button>
                 <button onclick="switchSubTab('skyeuv', 'tech')" id="tab-skyeuv-tech" class="btn-press sub-tab-btn skyeuv-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-compress-arrows-alt"></i> 專業邏輯</button>
@@ -1020,18 +1028,16 @@
     </main>
 
     <script>
-        // Store interval globally to allow clearing
         let activeTimer = null;
         let speechSynthesisActive = false;
 
         window.onload = () => {
-            injectPracticeTools(); // 自動注入計時與語音按鈕
-            switchCompany('asml'); // 預設載入 ASML
+            injectPracticeTools(); 
+            switchCompany('asml'); 
         };
 
         function injectPracticeTools() {
             document.querySelectorAll('.accordion-inner > div').forEach((container, index) => {
-                // 不要在腳本區或已經有工具列的地方重複加入
                 if (container.closest('#content-asml-script') || 
                     container.closest('#content-swancor-script') || 
                     container.closest('#content-skyeuv-script') ||
@@ -1054,8 +1060,6 @@
 
         function startTimer(elementId, seconds) {
             const display = document.getElementById(elementId);
-            
-            // 如果已經在跑同一個，就停止
             if (activeTimer && activeTimer.id === elementId) {
                 clearInterval(activeTimer.interval);
                 display.classList.add('hidden');
@@ -1063,16 +1067,14 @@
                 activeTimer = null;
                 return;
             }
-
-            // 清除之前的計時器
             if (activeTimer) {
                 clearInterval(activeTimer.interval);
-                document.getElementById(activeTimer.id).classList.add('hidden');
+                const oldDisplay = document.getElementById(activeTimer.id);
+                if(oldDisplay) oldDisplay.classList.add('hidden');
             }
 
             display.classList.remove('hidden', 'timer-warning');
             display.classList.add('timer-active');
-            
             let remaining = seconds;
             
             const interval = setInterval(() => {
@@ -1084,7 +1086,6 @@
                     display.classList.remove('timer-active');
                     display.classList.add('timer-warning');
                 }
-                
                 if (remaining <= 0) {
                     clearInterval(interval);
                     display.textContent = "時間到！";
@@ -1102,13 +1103,11 @@
                 alert('您的瀏覽器不支援語音朗讀功能');
                 return;
             }
-
-            // 取得卡片內的文字內容 (排除按鈕與時間文字)
             const container = btn.closest('.accordion-inner');
             let text = container.innerText;
             text = text.replace(/計時練習/g, '').replace(/語音朗讀/g, '').replace(/\d{2}:\d{2}/g, '').replace(/時間到！/g, '');
 
-            window.speechSynthesis.cancel(); // 停止先前的朗讀
+            window.speechSynthesis.cancel();
             
             if (speechSynthesisActive && btn.dataset.playing === 'true') {
                 speechSynthesisActive = false;
@@ -1117,15 +1116,15 @@
                 return;
             }
 
-            // 重置所有播放按鈕狀態
             document.querySelectorAll('.fa-stop.text-rose-500').forEach(icon => {
                 const b = icon.closest('button');
-                b.dataset.playing = 'false';
-                b.innerHTML = '<i class="fas fa-volume-up text-emerald-500"></i> 語音朗讀';
+                if(b){
+                    b.dataset.playing = 'false';
+                    b.innerHTML = '<i class="fas fa-volume-up text-emerald-500"></i> 語音朗讀';
+                }
             });
 
             const utterance = new SpeechSynthesisUtterance(text);
-            // 簡單判斷：如果英文字母多於中文，設定為英文發音，否則為中文
             const engCount = (text.match(/[a-zA-Z]/g) || []).length;
             const chiCount = (text.match(/[\u4e00-\u9fa5]/g) || []).length;
             utterance.lang = engCount > chiCount ? 'en-US' : 'zh-TW';
@@ -1140,19 +1139,16 @@
             speechSynthesisActive = true;
             btn.dataset.playing = 'true';
             btn.innerHTML = '<i class="fas fa-stop text-rose-500"></i> 停止朗讀';
-            
             window.speechSynthesis.speak(utterance);
         }
 
         function switchCompany(companyId) {
-            // 1. Reset Company Tabs
             document.querySelectorAll('.company-tab').forEach(el => {
                 el.classList.remove('active', 'active-asml', 'active-swancor', 'active-skyeuv');
             });
             const activeTab = document.getElementById('comp-' + companyId);
             activeTab.classList.add('active', 'active-' + companyId);
 
-            // 2. Hide all sections, show the chosen one
             document.querySelectorAll('.company-section').forEach(el => {
                 el.classList.add('hidden');
                 el.classList.remove('block');
@@ -1160,10 +1156,8 @@
             document.getElementById('section-' + companyId).classList.remove('hidden');
             document.getElementById('section-' + companyId).classList.add('block');
 
-            // 3. Reset Sub-tabs within that company to 'script'
             switchSubTab(companyId, 'script');
             
-            // 4. Auto-open the first accordion smoothly
             setTimeout(() => {
                 const section = document.getElementById('content-' + companyId + '-script');
                 if (section) {
@@ -1181,22 +1175,18 @@
         function switchSubTab(companyId, subTabId) {
             const section = document.getElementById('section-' + companyId);
             
-            // Hide all sub-contents
             section.querySelectorAll('.sub-content').forEach(el => {
                 el.classList.add('hidden');
                 el.classList.remove('block');
             });
             
-            // Reset all sub-tab buttons
             section.querySelectorAll('.sub-tab-btn').forEach(el => {
                 el.classList.remove('active', 'asml-theme', 'swancor-theme', 'skyeuv-theme');
             });
             
-            // Show selected content
             document.getElementById(`content-${companyId}-${subTabId}`).classList.remove('hidden');
             document.getElementById(`content-${companyId}-${subTabId}`).classList.add('block');
             
-            // Apply active styling to button
             const activeBtn = document.getElementById(`tab-${companyId}-${subTabId}`);
             activeBtn.classList.add('active');
             if(companyId === 'asml') activeBtn.classList.add('asml-theme');
@@ -1218,15 +1208,15 @@
         }
 
         function expandAll() {
-            // 只展開目前可見公司內的卡片，避免過多
             const activeCompany = document.querySelector('.company-section.block');
-            activeCompany.querySelectorAll('.accordion-wrapper').forEach(w => w.classList.add('open'));
-            activeCompany.querySelectorAll('.fa-chevron-down').forEach(i => i.style.transform = 'rotate(180deg)');
+            if(activeCompany){
+                activeCompany.querySelectorAll('.accordion-wrapper').forEach(w => w.classList.add('open'));
+                activeCompany.querySelectorAll('.fa-chevron-down').forEach(i => i.style.transform = 'rotate(180deg)');
+            }
         }
 
         function preparePrint() {
-            expandAll(); // 確保所有卡片開啟
-            // 稍等動畫完成後呼叫列印
+            expandAll();
             setTimeout(() => {
                 window.print();
             }, 400);
