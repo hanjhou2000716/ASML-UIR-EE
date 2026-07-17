@@ -626,10 +626,11 @@
             </div>
         </div>
 
-        <!-- ========================================================= -->
-        <!--                      COMPANY 2: MICRON                    -->
+       <!-- ========================================================= -->
+        <!--                      COMPANY 2: MICRON (美光 RDA)         -->
         <!-- ========================================================= -->
         <div id="section-micron" class="company-section hidden">
+            
             <nav class="flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4">
                 <button onclick="switchSubTab('micron', 'script')" id="tab-micron-script" class="btn-press sub-tab-btn micron-theme active flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-scroll"></i> 專屬劇本</button>
                 <button onclick="switchSubTab('micron', 'tech')" id="tab-micron-tech" class="btn-press sub-tab-btn micron-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-microscope"></i> 專業邏輯</button>
@@ -641,28 +642,45 @@
             <div id="content-micron-script" class="sub-content block space-y-3">
                 <div class="bg-gradient-to-br from-sky-600 to-cyan-800 rounded-2xl shadow-md p-5 text-white mb-4">
                     <h2 class="text-xl font-black mb-1">美光 RDA 量測輪班工程師劇本</h2>
-                    <p class="text-sky-100 text-[13px]">策略：台積2奈米建廠實戰 + 參數調校與數據驅動 + 主動預防保養</p>
+                    <p class="text-sky-100 text-[13px]">策略：台積2奈米建廠實戰 + 參數調校與數據驅動 + 主動預防保養 + 適應輪班</p>
                 </div>
                 
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden group qa-card">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden group">
                     <button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex gap-4 items-center hover:bg-sky-50/50 transition-colors">
                         <div class="w-10 h-10 rounded-full bg-sky-100 flex items-center justify-center flex-shrink-0"><i class="fas fa-bullseye text-sky-600"></i></div>
-                        <div class="flex-grow"><h3 class="font-bold text-slate-800 text-[15px]">RDA 量測職位自我介紹 (核心武裝)</h3></div>
+                        <div class="flex-grow"><h3 class="font-bold text-slate-800 text-[15px]">RDA 職位自我介紹 (核心武裝)</h3></div>
                         <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 transform"></i>
                     </button>
                     <div class="accordion-wrapper">
                         <div class="accordion-inner">
                             <div class="px-5 pb-5 text-[14px] leading-relaxed space-y-3 border-t border-slate-100 pt-3">
-                                <p>各位主管好，我是莊瀚洲。針對「RDA 黃光量測設備維護工程師」，我的優勢在於<strong>「新機台導入實戰」與「數據驅動的參數調校能力」</strong>。</p>
-                                <p>我在台積電 2 奈米廠擔任 PVD 設備工程師，直接參與了 AMAT Endura 的裝機、Hook-up 與嚴格的 Buy-off 驗收。這讓我非常熟悉半導體設備從 Vendor 交機到產線量產的完整導入流程。</p>
-                                <p>針對量測機台需要的精準度，我在台積電從無到有建置了 End Point 系統，並在日月光專案中透過 DOE 調整 High K TIM 的參數。我非常習慣透過 SEM/EDX 或 Log 數據來進行 Troubleshooting 與尋找 Root Cause，而不只是被動的更換零件。</p>
-                                <p>此外，我擁有 CNC 銑床證照與紮實的機械底蘊，對於無塵室的 SOP 紀律與工安有極高的要求。我完全適應高壓與輪班的動態環境，有信心能確保美光量測設備的高稼動率與穩定度。</p>
+                                <p>各位主管好，我是莊瀚洲。針對「RDA 黃光量測設備維護工程師」，我的優勢在於<strong>「新機台導入實戰」與「數據驅動的異常排查能力」</strong>。</p>
+                                <p>我在台積電 2 奈米廠擔任 PVD 設備工程師，直接參與了 AMAT Endura 的裝機、Hook-up 與嚴格的 Buy-off 驗收。這讓我非常熟悉半導體設備從 Vendor 交機到產線量產的完整導入流程與高壓節奏。</p>
+                                <p>針對量測機台需要的精準度，我曾在台積電從無到有建置 End Point 系統，習慣透過 Log 數據來進行 Troubleshooting 與尋找 Root Cause，而不只是被動的更換零件。此外，對於產線的品質控制，我能熟練運用 SPC 與 FDC 系統邏輯，從「人機料法環」維度快速定位異常。</p>
+                                <p>最後，我深知 RDA 輪班工作對於體能與交接紀律的極高要求。我平時有高強度公路車與重訓習慣，體能狀態極佳，加上我對無塵室 SOP 的嚴格堅持，我有絕對的信心能確保美光量測設備的高稼動率。謝謝。</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-sky-50 rounded-2xl shadow-sm border border-sky-200 overflow-hidden group mt-6 qa-card">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden group">
+                    <button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex gap-4 items-center hover:bg-sky-50/50 transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0"><i class="fas fa-route text-slate-600"></i></div>
+                        <div class="flex-grow"><h3 class="font-bold text-slate-800 text-[15px]">短中長期職涯規劃 <span class="tag tag-must ml-1">🔥 必備</span></h3></div>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300 transform"></i>
+                    </button>
+                    <div class="accordion-wrapper">
+                        <div class="accordion-inner">
+                            <div class="px-5 pb-5 text-[14px] leading-relaxed space-y-3 border-t border-slate-100 pt-3">
+                                <p><strong class="text-sky-700">短期 (0-1年)：</strong>快速取得黃光量測設備的獨立值班認證 (Certification)。熟練掌握機台的日常 PM 與基礎 Troubleshooting，完全適應輪班與無塵室的高壓節奏，確保交接班 (Handover) 資訊零落差。</p>
+                                <p><strong class="text-sky-700">中期 (1-3年)：</strong>成為班內的 Technical Reference。熟練運用 SPC/FDC 系統，提前抓出機台異常趨勢，落實 Proactive Maintenance (預防保養)。同時期望參與新量測機台的評估與裝機驗收 (Buy-off)。</p>
+                                <p><strong class="text-sky-700">長期 (3年以上)：</strong>帶領新進工程師，並參與跨部門的持續改善專案 (CIP)。例如與製程工程師 (PE) 合作進行量測參數微調，從設備端提出優化方案，提升整體黃光區的 Throughput。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-sky-50 rounded-2xl shadow-sm border border-sky-200 overflow-hidden group mt-6">
                     <button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex gap-4 items-center">
                         <div class="w-10 h-10 rounded-full bg-sky-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-question text-white"></i></div>
                         <div class="flex-grow"><h3 class="font-bold text-sky-900 text-[15px]">Reverse Qs (向面試官提問)</h3></div>
@@ -671,8 +689,8 @@
                     <div class="accordion-wrapper">
                         <div class="accordion-inner">
                             <div class="px-5 pb-5 text-[14px] leading-relaxed space-y-3 border-t border-sky-100 pt-3 bg-white">
-                                <p><span class="font-bold text-sky-600">1. 機台類型：</span>請問目前 RDA 團隊負責的主力量測設備是偏向 Overlay、CD-SEM 還是光學薄膜量測？未來是否有導入新世代機台的計畫？</p>
-                                <p><span class="font-bold text-sky-600">2. 數據系統：</span>在進行 Proactive PM 或異常防堵時，團隊目前最依賴的 FDC 或 SPC 系統是什麼？新人大概需要花多少時間熟悉這套系統？</p>
+                                <p><span class="font-bold text-sky-600">1. 機台技術：</span>請問目前 RDA 團隊負責的主力量測設備是偏向 Overlay、CD-SEM 還是光學薄膜量測？未來是否有導入新世代量測機台的計畫？</p>
+                                <p><span class="font-bold text-sky-600">2. 數據防堵：</span>在進行 Proactive PM 或異常防堵時，團隊目前最依賴的 FDC 或大數據系統是什麼？新人大概需要花多少時間熟悉這套系統？</p>
                                 <p><span class="font-bold text-sky-600">3. 跨部門協作：</span>作為輪班工程師，在處理量測數據飄移或 Alarm 時，與 PE (製程工程師) 及 Vendor 的責任邊界通常是如何劃分的？</p>
                             </div>
                         </div>
@@ -681,168 +699,171 @@
             </div>
 
             <div id="content-micron-tech" class="sub-content hidden space-y-3">
-                <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-b-2 border-slate-200 pb-1 flex items-center gap-2">🔬 設備維護與數據分析 (10題)</h3>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">1. PVD 與黃光量測機台的差異？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「PVD 重視真空度、電漿穩定與腔體潔淨度；量測機台(如 CD-SEM/Overlay)更重視光學對位、Sensor 精度與抗震動。雖然硬體核心不同，但『透過 Log 抓 Root cause』與『嚴格執行 PM』的設備維護邏輯是完全相通的。」
-                </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">⭐⭐⭐ 必考核心</span><br>2. 何謂主動預防保養 (Proactive PM)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
+                <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-l-4 border-sky-500">專業與邏輯測驗 (10題)</h3>
+                
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">⭐⭐⭐ 必考核心</span><br>1. 何謂主動預防保養 (Proactive PM)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
                     💡 「不僅是按表操課換零件(CM)，而是透過 FDC 監控機台參數(如馬達電流、Sensor數值)的趨勢微小變化。在數值超出 control limit 導致當機前，提前排定 PM 介入，極大化機台 Uptime。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">3. 如何進行機台的參數微調 (Fine-tuning)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「以我在日月光調整 TIM 點膠參數為例。微調必須是 Data-driven 的。我會設計 DOE，每次只調整單一變數(如平台移動速度或對焦時間)，觀察量測數據的再現性(Reproducibility)，找到最佳的 Recipe 甜蜜點。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">2. 品保與驗證工具的使用經驗？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 結合上緯面試經驗。「雖不一定每天手繪魚骨圖，但我熟悉其『根因分析(Root Cause)』邏輯。設備端我更常運用 SPC 監控量測數據 Trend，發生 OOC 異常時，直覺從『人機料法環』維度排查變異源。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">4. 什麼是 FDC 與 SPC 系統？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「FDC (Fault Detection and Classification) 收集設備感測器的高頻數據來監控機台健康；SPC (Statistical Process Control) 則是監控產品量測結果的變異趨勢(如 Cp/Cpk)。兩者結合能精準定位異常是來自機台硬體還是製程。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">3. 如何進行機台的參數微調 (Fine-tuning)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「微調必須是 Data-driven 的。我會設計 DOE，每次只調整單一變數(如平台移動速度或對焦時間)，觀察量測數據的再現性(Reproducibility)，找到最佳的 Recipe 甜蜜點。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-high mb-1">⭐⭐ 高頻題</span><br>5. 新機台導入 (Vendor coordinate / Buy-off) 經驗？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">⭐⭐⭐ 必考核心</span><br>4. 新機台導入 (Vendor Coordinate) 經驗？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
                     💡 「在台積電 2nm 建廠時，我負責協調廠務與 AMAT 原廠進行 Hook-up。我會嚴格對齊 Schedule，確認水電氣規格，並親自參與最終的 Buy-off 測試，確保硬體穩定度達標後才放行給製程端。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">6. 如何確保量測機台的精準度 (Precision)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「定期使用 Golden Wafer 進行 Calibration。確保機台的環境控制(溫濕度、微震動)在 SPEC 內。如果有硬體更換(如光源或鏡頭)，必須重新執行嚴格的對位補償與 Gage R&R 測試。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">5. 什麼是 FDC 與 SPC 系統？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「FDC (Fault Detection and Classification) 收集設備感測器的高頻數據來監控機台健康；SPC (Statistical Process Control) 則是監控產品量測結果的變異趨勢。兩者結合能精準定位異常是來自機台硬體還是製程。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">7. 面對複雜 Alarm 的 Troubleshooting 邏輯？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">6. 面對複雜 Alarm 的 Troubleshooting 邏輯？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
                     💡 「絕不盲目 Reset。第一步：確保機台 Safe state。第二步：調閱 Error Log 與 FDC 歷史曲線。第三步：運用 5 Whys 與交叉比對法，切斷變數(如更換模組測試)，精準鎖定失效的硬體元件。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">8. 交叉驗證法 (Cross-matching) 實例？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「當量測數據異常時，我會將同一片 Wafer 放進另一台同型號健康的 Tool 量測。如果結果正常，代表是原機台硬體飄移；如果結果一樣異常，則有極大機率是上一站製程異常(如曝光失焦)，藉此釐清權責。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-high mb-1">⭐⭐ 高頻題</span><br>7. PVD 與黃光量測機台的差異？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「PVD 重視真空度、電漿穩定；量測機台(如 CD-SEM)更重視光學對位、Sensor 精度與抗震動。雖然硬體核心不同，但『透過 Log 抓 Root cause』與『嚴格執行 PM』的設備維護邏輯是完全相通的。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">9. 無塵室硬體操作的防呆觀念？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">8. 交叉驗證法 (Cross-matching) 實例？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「當量測數據異常時，我會將同一片 Wafer 放進另一台同型號健康的 Tool 量測。如果結果正常，代表是原機台硬體飄移；如果結果一樣異常，則極大機率是上一站製程異常(如曝光失焦)，藉此釐清權責。」
+                </div></div></div></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">9. 無塵室硬體操作的防呆觀念？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
                     💡 「我擁有 CNC 銑床與車床證照，對機構公差非常敏感。在鎖固光學元件或腔體法蘭時，我嚴格遵守對角線分段上扭力的 SOP，避免應力不均導致微變形影響量測準確度。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">10. 如何與 Vendor 有效合作？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「Vendor 是資源而非依靠。在 Call Vendor 前，我會先備妥 Log、錯誤截圖與初步排查結果。等 Vendor 到場時，我能用他們聽得懂的技術語言快速對焦，大幅縮短 Down time。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">10. 如何確保量測機台的精準度 (Precision)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「定期使用 Golden Wafer 進行 Calibration。確保機台的環境控制(溫濕度、微震動)在 SPEC 內。如果有硬體更換(如光源或鏡頭)，必須重新執行嚴格的對位補償與 Gage R&R 測試。」
                 </div></div></div></div>
             </div>
 
             <div id="content-micron-motiv" class="sub-content hidden space-y-3">
-                <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-b-2 border-slate-200 pb-1 flex items-center gap-2">🎯 動機與特質 (10題)</h3>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">⭐⭐⭐ 必考核心</span><br>1. 為何想來美光 RDA 黃光量測部門？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「量測(Metrology)是半導體製程的『眼睛』。在台積維護 PVD 後，我深刻體會『精準的數據監控』才是提升良率的關鍵。美光 RDA 強調數據驅動與機台優化，這與我喜歡抓 Root cause 的工程性格完美契合。」
+                <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-l-4 border-sky-500">動機與特質 (10題)</h3>
+                
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">⭐⭐⭐ 必考核心</span><br>1. 為什麼想離開台積，來美光 RDA 黃光量測？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「量測(Metrology)是半導體的『眼睛』。在台積維護 PVD 後，我深刻體會『精準的數據監控』才是提升良率的關鍵。美光 RDA 強調數據驅動與機台優化，這與我喜歡抓 Root cause 的工程性格完美契合。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">2. 從 PVD 轉量測，能適應嗎？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「絕對可以。我碩論研究金屬散熱材料時，大量使用 SEM/EDX 進行微觀量測，這讓我對光學與電子束量測系統有一定的概念。再加上我扎實的機械拆裝底子，跨模組適應對我來說很快。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">2. 因為健康因素離開？對 RDA 輪班的看法？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 <span class="text-red-600 font-bold">絕對不提健康疑慮。</span>「過去是為職涯轉換做短期充電。我平時維持高強度公路車與重訓習慣，體能狀態極佳。在台積已完全適應無塵室高壓節奏，對美光的輪班排程，我已做好 100% 生理與心理準備。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">3. 對輪班工作 (Shift work) 的看法？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「我在台積電現場已完全適應了無塵室的高壓節奏。我有持續健身的習慣，體能狀態極佳。輪班對我來說是熟悉所有突發異常的最佳時機，我準備好了。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">3. 從 PVD 轉量測，能適應嗎？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「絕對可以。我碩論研究金屬散熱材料時，大量使用 SEM/EDX 進行微觀量測，這讓我對光學與電子束量測系統有一定的概念。加上我扎實的機械拆裝底子，跨模組適應對我來說很快。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">4. 如何展現你的「好奇心與求知欲 (Curious)」？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「我原本是純機械系，但我主動跨考封裝碩士，還跑去考 CNC 證照，甚至在台積電實習時從無到有建出 End Point 系統。我習慣打破舒適圈去拆解未知的技術難題。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">4. 如何展現你的「好奇心與求知欲 (Curious)」？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「我原本是純機械系，但我主動跨考封裝碩士，考取 CNC 證照，甚至在台積電從無到有建出 End Point 系統。我習慣打破舒適圈去拆解未知的技術難題。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">5. 團隊協作 (Collaborative) 對你來說是什麼？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「是『資訊的透明與無縫交接』。特別是輪班工作，上一班沒修完的機台，我會確保交接清單(Passdown)上清楚列出已排除的變數與目前的 Alarm 狀態，讓下一班能立刻接手，而不是重頭來過。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-high mb-1">⭐⭐ 高頻題</span><br>5. 團隊協作 (Collaborative) 對你來說是什麼？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「是『資訊的透明與無縫交接』。特別是輪班工作，上一班沒修完的機台，我會確保交接清單(Passdown)上清楚列出已排除的變數與目前的 Alarm 狀態，讓下一班能立刻接手。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-high mb-1">⭐⭐ 高頻題</span><br>6. 適應動態環境 (Dynamic Environment) 的例子？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「在台積建廠初期，每天的時程都在變動。我必須在 Vendor 缺料、廠務斷電的突發狀況中，靈活排定優先順序(Prioritization)，確保最重要的 PVD 驗證能如期完成。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">6. 適應動態環境 (Dynamic Environment) 的例子？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「在台積建廠初期，每天時程都在變動。我必須在 Vendor 缺料、廠務斷電的突發狀況中，靈活排定優先順序(Prioritization)，確保最重要的 PVD 驗證能如期完成。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">7. 為什麼離開台積電？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「台積電讓我具備了極強的工安與執行力，但我更渴望投入在『機台的深度解析與量測數據優化』上。美光 RDA 職缺提供了更大的舞台讓我發揮數據分析與硬體除錯的雙重專長。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">7. 對美光這間公司的了解？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「美光是全球記憶體(DRAM/NAND)的頂尖領導者。特別在先進節點的記憶體製造上，黃光量測設備的穩定度直接決定了疊對(Overlay)的良率。加入 RDA 等於是守護記憶體製程的最前線。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">8. 對美光這間公司的了解？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「美光是全球記憶體(DRAM/NAND)的頂尖領導者。特別在先進節點的記憶體製造上，黃光量測設備的穩定度直接決定了疊對(Overlay)的良率。加入美光 RDA 等於是守護記憶體製程的最前線。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">8. 覺得輪班很累，失去熱情時怎麼辦？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「輪班是練功最快的方式。當我覺得疲乏，我會設定小目標：例如『這個月我要把某個常發生的 Alarm 徹底根治』。用解題的成就感驅動自己，並在休假時透過公路車騎乘徹底重置身心。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">9. 在 RDA 的 3-5 年職涯規劃？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「前半年：熟悉所有量測設備的 PM 流程與 FDC 系統。1-2年：成為輪班主力，能獨立解決 80% 以上的 Alarm。3-5年：主導機台持續改善專案(CIP)，帶領團隊優化 Recipe 提升 throughput。」
-                </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">10. 為什麼你是這份職缺的 Perfect Fit？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">9. 為什麼你是這份職缺的 Perfect Fit？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
                     💡 「我具備『台積裝機的高壓抗性』與『封測碩士的數據敏感度』。我懂機械硬體拆裝，也習慣看數據找 Root cause，這完美符合 RDA 需要的 Proactive Troubleshooting 能力。」
+                </div></div></div></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">10. 你的缺點是什麼？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「對於『優化細節』有時過於執著。例如我想把某個機台參數調到最完美而多花時間。但我現在學會了在『效率』與『完美』間設定停損點，以團隊的量產時程為第一優先。」
                 </div></div></div></div>
             </div>
 
             <div id="content-micron-behav" class="sub-content hidden space-y-3">
-                <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-b-2 border-slate-200 pb-1 flex items-center gap-2">💼 經歷與行為 (STAR 法則)</h3>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">⭐⭐⭐ 必考核心</span><br>1. 主動預防保養 (Proactive PM) 的經驗？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2 leading-relaxed">
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 在台積電維護 PVD 機台時，傳統 PM 都是時間到了才換零件，有時會提早發生無預警 Down 機。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 必須降低非預期停機時間 (Unscheduled Downtime)。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 我主動分析歷史 Log，發現某個幫浦在失效前，震動值與電流會有微幅上升的趨勢。我將這個參數設為監控指標，當數值異常但未達 Alarm 時，就提前在產能空檔排定檢修。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 成功避免了量產中的機台損壞，極大化了設備稼動率，這就是數據驅動的預防保養。</p>
+                <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-l-4 border-sky-500">經歷與行為 (STAR 法則)</h3>
+                
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">⭐⭐⭐ 產線救火實例</span><br>1. 印象最深刻的異常處理 (Troubleshooting)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2">
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 台積產線面臨極大出貨壓力時，負責的機台頻繁出現未知 Alarm，稼動率驟降。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 必須在不影響交期的限制條件下，快速找出根因(Root Cause)並恢復運作。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 我絕不用「偷吃步」。我調閱 Error Log 與近期參數，發現是溫控誤差導致連鎖反應。我運用交叉比對邏輯確認異常點，並與製造部協調短暫停機精準修復。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 排除異常穩住良率。事後將此參數波動特徵建議更新進 SOP，讓後續交接班同仁遇到時能在一分鐘內排除。</p>
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">2. 參數調校與微調 (Parameter Fine-tuning)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2 leading-relaxed">
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 在日月光參與 High K TIM 散熱材料專案，初期點膠容易發生溢膠與孔洞(Void)。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 必須優化點膠參數，提升封裝良率與熱阻穩定性。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 我沒有盲目試錯，而是設計了 DOE，針對點膠壓力、移動速度、材料溫度三個變數進行交叉測試。利用超音波檢測(SAT)確認內部孔洞率。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 成功找到最佳的 Recipe 參數，解決溢膠問題。這證明了我具備系統化調校設備參數的能力。</p>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">2. 主動預防保養 (Proactive PM) 的經驗？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2">
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 傳統 PM 都是時間到了才換零件，有時會發生無預警 Down 機。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 降低非預期停機時間 (Unscheduled Downtime)。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 分析歷史 Log，發現某零件失效前，震動與電流有微幅上升趨勢。我將此設為監控指標，數值異常未達 Alarm 前，就提前在產能空檔排定檢修。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 避免量產中損壞，極大化稼動率，展現數據驅動預防保養能力。</p>
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">3. 新機台導入 (Vendor Coordinate) 實例？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2 leading-relaxed">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">3. 參數調校與微調 (Parameter Fine-tuning)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2">
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 導入 High K TIM 散熱材料初期，點膠易發生溢膠與孔洞(Void)。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 優化點膠參數，提升封裝良率。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 設計 DOE，針對點膠壓力、速度等變數進行交叉測試。利用超音波檢測(SAT)確認內部孔洞率。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 找到最佳 Recipe 參數，解決溢膠，證明我具備系統化調校參數的能力。</p>
+                </div></div></div></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">4. 新機台導入 (Vendor Coordinate) 實例？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2">
                     <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 台積 Fab22 2奈米新廠建置，需大量導入全新 AMAT PVD 機台。</p>
                     <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 確保機台硬體就位並順利通過驗收 (Buy-off)。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 我主動對齊廠務端的水電氣資源與 Vendor 的派工時間。面對裝機落後，我參與每日 Brief meeting 追蹤進度，並親自檢視機台配管與氣密測試是否符合規範。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 新機台如期通過嚴格的硬體驗證並導入量產，這培養了我跨部門協調與新技術落地的能力。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 主動對齊廠務水電氣與 Vendor 派工時間。參與每日 Brief meeting 追蹤進度，親自檢視機台配管是否符合規範。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 新機台如期通過嚴格硬體驗證導入量產，培養了跨部門協調能力。</p>
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-high mb-1">⭐⭐ 高頻題</span><br>4. 數據驅動持續改善 (Continuous Improvement)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2 leading-relaxed">
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 碩論研究金屬 TIM 散熱材料，在經過溫度循環測試後，樣品出現不明原因的導熱率下降。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 找出材料失效的 Root cause 並進行改善。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 我不是憑感覺改配方，而是將樣品切片(Cross-section)，運用 SEM/EDX 設備進行微觀量測，精準取得介金屬(IMC)層厚度的「數據」。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 數據證明是特定 IMC 層過厚導致脆裂。針對數據調整回焊溫度後大幅提升了穩定性。這就是我運用數據解決問題的標準邏輯。</p>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">5. 高壓環境下的優先級排定 (Prioritization)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2">
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 值班時，同時遇到產線趕貨(Hot run)、A機台亮紅燈 Alarm、B機台準備排定 PM。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 妥善調度，避免影響整體廠區 Throughput。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 排定優先級：1. 先處理 A 機台 Alarm(恢復產能最急)。2. 確保 Hot run 順利通過健康機台。3. 延後 B 機台 PM(若未達嚴重風險)。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 挺過當班危機無重大 Delay，能在動態環境中保持冷靜與大局觀。</p>
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">5. 在高壓變動環境下的優先級排定 (Prioritization)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2 leading-relaxed">
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 在台積值班時，同時遇到產線要趕貨 (Hot run)、A機台亮紅燈 Alarm、B機台正準備排定 PM。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 在人力有限下妥善調度，避免影響整體廠區 Throughput。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 我立刻排定優先級：1. 先處理解決 A 機台 Alarm (恢復產能最急迫)。2. 延後 B 機台 PM (若未達嚴重風險)。3. 確保 Hot run 產品順利通過健康機台。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 成功挺過當班危機，無重大 Delay。這證明我能在動態環境中保持冷靜與大局觀。</p>
-                </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">6. 團隊協作與衝突處理 (Collaboration)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2 leading-relaxed">
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 在台積建置 End Point 系統時，新管線與舊有機台發生機構干涉，廠務部與製程部互不相讓。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 化解衝突並找出可行的安裝方案。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 我主動利用 CAD 畫出 3D 空間配置圖，讓抽象的管線走向具象化，並拿出廠規 SOP。用「客觀圖面與數據」引導雙方討論。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 成功修改轉接件導角，兼顧工安與散熱，雙方滿意放行。</p>
-                </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">7. 建立工具/系統的經驗？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2 leading-relaxed">
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 台積電實習期間，舊有機台缺乏有效的即時監控機制，影響異常反應速度。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 提升機台監測效能。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 我運用跨領域學習，從硬體線路規劃到軟體訊號對接，從無到有建置了 End Point 系統的硬體架構。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 獲得廠區佳作肯定，這證明我具備「將抽象概念化為真實工程系統」的創造力。</p>
-                </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">8. 輪班交接 (Handover) 的良好習慣？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2 leading-relaxed">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">6. 輪班交接 (Handover) 的良好習慣？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2">
                     <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 設備維護常遇到跨班次的長時 Troubleshoot，資訊斷層會導致重工。</p>
                     <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 確保下一班工程師能無縫接軌。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 我的交接原則是「量化且條理分明」。我會在 Passdown 中寫明：1. 異常現象與 Alarm Code。2. 當班「已經嘗試過」哪些無效動作(切斷變數)。3. 建議下一班優先執行的步驟。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 大幅減少溝通成本，這是我對團隊的 Ownership。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 交接原則是「量化且條理分明」。在 Passdown 寫明：1. 異常現象與 Alarm Code。2. 當班「已嘗試過」哪些無效動作。3. 建議下一班優先執行的步驟。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 大幅減少溝通成本，確保 RDA 團隊的高效運作。</p>
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">9. 管理 Vendor 的經驗？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2 leading-relaxed">
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 裝機專案時，Vendor (設備商) 負責主要施工，但進度落後。</p>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">7. 團隊協作與衝突處理 (Collaboration)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2">
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 建置 End Point 系統時，新管線與舊機台發生干涉，廠務部與製程部互不相讓。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 化解衝突並找出可行的安裝方案。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 畫出 3D 空間配置圖，讓抽象管線走向具象化，並拿出廠規 SOP。用「客觀圖面與數據」引導雙方討論。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 成功修改轉接件導角，兼顧工安與散熱，雙方滿意放行。</p>
+                </div></div></div></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">8. 建立工具/系統的創新經驗？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2">
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 台積電舊有機台缺乏有效的即時監控機制，影響異常反應速度。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 提升機台監測效能。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 運用跨領域學習，從硬體線路規劃到軟體訊號對接，從無到有建置了 End Point 系統的硬體架構。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 獲得廠區佳作肯定，證明我具備將抽象概念化為真實系統的工程創造力。</p>
+                </div></div></div></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">9. 管理 Vendor 的經驗？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2">
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 裝機專案時，Vendor 進度落後。</p>
                     <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 推動 Vendor 趕上進度且確保品質。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 我不只是催促進度，而是跟他們一起看現場。發現是氣體配管被卡住後，我立刻運用我的權限協調廠務部放行。我把 Vendor 當作夥伴而非下屬。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 排除施工障礙，Vendor 也能順利加速完工。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 我不是只催促，而是跟他們一起看現場。發現氣體配管卡住後，立刻協調廠務放行。把 Vendor 當作夥伴而非下屬。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 排除施工障礙，Vendor 順利加速完工。</p>
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">10. 犯過最蠢的錯誤與學習？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2 leading-relaxed">
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 大學操作 CNC 時，曾因為太自信，未完全按照對角線上扭力就啟動主軸。</p>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">10. 犯過最蠢的錯誤與學習？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 space-y-2">
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[S 情境]</strong> 操作 CNC 時，曾因太自信未按對角線上扭力就啟動主軸。</p>
                     <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[T 任務]</strong> 承擔後果並修正習慣。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 導致工件微偏移報廢。我立刻按下急停並向老師承認錯誤。</p>
-                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 這次教訓深深烙印在我的肌肉記憶中。從此之後，不管在台積電還是任何無塵室，「嚴格遵守鎖固 SOP」成為我不可撼動的天條。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[A 行動]</strong> 導致工件微偏移報廢。立刻按下急停並承認錯誤。</p>
+                    <p><strong class="text-sky-600 bg-sky-50 px-1 rounded">[R 結果]</strong> 這次教訓深深烙印在肌肉記憶中。從此「嚴格遵守鎖固 SOP」成為我不可撼動的天條。</p>
                 </div></div></div></div>
             </div>
 
             <div id="content-micron-sit" class="sub-content hidden space-y-3">
-                <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-b-2 border-slate-200 pb-1 flex items-center gap-2">🛡️ 情境與應變 (10題)</h3>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">⭐⭐⭐ 必考核心</span><br>1. PE 抱怨量測數據飄移，把鍋推給機台？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「用數據自證清白。我會立刻跑一次 Daily Monitor (如 Golden Wafer 測量)。如果機台底層狀態(Baseline)正常，我會把數據攤開，跟 PE 討論是否為上一站(如曝光/蝕刻)的製程變異，共同解決問題。」
+                <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-l-4 border-sky-500">情境與應變 (10題)</h3>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">1. PE 抱怨量測數據飄移，把鍋推給機台？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「用數據自證清白。我會立刻跑一次 Daily Monitor (如 Golden Wafer 測量)。如果機台底層狀態正常，我會把數據攤開，跟 PE 討論是否為上一站(如曝光/蝕刻)的製程變異，共同解決問題。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">2. 設備商說廠務有問題，廠務說設備有問題？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「身為設備工程師，我是 Owner。我會拿儀器(如三用電表或流量計)到界接點(Facility Hook-up)親自量測。用科學數據證明進水/進電是否達標，停止踢皮球。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">2. 設備商說廠務有問題，廠務說設備有問題？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「身為設備工程師，我是 Owner。我會拿儀器到界接點(Facility Hook-up)親自量測。用科學數據證明進水/進電是否達標，停止踢皮球。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">3. 遇到從未見過的 Alarm 且手冊沒寫？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">3. 遇到從未見過的 Alarm 且手冊沒寫？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
                     💡 「確保 Safe State 後，展開 5 Whys 分析。回顧發生 Alarm 前的最後一個機械動作或參數變更。設下 Time-box (如30分鐘)，若仍無頭緒，立刻彙整 Log 升級(Escalate)給資深前輩或原廠。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">4. 產能壓力大，長官要求跳過某項 PM 步驟？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「堅守品質底線。<strong class="text-red-600">絕不私自跳過</strong>。我會向長官說明該步驟(如光學元件清潔)對量測精度的關鍵影響，跳過可能導致整批 Wafer 報廢。我可以透過優化其他不影響品質的備料動作來搶時間。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">⭐⭐⭐ 必考核心</span><br>4. 產能壓力大，長官要求跳過某項 PM 步驟？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「堅守品質底線。<span class="text-red-600 font-bold">絕不私自跳過</span>。向長官說明該步驟(如光學元件清潔)對量測精度的關鍵影響，跳過可能導致整批 Wafer 報廢。可透過優化其他不影響品質的備料動作搶時間。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-high mb-1">⭐⭐ 高頻題</span><br>5. FDC 顯示參數微幅飄移，但還沒亮 Alarm？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「這就是 Proactive PM 的好時機。我會持續監控飄移斜率，預判何時會碰到 Control Limit。同時預先備妥可能的替換零件，在下一個產能空檔主動介入檢修，避免機台在趕貨時當機。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">5. FDC 顯示參數微幅飄移，但還沒亮 Alarm？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「這就是 Proactive PM 的好時機。持續監控飄移斜率，預判何時會碰 Control Limit。預先備妥替換零件，在下一個產能空檔主主介入檢修，避免機台在趕貨時當機。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">6. 下班前 10 分鐘機台突然 Down 機？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「Ownership。我會先將機台穩定，進行初步排查並拉出 Log。等下一班學長來時，我不會直接丟給他，而是詳細報告我剛才看到的現象與初步判斷，確保他完全掌握狀況後我才下班。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">6. 下班前 10 分鐘機台突然 Down 機？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「展現 Ownership。先將機台穩定，進行初步排查並拉出 Log。等下一班學長來時，詳細報告我剛才看到的現象與初步判斷，確保他完全掌握狀況後我才下班。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">7. 被指派接手完全陌生的量測機台型號？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「展現求知慾。我會要來原廠 Manual 快速掃描硬體架構(如光源、載台)。主動爭取參與該機台的 PM 或跟著資深學長值班，透過『動手做』快速建立對新設備的肌肉記憶。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">7. 被指派接手完全陌生的量測機台型號？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「展現求知慾。要來原廠 Manual 快速掃描硬體架構(光源、載台)。主動爭取參與該機台的 PM 或跟著資深學長值班，透過『動手做』快速建立對新設備的肌肉記憶。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">8. 發現公司 SOP 裡面有明顯的錯誤？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「不私自更改動作，但也絕不忽視。我會將錯誤的截圖與我的客觀數據/正確原廠手冊截圖彙整，提報給主管或撰寫 SOP 的單位，推動文件更新，這才是數據驅動的持續改善。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">8. 發現公司 SOP 裡面有明顯的錯誤？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「不私自更改動作，但也絕不忽視。將錯誤的截圖與我的客觀數據/正確原廠手冊截圖彙整，提報給主管或撰寫 SOP 的單位，推動文件更新，這才是數據驅動的持續改善。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">9. PM 到一半發現備品(Spare parts)庫存沒了？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「立刻評估舊零件是否能安全撐到備品到貨。若不行，協調同廠區其他閒置機台的零件借用。事後必須檢討料件最低安全庫存(Safety stock)水位，從系統面防堵。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">9. PM 到一半發現備品(Spare parts)庫存沒了？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「立刻評估舊零件是否能安全撐到備品到貨。若不行，協調同廠區其他閒置機台零件借用。事後必須檢討料件最低安全庫存(Safety stock)水位，從系統面防堵。」
                 </div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">10. 覺得輪班很累，失去熱情時怎麼辦？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
-                    💡 「輪班是練功最快的方式。當我覺得疲乏，我會給自己設定小目標：例如『這個月我要把某個常發生的 Alarm 徹底根治』。用解題的成就感來驅動自己，並在休假時徹底去騎車放空重置。」
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">10. 機台問題卡關很久，長官不耐煩詢問？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2">
+                    💡 「穩住心態。向長官客觀報告目前已排除的變數、現在懷疑的 Root Cause、以及預計還需要多少時間測試。用邏輯與明確的 Time-box 讓長官安心。」
                 </div></div></div></div>
             </div>
         </div>
