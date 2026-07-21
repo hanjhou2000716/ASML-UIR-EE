@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Lyor Zhuang - 終極面試攻防系統</title>
+    <!-- GitHub Pages: save this file as index.html in repository root -->
     <meta name="theme-color" content="#2563eb">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -89,6 +90,20 @@
         @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; color: #dc2626; } }
         .timer-active { animation: flash 1s infinite; color: #ea580c; }
         .timer-warning { animation: flash 0.5s infinite; color: #dc2626; font-weight: 900; }
+
+
+        /* Weakness review and study tools */
+        .weakness-card { border-left: 4px solid #ef4444; background: linear-gradient(135deg,#fff 0%,#fff7ed 100%); }
+        .study-toolbar { position: sticky; top: 102px; z-index: 42; padding: 8px; margin-bottom: 12px; border: 1px solid #e2e8f0; border-radius: 14px; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); box-shadow: 0 6px 18px rgba(15,23,42,.06); }
+        .study-search { width: 100%; padding: 9px 12px 9px 34px; border: 1px solid #cbd5e1; border-radius: 10px; background: #f8fafc; font-size: 13px; outline: none; }
+        .study-search:focus { background:#fff; border-color:#6366f1; box-shadow:0 0 0 3px rgba(99,102,241,.12); }
+        .search-box-wrapper { position:relative; flex:1; }
+        .search-box-wrapper > i { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:#94a3b8; }
+        .qa-card.search-hidden { display:none; }
+        .qa-card.practice-highlight { border:2px solid #f59e0b !important; box-shadow:0 8px 24px rgba(245,158,11,.2); animation:practicePulse .7s ease; }
+        .memory-level { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:999px; font-size:10px; font-weight:800; }
+        .memory-red { background:#fee2e2; color:#b91c1c; } .memory-yellow { background:#fef3c7; color:#92400e; } .memory-green { background:#dcfce7; color:#166534; }
+        @keyframes practicePulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.015)} }
 
         /* Print Specific Styles */
         @media print {
@@ -631,6 +646,7 @@
             
             <nav class="flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4">
                 <button onclick="switchSubTab('micron', 'script')" id="tab-micron-script" class="btn-press sub-tab-btn micron-theme active flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-scroll"></i> 專屬劇本</button>
+                <button onclick="switchSubTab('micron', 'weakness')" id="tab-micron-weakness" class="btn-press sub-tab-btn micron-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-crosshairs"></i> 弱點補強</button>
                 <button onclick="switchSubTab('micron', 'tech')" id="tab-micron-tech" class="btn-press sub-tab-btn micron-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-microscope"></i> 專業邏輯</button>
                 <button onclick="switchSubTab('micron', 'motiv')" id="tab-micron-motiv" class="btn-press sub-tab-btn micron-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-fire"></i> 動機特質</button>
                 <button onclick="switchSubTab('micron', 'behav')" id="tab-micron-behav" class="btn-press sub-tab-btn micron-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-briefcase"></i> 經歷行為</button>
@@ -694,6 +710,35 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+
+            <div id="content-micron-weakness" class="sub-content hidden space-y-3">
+                <div class="bg-gradient-to-br from-rose-600 to-orange-600 rounded-2xl shadow-md p-5 text-white"><h2 class="text-xl font-black mb-1">上緯面試弱點 → 美光應戰修正版</h2><p class="text-rose-100 text-[13px]">補強職涯規劃、產線異常、品質工具與延伸追問</p></div>
+                <div class="study-toolbar flex items-center gap-2"><div class="search-box-wrapper"><i class="fas fa-search"></i><input type="search" class="study-search" placeholder="搜尋：職涯、異常、魚骨圖、SPC..." oninput="filterInterviewCards(this,'content-micron-weakness')"></div><button onclick="randomPractice('content-micron-weakness')" class="btn-press flex-shrink-0 bg-amber-500 text-white px-3 py-2 rounded-lg text-xs font-black"><i class="fas fa-dice mr-1"></i>抽題</button></div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card weakness-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]"><span class="memory-level memory-red mb-1">上次答不清楚</span><br>1. 短、中、長期職涯規劃？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed space-y-3">
+                    <p><strong class="text-sky-700">短期（0～1 年）：</strong>熟悉 RDA 團隊量測設備、PM、Calibration、Golden Wafer、Alarm 邏輯與交接制度，取得獨立值班認證。目標是不只照 SOP 操作，也能說明每個 Check point 的目的。</p>
+                    <p><strong class="text-sky-700">中期（1～3 年）：</strong>成為能獨立處理異常的工程師，結合 Alarm、Log、SPC、FDC 與維修紀錄，找出高頻失效模式，降低重複 Alarm 與非預期停機。</p>
+                    <p><strong class="text-sky-700">長期（3 年以上）：</strong>成為設備與製程間的技術橋樑，參與新設備導入、Buy-off、CIP 與新人培訓，成為能處理複雜系統問題的 Technical Reference。</p>
+                    <div class="bg-sky-50 border border-sky-200 rounded-lg p-3"><strong>追問：為什麼你能做到？</strong><p class="mt-1">我已在台積電經歷新機導入、Vendor 協調、設備驗證與量產壓力，也在日月光接觸產線異常。我要補的是美光特定設備知識，而不是重新學習 Fab 節奏與責任觀念。</p></div>
+                </div></div></div></div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card weakness-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]"><span class="memory-level memory-red mb-1">必備 STAR</span><br>2. 日月光最深刻的產線異常？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed space-y-3">
+                    <div class="bg-amber-50 border border-amber-200 rounded-lg p-3"><strong>請把中括號換成你的真實資料，避免被追問時失真。</strong></div>
+                    <p><strong class="text-sky-700">S：</strong>在日月光進行新型散熱／封裝材料導入時，產線出現［黏著不良／厚度漂移／空洞率升高］，並集中於特定批次。</p>
+                    <p><strong class="text-sky-700">T：</strong>在不影響出貨時程下，先隔離風險批次，再判斷異常來自材料、設備、參數或操作差異。</p>
+                    <p><strong class="text-sky-700">A：</strong>先確認量測系統，再以柏拉圖鎖定主要不良模式；使用人、機、料、法、環、測魚骨圖縮小變因，並以正常／異常批次交叉比對及小型 DOE 驗證。</p>
+                    <p><strong class="text-sky-700">R：</strong>確認主因為［真實原因］，修訂參數或作業標準，使不良率由［X%］降至［Y%］，並將檢查點納入後續管制。</p>
+                    <p class="bg-slate-50 rounded-lg p-3"><strong>數字記不清楚：</strong>「確切百分比我不希望憑印象亂報，但改善後異常明顯收斂，且確認項目被納入標準流程。」</p>
+                </div></div></div></div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]"><span class="memory-level memory-yellow mb-1">品質工具</span><br>3. 品保七大手法如何用在設備異常？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed space-y-2">
+                    <p><strong>查檢表：</strong>記錄 Alarm、時間、Lot、Recipe、零件壽命與環境條件。</p><p><strong>柏拉圖：</strong>找出造成最多 Downtime 的主要問題。</p><p><strong>魚骨圖：</strong>依人、機、料、法、環、測展開原因。</p><p><strong>直方圖：</strong>觀察分布、偏移、雙峰與變異。</p><p><strong>散佈圖：</strong>確認溫度、壓力、使用次數與異常的關聯。</p><p><strong>管制圖：</strong>區分一般與特殊原因變異。</p><p><strong>層別法：</strong>依機台、班別、產品、Recipe 或零件批號拆分。</p>
+                    <div class="bg-slate-900 text-white rounded-lg p-3"><strong class="text-amber-300">30 秒答法：</strong>我先用查檢表確保資料完整，再以柏拉圖鎖定主要損失；透過層別與魚骨圖縮小變因，最後用散佈圖、管制圖或小型實驗驗證，將經驗判斷轉成團隊可重複使用的證據。</div>
+                </div></div></div></div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">4. 被突然追問時如何避免腦袋空白？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed space-y-3"><p>使用「<strong class="text-indigo-700">結論－例子－方法－結果</strong>」：先講判斷，再選一個真實案例，說明如何隔離風險與縮小變因，最後交代結果及標準化。</p><p class="bg-indigo-50 rounded-lg p-3">爭取時間：「這題我想用一個實際案例回答，我先花幾秒整理情境。」</p><p class="bg-emerald-50 rounded-lg p-3">沒有完全相同經驗：「我沒有遇過完全相同的狀況，但我處理過底層邏輯相近的問題。」</p></div></div></div></div>
             </div>
 
             <div id="content-micron-tech" class="sub-content hidden space-y-3">
@@ -1070,6 +1115,8 @@
         <div id="section-skyeuv" class="company-section hidden">
             <nav class="flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4">
                 <button onclick="switchSubTab('skyeuv', 'script')" id="tab-skyeuv-script" class="btn-press sub-tab-btn skyeuv-theme active flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-scroll"></i> 專屬劇本</button>
+                <button onclick="switchSubTab('skyeuv', 'weakness')" id="tab-skyeuv-weakness" class="btn-press sub-tab-btn skyeuv-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-crosshairs"></i> 弱點補強</button>
+                <button onclick="switchSubTab('skyeuv', 'vacuum')" id="tab-skyeuv-vacuum" class="btn-press sub-tab-btn skyeuv-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-wind"></i> 真空題庫</button>
                 <button onclick="switchSubTab('skyeuv', 'tech')" id="tab-skyeuv-tech" class="btn-press sub-tab-btn skyeuv-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-compress-arrows-alt"></i> 專業邏輯</button>
                 <button onclick="switchSubTab('skyeuv', 'motiv')" id="tab-skyeuv-motiv" class="btn-press sub-tab-btn skyeuv-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-fire"></i> 動機特質</button>
                 <button onclick="switchSubTab('skyeuv', 'behav')" id="tab-skyeuv-behav" class="btn-press sub-tab-btn skyeuv-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2"><i class="fas fa-briefcase"></i> 經歷行為</button>
@@ -1078,7 +1125,7 @@
 
             <div id="content-skyeuv-script" class="sub-content block space-y-3">
                 <div class="bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl shadow-md p-5 text-white mb-4">
-                    <h2 class="text-xl font-black mb-1">輝虹 機構設計劇本</h2>
+                    <h2 class="text-xl font-black mb-1">天虹 設備／機構工程師劇本</h2>
                     <p class="text-purple-100 text-[13px]">策略：北科純機械 + 3DCAD/CNC實作 + 台積PVD真空經驗</p>
                 </div>
                 
@@ -1118,6 +1165,30 @@
                 </div>
             </div>
 
+
+            <div id="content-skyeuv-weakness" class="sub-content hidden space-y-3">
+                <div class="bg-gradient-to-br from-rose-600 to-purple-700 rounded-2xl shadow-md p-5 text-white"><h2 class="text-xl font-black mb-1">天虹設備商面試弱點補強</h2><p class="text-rose-100 text-[13px]">把 Fab 使用者經驗轉化為設計、測試、交機與客戶支援能力</p></div>
+                <div class="study-toolbar flex items-center gap-2"><div class="search-box-wrapper"><i class="fas fa-search"></i><input type="search" class="study-search" placeholder="搜尋：職涯、設備商、客戶、異常..." oninput="filterInterviewCards(this,'content-skyeuv-weakness')"></div><button onclick="randomPractice('content-skyeuv-weakness')" class="btn-press flex-shrink-0 bg-amber-500 text-white px-3 py-2 rounded-lg text-xs font-black"><i class="fas fa-dice mr-1"></i>抽題</button></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card weakness-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px]">1. 為什麼從晶圓廠轉到設備商？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed space-y-2"><p>晶圓廠經驗讓我知道客戶真正重視設備穩定性、維修效率、操作便利性、文件完整度及異常支援速度。我希望把 Fab 端經驗帶到設備商，從設計、測試到交機都提前思考客戶痛點。</p><p>我的機械、CNC、CAD 與 PVD 真空設備背景，能同時理解加工性、密封、維修空間與量產需求。</p></div></div></div></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card weakness-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px]">2. 天虹短、中、長期職涯規劃</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed space-y-3"><p><strong class="text-purple-700">短期：</strong>熟悉產品架構、真空系統、測漏、圖面規範、組裝 SOP 與驗證，能獨立完成基礎模組設計及排障。</p><p><strong class="text-purple-700">中期：</strong>獨立負責設備模組或 Prototype，從需求、CAD、DFM、發包、組裝、測試到客戶回饋形成閉環。</p><p><strong class="text-purple-700">長期：</strong>成為能整合真空、機構、薄膜製程與客戶需求的系統工程師，負責平台改善、新產品導入及新人培訓。</p></div></div></div></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px]">3. 客戶設備突然抽不到真空，怎麼處理？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed"><ol class="list-decimal pl-5 space-y-2"><li>先讓設備進入 Safe state，停止可能損傷 Pump 或污染腔體的動作。</li><li>確認 Gauge、Valve、Pump、Foreline 與 Interlock。</li><li>比較正常 Pump-down curve，判斷抽不下來、速度變慢或停在固定壓力。</li><li>分段隔離腔體、管路與 Pump。</li><li>依型態執行氦氣測漏、RGA、O-ring、污染及 Outgassing 排查。</li><li>修復後重做 Pump-down、Leak rate 與 Qualification。</li></ol><p class="bg-purple-50 rounded-lg p-3 mt-3"><strong>設備商加分：</strong>將失效模式回饋到設計端，例如增加隔離閥、改善 O-ring 溝槽、移除盲孔、增加測試 Port 或維修空間。</p></div></div></div></div>
+            </div>
+
+            <div id="content-skyeuv-vacuum" class="sub-content hidden space-y-3">
+                <div class="bg-gradient-to-br from-violet-700 to-slate-900 rounded-2xl shadow-md p-5 text-white"><h2 class="text-xl font-black mb-1">真空、測漏、質譜與薄膜機台複習</h2><p class="text-violet-100 text-[13px]">設備商面試版：原理、判斷方式、實務步驟與設計改善</p></div>
+                <div class="study-toolbar flex items-center gap-2"><div class="search-box-wrapper"><i class="fas fa-search"></i><input type="search" class="study-search" placeholder="搜尋：Pump、測漏、RGA、PVD..." oninput="filterInterviewCards(this,'content-skyeuv-vacuum')"></div><button onclick="randomPractice('content-skyeuv-vacuum')" class="btn-press flex-shrink-0 bg-amber-500 text-white px-3 py-2 rounded-lg text-xs font-black"><i class="fas fa-dice mr-1"></i>抽題</button></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]"><span class="tag tag-must mb-1">⭐⭐⭐ 必考</span><br>1. 真空系統的組成與抽氣順序</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">基本組成包含腔體、管路、閥門、前級 Pump、高真空 Pump、壓力計、Vent／Purge、控制與 Interlock。先以 Dry／Rotary Pump 粗抽；達切換壓力後才連通 Turbo／Cryo Pump；最後確認 Base pressure、Pump-down time、Leak rate 與 RGA。高真空 Pump 不可任意從大氣壓直接工作。</div></div></div></div>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">2. Dry、Turbo、Cryo Pump 比較</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">Dry Pump 用於粗抽／前級，污染低但要注意粉塵、腐蝕與排氣；Turbo 以高速葉片輸送分子，需要前級 Pump，怕大氣衝擊與異物；Cryo 以低溫冷凝與吸附捕捉氣體，潔淨且抽速高，但需定期 Regeneration。比較時要談氣體負載、污染、維護、成本與可維修性。</div></div></div></div>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]"><span class="tag tag-must mb-1">⭐⭐⭐ 必考</span><br>3. 真空度停在固定壓力如何判斷？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">依序確認 Gauge 種類與校正、Pump-down curve、Valve／Foreline／Pump 狀態；做 Rate-of-rise 區分漏氣與 Outgassing；用 Isolation test 分段隔離，再以氦測漏及 RGA 判斷 Air leak、水氣、油氣、製程殘留或 Virtual leak。</div></div></div></div>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]"><span class="tag tag-must mb-1">⭐⭐⭐ 必考</span><br>4. 氦質譜測漏：真空法與吸槍法</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">真空噴吹法是將待測物抽真空，外部少量噴氦；正壓吸槍法是在待測物內充氦，外部以 Sniffer 搜尋。實務上先確認背景值與反應時間，從設備較高處、離 Pump 較遠處開始，少量緩慢噴吹；訊號出現後停止並等背景恢復，再縮小範圍。</div></div></div></div>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">5. RGA 原理與常見 m/z</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">電子撞擊使殘餘氣體游離，Quadrupole 依 m/z 篩選。常見：2 氫、4 氦、18 水、28 氮／CO、32 氧、40 氬、44 二氧化碳／有機碎片。大氣漏氣常見 28 與 32 同升，約呈 4:1；水或有機碎片偏高但無完整大氣比例，需考慮 Outgassing 或污染。</div></div></div></div>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">6. 大氣壓質譜與真空質譜差異</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">ESI、APCI 等可在接近大氣壓處產生離子，再經小孔、Skimmer 與差動抽氣導入真空分析器。設備端要同時關注大氣端霧化、溶劑、氣流與污染，以及真空端 Orifice、Pump load、真空穩定及離子傳輸效率。</div></div></div></div>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]"><span class="tag tag-must mb-1">⭐⭐⭐ 必考</span><br>7. 初階 PVD 薄膜機台模組</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">主要包含 Load lock、Transfer module、Process chamber、Target／Source、Gas delivery、DC／RF Power、Substrate stage、Vacuum system、Gauge／Throttle valve、Cooling 與 Interlock。面試時要能從 Wafer 進機、抽氣、傳送、沉積、冷卻到出片描述完整流程。</div></div></div></div>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">8. Sputtering 原理與關鍵參數</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">低壓 Ar 形成 Plasma，Ar+ 轟擊 Target，使原子濺射並沉積。關鍵參數：Base／Process pressure、Power、Gas flow、Target-to-substrate distance、Temperature、Bias、Target condition；它們影響沉積速率、均勻性、緻密度、應力、附著及 Particle。</div></div></div></div>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">9. 膜厚或均勻性異常排查</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">先排除量測與 Recipe 錯誤，再查看時間、Power、Pressure、Gas flow、Bias trend；檢查 Target 壽命、Wafer rotation、Clamp／ESC、Shield 堆膜、MFC、Throttle valve 與 Gauge 漂移。依 Center／Edge、Chamber、Recipe、時間層別，修復後用 Monitor wafer 驗證。</div></div></div></div>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">10. 如何減少 Virtual Leak</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">避免密閉盲孔與夾層，使用 Vent screw／Vent groove；選低 Outgassing 材料並做好清洗烘烤；避免 O-ring 溝槽形成困氣空間；縮短細長管路、提高 Conductance，並在設計審查加入 Vacuum DFM／DFA Checklist。</div></div></div></div>
+            </div>
+
             <div id="content-skyeuv-tech" class="sub-content hidden space-y-3">
                 <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-b-2 border-slate-200 pb-1 flex items-center gap-2">🚀 溫故知新：真空與薄膜技術</h3>
                 
@@ -1138,7 +1209,7 @@
                         <li><strong>吸槍法 (Sniffer/正壓法)：</strong> 管路內部充入高壓氦氣，用測漏儀吸槍在外部偵測。(常用於氣體管路/Gas panel)</li>
                     </ul>
                     <p class="mt-2 font-bold text-rose-600">💡 面試應答：</p>
-                    <p>「噴吹氦氣時必須『由下往上噴』(氦氣比空氣輕會往上飄)，且噴速要慢，才能精準定位是哪個法蘭 (Flange) 的 O-ring 產生微漏 (Micro-leak)。」</p>
+                    <p>「先確認背景值與反應時間，從設備較高處、離 Pump 較遠的位置開始，逐步往下搜尋。氦氣應少量、緩慢噴吹；發現訊號後停止並等待背景恢復，再縮小到特定 Flange、Feedthrough 或 O-ring，避免環境氦氣累積造成誤判。」</p>
                 </div></div></div></div>
 
                 <div class="bg-purple-50 rounded-xl shadow-sm border border-purple-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-purple-900">3. 質譜儀(RGA) 應用與真實/虛擬漏氣分辨？</span><i class="fas fa-chevron-down text-purple-500"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-purple-800 border-t border-purple-100 pt-2 leading-relaxed bg-white">
@@ -1194,7 +1265,7 @@
 
             <div id="content-skyeuv-motiv" class="sub-content hidden space-y-3">
                 <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-b-2 border-slate-200 pb-1 flex items-center gap-2">🎯 動機與特質 (10題)</h3>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">1. 為何選擇加入新創設備商(輝虹)？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">1. 為何選擇加入設備商（天虹）？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
                     💡 「在台積電我看過最頂尖的成熟設備；但我更渴望『從 0 到 1』打造設備的成就感。新創環境的高自由度與快速迭代，能最大化發揮我的機械設計與實作熱忱。」
                 </div></div></div></div>
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">2. 放棄大廠(TSMC)的光環不覺得可惜？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
@@ -1480,17 +1551,39 @@
             }
         }
 
+
+        function filterInterviewCards(input, contentId) {
+            const content = document.getElementById(contentId);
+            if (!content) return;
+            const keyword = input.value.trim().toLowerCase();
+            content.querySelectorAll('.qa-card').forEach(card => {
+                card.classList.toggle('search-hidden', keyword && !card.innerText.toLowerCase().includes(keyword));
+            });
+        }
+
+        function randomPractice(contentId) {
+            const content = document.getElementById(contentId);
+            if (!content) return;
+            const cards = [...content.querySelectorAll('.qa-card:not(.search-hidden)')];
+            if (!cards.length) { alert('目前沒有符合搜尋條件的題目。'); return; }
+            document.querySelectorAll('.practice-highlight').forEach(c => c.classList.remove('practice-highlight'));
+            const card = cards[Math.floor(Math.random() * cards.length)];
+            const button = card.querySelector(':scope > button');
+            const wrapper = button?.nextElementSibling;
+            if (wrapper && !wrapper.classList.contains('open')) toggleCard(button);
+            card.classList.add('practice-highlight');
+            card.scrollIntoView({behavior:'smooth', block:'center'});
+            setTimeout(() => card.classList.remove('practice-highlight'), 3500);
+        }
+
         function toggleCard(button) {
+            if (!button) return;
             const wrapper = button.nextElementSibling;
             const icon = button.querySelector('.fa-chevron-down');
-            
-            if (wrapper.classList.contains('open')) {
-                wrapper.classList.remove('open');
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                wrapper.classList.add('open');
-                icon.style.transform = 'rotate(180deg)';
-            }
+            if (!wrapper || !wrapper.classList.contains('accordion-wrapper')) return;
+            const willOpen = !wrapper.classList.contains('open');
+            wrapper.classList.toggle('open', willOpen);
+            if (icon) icon.style.transform = willOpen ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
         function expandAll() {
