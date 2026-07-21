@@ -105,6 +105,10 @@
         .memory-red { background:#fee2e2; color:#b91c1c; } .memory-yellow { background:#fef3c7; color:#92400e; } .memory-green { background:#dcfce7; color:#166534; }
         @keyframes practicePulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.015)} }
 
+        /* Explicit visibility rules: prevent a CDN/Tailwind timing issue from leaving a selected page blank. */
+        .company-section.hidden, .sub-content.hidden { display: none !important; }
+        .company-section.block, .sub-content.block { display: block !important; min-height: 1px; }
+
         /* Print Specific Styles */
         @media print {
             body { background-color: #ffffff; color: #000000; padding: 0; margin: 0; }
@@ -155,7 +159,7 @@
                 <i class="fas fa-flask text-lg mb-0.5"></i> 上緯
             </button>
             <button onclick="switchCompany('skyeuv')" id="comp-skyeuv" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
-                <i class="fas fa-cube text-lg mb-0.5"></i> 輝虹
+                <i class="fas fa-cube text-lg mb-0.5"></i> 天虹
             </button>
         </div>
     </header>
@@ -1187,6 +1191,8 @@
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">8. Sputtering 原理與關鍵參數</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">低壓 Ar 形成 Plasma，Ar+ 轟擊 Target，使原子濺射並沉積。關鍵參數：Base／Process pressure、Power、Gas flow、Target-to-substrate distance、Temperature、Bias、Target condition；它們影響沉積速率、均勻性、緻密度、應力、附著及 Particle。</div></div></div></div>
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">9. 膜厚或均勻性異常排查</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">先排除量測與 Recipe 錯誤，再查看時間、Power、Pressure、Gas flow、Bias trend；檢查 Target 壽命、Wafer rotation、Clamp／ESC、Shield 堆膜、MFC、Throttle valve 與 Gauge 漂移。依 Center／Edge、Chamber、Recipe、時間層別，修復後用 Monitor wafer 驗證。</div></div></div></div>
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">10. 如何減少 Virtual Leak</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">避免密閉盲孔與夾層，使用 Vent screw／Vent groove；選低 Outgassing 材料並做好清洗烘烤；避免 O-ring 溝槽形成困氣空間；縮短細長管路、提高 Conductance，並在設計審查加入 Vacuum DFM／DFA Checklist。</div></div></div></div>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">11. Leak、Outgassing 與 Virtual Leak 如何區分？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed"><strong>Leak</strong> 是外界氣體由固定路徑進入；<strong>Outgassing</strong> 是材料、表面吸附水氣或污染物在真空下釋放；<strong>Virtual Leak</strong> 常是盲孔、夾層或螺紋底部困住氣體後慢慢釋放。實務上以 Pump-down curve、Rate-of-rise、烘烤前後趨勢、RGA 與氦測漏交叉判讀，不用單一現象直接下結論。</div></div></div></div>
+<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center gap-3"><span class="font-bold text-[14px]">12. PVD 腔體要開蓋／拆裝前的安全思考？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] border-t pt-3 leading-relaxed">先依廠內 SOP 完成停機、隔離能源、放氣／冷卻、確認無殘留壓力與化學／電力風險，再確認吊掛、重物、夾傷、銳邊與污染控制。拆裝時記錄零件版本與密封面狀態，組回後依規範做 Leak check、Pump-down 與 Qualification。面試時先講安全和程序，再談技術動作，會比直接講「我會拆 O-ring」更成熟。</div></div></div></div>
             </div>
 
             <div id="content-skyeuv-tech" class="sub-content hidden space-y-3">
@@ -1228,8 +1234,6 @@
                     <p>「在台積維護 AMAT Endura，我深知 PVD 對於『電漿穩定度』的嚴苛要求。機構設計的任何微小瑕疵(如接地面不良)都會引發 Arcing (打弧) 導致晶圓報廢。我有實戰經驗，能在設備開發階段就排除這些量產風險。」</p>
                 </div></div></div></div>
 
-                <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-b-2 border-slate-200 pb-1 flex items-center gap-2 mt-6">⚙️ 腔體與光學機構 (常規題)</h3>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">1. 真空腔體設計經驗與考量？</span><i class="fas fa-chevron-down text-slate-400"></i></button>
                 <h3 class="font-black text-slate-800 text-lg mb-3 pl-1 border-b-2 border-slate-200 pb-1 flex items-center gap-2">⚙️ 腔體與光學機構 (10題)</h3>
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold text-[14px] text-slate-700">1. 真空腔體設計經驗與考量？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-2 leading-relaxed">
                     💡 「在台積負責PVD讓我對真空極敏感。設計時注意：1.表面處理減低除氣(Outgassing)。2. O-ring 溝槽公差與壓縮率。3.抽氣/破真空的流場，避免污染光學鏡片。」
@@ -1377,10 +1381,10 @@
         let activeTimer = null;
         let speechSynthesisActive = false;
 
-        window.onload = () => {
+        window.addEventListener('DOMContentLoaded', () => {
             injectPracticeTools(); 
             switchCompany('asml'); // 預設載入 ASML
-        };
+        });
 
         function injectPracticeTools() {
             document.querySelectorAll('.accordion-inner > div').forEach((container, index) => {
@@ -1499,11 +1503,15 @@
             document.querySelectorAll('.company-section').forEach(el => {
                 el.classList.add('hidden');
                 el.classList.remove('block');
+                el.setAttribute('hidden', '');
+                el.style.display = '';
             });
             const targetSection = document.getElementById('section-' + companyId);
             if(targetSection) {
                 targetSection.classList.remove('hidden');
                 targetSection.classList.add('block');
+                targetSection.removeAttribute('hidden');
+                targetSection.style.display = 'block';
             }
 
             switchSubTab(companyId, 'script');
@@ -1529,6 +1537,8 @@
             section.querySelectorAll('.sub-content').forEach(el => {
                 el.classList.add('hidden');
                 el.classList.remove('block');
+                el.setAttribute('hidden', '');
+                el.style.display = '';
             });
             
             section.querySelectorAll('.sub-tab-btn').forEach(el => {
@@ -1539,6 +1549,8 @@
             if(targetContent) {
                 targetContent.classList.remove('hidden');
                 targetContent.classList.add('block');
+                targetContent.removeAttribute('hidden');
+                targetContent.style.display = 'block';
             }
             
             const activeBtn = document.getElementById(`tab-${companyId}-${subTabId}`);
