@@ -2,10 +2,11 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Lyor Zhuang - 終極面試攻防系統</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Lyor Zhuang｜面試作戰台</title>
+    <meta name="description" content="個人化半導體職缺面試準備、題庫與複盤工作台。">
     <!-- GitHub Pages: save this file as index.html in repository root -->
-    <meta name="theme-color" content="#2563eb">
+    <meta name="theme-color" content="#1f3654">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="面試攻防">
@@ -18,26 +19,31 @@
     
     <style>
         :root {
-            --app-bg: #f8fafc;
-            --asml-color: #2563eb;
-            --swancor-color: #059669;
-            --skyeuv-color: #7c3aed;
-            --micron-color: #0284c7;
+            --app-bg: #f5f4f0;
+            --paper: #fcfbf8;
+            --ink: #263442;
+            --asml-color: #1f3654;
+            --swancor-color: #71866e;
+            --skyeuv-color: #d9823b;
+            --micron-color: #64748b;
+            --accent-sage: #91a48e;
+            --accent-orange: #d9823b;
         }
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            background-color: var(--app-bg);
+            background: radial-gradient(circle at 10% -10%, rgba(145,164,142,.16), transparent 30rem), var(--app-bg);
             -webkit-tap-highlight-color: transparent;
             overscroll-behavior-y: none;
             padding-bottom: env(safe-area-inset-bottom);
         }
+        button:focus-visible, input:focus-visible { outline: 3px solid rgba(217,130,59,.42); outline-offset: 3px; }
         
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         /* Company Navigation Tabs */
         .company-tab {
-            transition: all 0.2s ease-in-out;
+            transition: color .2s ease, background .2s ease, opacity .2s ease;
             border-bottom: 3px solid transparent;
             opacity: 0.5;
             position: relative;
@@ -47,6 +53,7 @@
         .company-tab.active-swancor { color: var(--swancor-color); border-bottom-color: var(--swancor-color); background: linear-gradient(to top, #ecfdf5, transparent); }
         .company-tab.active-skyeuv { color: var(--skyeuv-color); border-bottom-color: var(--skyeuv-color); background: linear-gradient(to top, #f5f3ff, transparent); }
         .company-tab.active-micron { color: var(--micron-color); border-bottom-color: var(--micron-color); background: linear-gradient(to top, #e0f2fe, transparent); }
+        .company-tab.active-assembly, .company-tab.active-fstech { color: var(--asml-color); border-bottom-color: var(--accent-sage); background: linear-gradient(to top, #edf2ea, transparent); }
 
         /* Sub-navigation Pills */
         .sub-tab-btn { 
@@ -60,12 +67,13 @@
         .sub-tab-btn.active.swancor-theme { background: var(--swancor-color); color: #ffffff; box-shadow: 0 4px 10px rgba(5, 150, 105, 0.2); }
         .sub-tab-btn.active.skyeuv-theme { background: var(--skyeuv-color); color: #ffffff; box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2); }
         .sub-tab-btn.active.micron-theme { background: var(--micron-color); color: #ffffff; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.2); }
+        .sub-tab-btn.active.assembly-theme, .sub-tab-btn.active.fstech-theme { background: var(--asml-color); color: #ffffff; box-shadow: 0 4px 10px rgba(31,54,84,.2); }
 
         /* Smooth Accordion with CSS Grid (Optimized for zero lag) */
         .accordion-wrapper {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.3s ease-in-out;
+            transition: grid-template-rows .28s cubic-bezier(.2,.8,.2,1);
         }
         .accordion-wrapper.open {
             grid-template-rows: 1fr;
@@ -75,7 +83,8 @@
         }
         
         /* Card Hover Effects */
-        .qa-card { transition: all 0.15s ease-in-out; }
+        .qa-card { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; background: var(--paper); }
+        .qa-card:hover { border-color: #cfd7cb; box-shadow: 0 8px 20px rgba(38,52,66,.07); }
         .qa-card:active { transform: scale(0.99); }
 
         /* Utility Tags */
@@ -94,7 +103,7 @@
 
         /* Weakness review and study tools */
         .weakness-card { border-left: 4px solid #ef4444; background: linear-gradient(135deg,#fff 0%,#fff7ed 100%); }
-        .study-toolbar { position: sticky; top: 102px; z-index: 42; padding: 8px; margin-bottom: 12px; border: 1px solid #e2e8f0; border-radius: 14px; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); box-shadow: 0 6px 18px rgba(15,23,42,.06); }
+        .study-toolbar { position: sticky; top: 102px; z-index: 42; padding: 8px; margin-bottom: 12px; border: 1px solid #dfddd6; border-radius: 14px; background: rgba(252,251,248,.94); backdrop-filter: blur(10px); box-shadow: 0 6px 18px rgba(15,23,42,.06); }
         .study-search { width: 100%; padding: 9px 12px 9px 34px; border: 1px solid #cbd5e1; border-radius: 10px; background: #f8fafc; font-size: 13px; outline: none; }
         .study-search:focus { background:#fff; border-color:#6366f1; box-shadow:0 0 0 3px rgba(99,102,241,.12); }
         .search-box-wrapper { position:relative; flex:1; }
@@ -108,6 +117,27 @@
         /* Explicit visibility rules: prevent a CDN/Tailwind timing issue from leaving a selected page blank. */
         .company-section.hidden, .sub-content.hidden { display: none !important; }
         .company-section.block, .sub-content.block { display: block !important; min-height: 1px; }
+
+        .workspace-hero { background: linear-gradient(135deg, #1f3654 0%, #2d4c67 100%); }
+        .focus-card { background: var(--paper); border: 1px solid #e4e1da; box-shadow: 0 8px 24px rgba(38,52,66,.06); }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-orange); display: inline-block; }
+        .status-dot.done { background: var(--accent-sage); }
+        .archive-drawer { position: fixed; right: 18px; top: 132px; z-index: 60; width: 210px; transform: translateX(240px); transition: transform .22s ease; background: var(--paper); border: 1px solid #ddd9d0; box-shadow: 0 16px 40px rgba(38,52,66,.16); }
+        .archive-drawer.open { transform: translateX(0); }
+        .mastered { border-left: 4px solid var(--accent-sage) !important; }
+        .mastered-badge { color: #476244; }
+        .role-meta { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(216,228,213,.35); background: rgba(255,255,255,.1); color: #e4eee1; border-radius: 999px; padding: 5px 10px; font-size: 11px; font-weight: 800; }
+        .section-nav { scrollbar-width: none; }
+        .section-nav::-webkit-scrollbar { display: none; }
+        .question-count { min-width: 38px; text-align: center; padding: 4px 7px; border-radius: 999px; background: #edf1ea; color: #52684e; font-size: 11px; font-weight: 800; }
+        .practice-tools { border-color: #e6e4de !important; background: rgba(245,244,240,.72) !important; }
+        @media (max-width: 640px) {
+            .archive-drawer { top: 116px; right: 10px; width: min(220px, calc(100vw - 20px)); }
+            .company-tab { min-width: 108px; }
+            .study-toolbar { top: 96px; }
+            .workspace-hero { border-radius: 22px; }
+        }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
 
         /* Print Specific Styles */
         @media print {
@@ -123,17 +153,21 @@
 </head>
 <body class="text-slate-800 pb-28 selection:bg-slate-200">
 
+    <aside id="archive-drawer" class="archive-drawer rounded-2xl p-3" aria-label="已結束面試紀錄" aria-hidden="true">
+        <div class="flex items-center justify-between px-2 pb-2"><p class="text-xs font-black text-slate-700">已結束面試</p><button onclick="toggleArchive()" aria-label="關閉已結束面試紀錄" class="text-slate-400 hover:text-slate-700"><i class="fas fa-times"></i></button></div>
+        <button onclick="switchCompany('micron');toggleArchive()" class="w-full text-left rounded-xl px-3 py-2 hover:bg-slate-100 text-sm font-bold text-slate-600">美光 <span class="float-right text-[10px] font-medium">已複盤</span></button>
+        <button onclick="switchCompany('swancor');toggleArchive()" class="w-full text-left rounded-xl px-3 py-2 hover:bg-slate-100 text-sm font-bold text-slate-600">上緯 <span class="float-right text-[10px] font-medium">已複盤</span></button>
+        <button onclick="switchCompany('skyeuv');toggleArchive()" class="w-full text-left rounded-xl px-3 py-2 hover:bg-slate-100 text-sm font-bold text-slate-600">天虹 <span class="float-right text-[10px] font-medium">已複盤</span></button>
+    </aside>
+
     <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 items-end fab-menu">
         <button onclick="scrollToTop()" class="w-12 h-12 bg-slate-800 text-white rounded-full shadow-lg flex items-center justify-center btn-press hover:bg-slate-700 transition">
             <i class="fas fa-arrow-up"></i>
         </button>
-        <button onclick="preparePrint()" class="w-14 h-14 bg-blue-600 text-white rounded-full shadow-xl flex items-center justify-center btn-press hover:bg-blue-700 transition">
-            <i class="fas fa-print text-xl"></i>
-        </button>
     </div>
 
     <header class="sticky top-0 z-50 w-full bg-white shadow-sm shadow-slate-200/50 backdrop-blur-md bg-white/95">
-        <div class="h-1.5 w-full bg-gradient-to-r from-blue-600 via-emerald-500 to-sky-500 to-purple-600"></div>
+        <div class="h-1.5 w-full bg-gradient-to-r from-[#1f3654] via-[#91a48e] to-[#d9823b]"></div>
         
         <div class="px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -143,28 +177,35 @@
                     <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Lyor Zhuang • Multi-Offer Ready</p>
                 </div>
             </div>
-            <button onclick="expandAll()" class="text-xs bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-200 transition btn-press">
-                <i class="fas fa-layer-group mr-1"></i> 全展開
-            </button>
+            <div class="flex gap-2"><button onclick="expandAll()" aria-label="展開目前題庫" class="text-xs bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-200 transition btn-press"><i class="fas fa-layer-group"></i></button><button onclick="toggleArchive()" aria-expanded="false" aria-controls="archive-drawer" class="text-xs bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-200 transition btn-press">歷史紀錄</button></div>
         </div>
         
         <div class="flex px-1 border-b border-slate-200 overflow-x-auto hide-scrollbar">
             <button onclick="switchCompany('asml')" id="comp-asml" class="company-tab active active-asml flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
-                <i class="fas fa-microchip text-lg mb-0.5"></i> ASML
+                <i class="fas fa-microchip text-lg mb-0.5"></i> ASML UIR
             </button>
-            <button onclick="switchCompany('micron')" id="comp-micron" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
-                <i class="fas fa-microscope text-lg mb-0.5"></i> 美光
+            <button onclick="switchCompany('assembly')" id="comp-assembly" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
+                <i class="fas fa-screwdriver-wrench text-lg mb-0.5"></i> ASML Assembly
             </button>
-            <button onclick="switchCompany('swancor')" id="comp-swancor" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
-                <i class="fas fa-flask text-lg mb-0.5"></i> 上緯
-            </button>
-            <button onclick="switchCompany('skyeuv')" id="comp-skyeuv" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
-                <i class="fas fa-cube text-lg mb-0.5"></i> 天虹
+            <button onclick="switchCompany('fstech')" id="comp-fstech" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
+                <i class="fas fa-chart-line text-lg mb-0.5"></i> 台塑勝高
             </button>
         </div>
     </header>
 
     <main class="px-4 py-5 max-w-2xl mx-auto" id="main-container">
+
+        <section id="dashboard" class="mb-6 space-y-4" aria-label="今日作戰台">
+            <div class="workspace-hero rounded-3xl p-6 text-white shadow-lg">
+                <p class="text-xs font-bold tracking-[.18em] text-[#d8e4d5]">INTERVIEW WORKSPACE</p>
+                <h2 class="mt-2 text-2xl font-black">今天，練出穩定的自己。</h2>
+                <p class="mt-2 text-sm leading-relaxed text-slate-200">先講結論，再用案例證明。你的主線是：設備排障、跨域整合、持續改善。</p>
+                <div class="mt-5 border-t border-white/20 pt-4">
+                    <div class="flex items-center justify-between"><h3 class="font-black">每次回答前的 3 個檢查</h3><span class="text-xs text-[#d8e4d5] font-bold">輸出校準</span></div>
+                    <ol class="mt-3 space-y-2 text-sm leading-relaxed text-slate-100"><li><b class="mr-1 text-[#d8e4d5]">01</b>先用一句話講結論，避免「我覺得、應該、you know」。</li><li><b class="mr-1 text-[#d8e4d5]">02</b>講清楚自己怎麼觀察、分析與推動，不只說 Call Vendor。</li><li><b class="mr-1 text-[#d8e4d5]">03</b>尊重主管與團隊，再說明你如何以數據或現場事實提出建議。</li></ol>
+                </div>
+            </div>
+        </section>
 
         <!-- ========================================================= -->
         <!--                      COMPANY 1: ASML                      -->
@@ -646,6 +687,52 @@
        <!-- ========================================================= -->
         <!--                      COMPANY 2: MICRON (美光 RDA)         -->
         <!-- ========================================================= -->
+        <!-- ========================================================= -->
+        <!--                  COMPANY: ASML ASSEMBLY                  -->
+        <!-- ========================================================= -->
+        <div id="section-assembly" class="company-section hidden">
+            <nav class="flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4">
+                <button onclick="switchSubTab('assembly','script')" id="tab-assembly-script" class="btn-press sub-tab-btn assembly-theme active flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">核心劇本</button>
+                <button onclick="switchSubTab('assembly','tech')" id="tab-assembly-tech" class="btn-press sub-tab-btn assembly-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">整機技術</button>
+                <button onclick="switchSubTab('assembly','english')" id="tab-assembly-english" class="btn-press sub-tab-btn assembly-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">英文 A4</button>
+                <button onclick="switchSubTab('assembly','feedback')" id="tab-assembly-feedback" class="btn-press sub-tab-btn assembly-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">回饋校準</button>
+            </nav>
+            <div id="content-assembly-script" class="sub-content block space-y-3">
+                <div class="workspace-hero rounded-2xl p-5 text-white"><p class="text-xs font-bold text-[#d8e4d5]">ASML · FINAL ASSEMBLY</p><h2 class="text-xl font-black mt-1">從組裝到系統穩定：我對結果負責</h2><p class="text-sm text-slate-200 mt-2">定位：具備 PVD 現場實戰、機電基礎與紀律，能用紀錄和驗證把問題推到可執行的改善。</p></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">為什麼想做 Assembly，而不是只做設備維護？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">我喜歡把零散的模組、校正與功能測試串成一個穩定系統。過去在 PVD 現場讓我知道，一台設備的可用性來自裝配品質、測試紀錄與跨團隊交接；我想把第一線觀察轉為更前端、可複製的整機改善能力。</div></div></div></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">若進度落後，怎麼回報與挽救？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed"><b>先結論：</b>我會先確保品質與安全，再提出可量化的新計畫。拆出卡點、影響工序、可平行的工作與需要支援的資源；當天向 team leader 報告現況、風險與選項，確認後追蹤每一項 action，而不是等到最後才說進度落後。</div></div></div></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">輪班、週末支援、10–30% 出差是否可配合？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">可以。我理解這是交付整機與客戶支援的一部分；我會事先做好交接、紀錄與體力安排，確保在高壓節奏下仍能維持檢查品質。也會把每次現場經驗整理成可供團隊複用的知識。</div></div></div></div>
+            </div>
+            <div id="content-assembly-tech" class="sub-content hidden space-y-3">
+                <div class="focus-card rounded-2xl p-4"><h3 class="font-black text-[#1f3654]">答題主軸：組裝 → 校正 → 功能測試 → 確認性能 → 完整交接</h3><p class="mt-2 text-sm text-slate-600">回答異常題時，先說安全與規格，再說：讀 test result／log、比對基準、做現場硬體觀察、縮小範圍、與 TS／PE／D&E 協作、提出並驗證方案、留下報告與防再發。</p></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">如何解讀異常 test result？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">先確認量測條件與 acceptance criteria；再與 golden data／前次結果比對，判斷是單一模組、介面、軟體參數或系統性偏移。我的目標不是猜原因，而是以紀錄把問題縮小到可驗證的假設，再決定是否需要升級支援。</div></div></div></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">遇到 recurring issue，會如何改善？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">建立發生條件、影響與暫行措施的紀錄，和相關團隊確認根因；再把改善落到 checklist、SOP、工具防呆或訓練內容。最後追蹤改善後的重複率與工時，確保不是只把問題移到下一站。</div></div></div></div>
+            </div>
+            <div id="content-assembly-english" class="sub-content hidden space-y-3">
+                <div class="focus-card rounded-2xl p-4"><h3 class="font-black text-[#1f3654]">90 秒英文自我介紹</h3><p class="mt-2 text-sm text-slate-600">My background combines mechanical training with hands-on PVD equipment experience in a high-discipline cleanroom environment. I enjoy troubleshooting by checking data, observing hardware, and coordinating with specialists to verify solutions. For Assembly, I can bring execution discipline, a learning mindset, and ownership for system progress.</p></div>
+                <div class="focus-card rounded-2xl p-4 text-sm text-slate-600"><b class="text-[#1f3654]">必練四題：</b> What do you enjoy outside work? ／ Why did you leave TSMC? ／ Are you considering other equipment companies? ／ How would you communicate an assembly issue to an overseas team?</div>
+            </div>
+            <div id="content-assembly-feedback" class="sub-content hidden space-y-3"><div class="focus-card rounded-2xl p-4 text-sm leading-relaxed text-slate-600"><h3 class="font-black text-[#1f3654] mb-2">這個職缺要讓人感受到的特質</h3><p><b>定性：</b>避免「都可以、再看看」；改為「我理解要求，並已評估自己可配合。」</p><p class="mt-2"><b>尊重：</b>先承認資深同仁與主管的專業，再用 test data、現場觀察提出建議。</p><p class="mt-2"><b>主動：</b>不用「Vendor 會處理」；改為「我先完成初步排查與紀錄，讓協作更快找到根因。」</p></div></div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!--                COMPANY: FORMOSA SUMCO TECH               -->
+        <!-- ========================================================= -->
+        <div id="section-fstech" class="company-section hidden">
+            <nav class="flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4">
+                <button onclick="switchSubTab('fstech','script')" id="tab-fstech-script" class="btn-press sub-tab-btn fstech-theme active flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">核心劇本</button>
+                <button onclick="switchSubTab('fstech','process')" id="tab-fstech-process" class="btn-press sub-tab-btn fstech-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">製程改善</button>
+                <button onclick="switchSubTab('fstech','case')" id="tab-fstech-case" class="btn-press sub-tab-btn fstech-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">案例模板</button>
+            </nav>
+            <div id="content-fstech-script" class="sub-content block space-y-3">
+                <div class="rounded-2xl p-5 text-white shadow-md" style="background:linear-gradient(135deg,#536d52,#71866e)"><p class="text-xs font-bold text-[#e5eee3]">FORMOSA SUMCO TECHNOLOGY</p><h2 class="text-xl font-black mt-1">量產穩定，是我最想推動的改善。</h2><p class="text-sm text-[#edf3eb] mt-2">定位：把設備現場的問題感轉成數據化的製程判斷，兼顧品質、效率、成本與自動化。</p></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">為什麼從設備經驗轉向生產製程？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">設備現場讓我理解異常如何影響產出；我希望下一步能更完整地看製程條件、良率與量產效率。這不是離開實務，而是把第一線觀察延伸成有數據、有驗證、有標準化的製程改善。</div></div></div></div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">遇到製程異常，你的處理順序？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed"><b>Contain → Analyze → Verify → Standardize。</b>先確保產品與人員風險受控；以 SPC／趨勢、批次與機台條件切分問題；用 5 Why 或魚骨圖形成假設；安排驗證；確認有效後更新規格、SOP 與監控點。</div></div></div></div>
+            </div>
+            <div id="content-fstech-process" class="sub-content hidden space-y-3"><div class="focus-card rounded-2xl p-4 text-sm text-slate-600"><h3 class="font-black text-[#536d52]">四個面試主軸</h3><ol class="mt-2 space-y-2"><li><b>品質：</b>良率、規格、異常隔離與再發防止。</li><li><b>效率：</b>瓶頸站、cycle time、停機損失與排程。</li><li><b>成本：</b>改善前後以耗材、工時、報廢或產能衡量。</li><li><b>自動化：</b>先定義痛點、資料與風險，再驗證導入成效。</li></ol></div><div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">如何推動效率或成本改善專案？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">先用數據定義基準與目標，找最大損失點；小範圍試驗確認對品質沒有副作用，再擴大導入。專案溝通會同時呈現產能、品質風險、成本效益與執行責任人，讓改善能落地而非停在簡報。</div></div></div></div></div>
+            <div id="content-fstech-case" class="sub-content hidden space-y-3"><div class="focus-card rounded-2xl p-4 text-sm leading-relaxed text-slate-600"><h3 class="font-black text-[#536d52]">STAR 案例填寫模板</h3><p class="mt-2"><b>S 情境：</b>哪個機台／製程現象影響了什麼指標？</p><p><b>T 任務：</b>你負責釐清或改善的範圍是什麼？</p><p><b>A 行動：</b>你看了哪些 log、觀察到什麼硬體現象、與誰協作、怎麼驗證？</p><p><b>R 結果：</b>downtime、重複率、工時、品質或風險降低了多少？若無數字，說明可觀察到的改善。</p></div></div>
+        </div>
+
         <div id="section-micron" class="company-section hidden">
             
             <nav class="flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4">
@@ -1382,8 +1469,10 @@
         let speechSynthesisActive = false;
 
         window.addEventListener('DOMContentLoaded', () => {
+            deployRoleQuestionBanks();
             injectPracticeTools(); 
-            switchCompany('asml'); // 預設載入 ASML
+            document.querySelectorAll('.qa-card > button').forEach(button => button.setAttribute('aria-expanded', 'false'));
+            switchCompany(localStorage.getItem('interview-active-company') || 'asml');
         });
 
         function injectPracticeTools() {
@@ -1396,11 +1485,14 @@
                     return;
                 }
                 
+                const mastered = localStorage.getItem(`interview-mastered-${index}`) === 'true';
+                if (mastered) container.closest('.qa-card')?.classList.add('mastered');
                 const toolsHtml = `
                     <div class="practice-tools flex items-center justify-between gap-2 mb-3 bg-slate-50/50 p-2 rounded-lg border border-slate-100">
                         <div class="flex gap-2">
                             <button onclick="startTimer('timer-${index}', 120)" class="text-[11px] font-bold bg-white border border-slate-200 shadow-sm px-2 py-1 rounded-md text-slate-600 hover:text-blue-600 transition"><i class="fas fa-stopwatch text-blue-500"></i> 計時練習</button>
                             <button onclick="speakText(this)" class="text-[11px] font-bold bg-white border border-slate-200 shadow-sm px-2 py-1 rounded-md text-slate-600 hover:text-emerald-600 transition"><i class="fas fa-volume-up text-emerald-500"></i> 語音朗讀</button>
+                            <button onclick="toggleMastered(this, ${index})" class="text-[11px] font-bold bg-white border border-slate-200 shadow-sm px-2 py-1 rounded-md ${mastered ? 'mastered-badge' : 'text-slate-600'} transition"><i class="fas fa-check"></i> ${mastered ? '已掌握' : '標記掌握'}</button>
                         </div>
                         <span id="timer-${index}" class="timer-display text-[13px] font-mono font-black text-slate-400 hidden">02:00</span>
                     </div>
@@ -1493,9 +1585,205 @@
             window.speechSynthesis.speak(utterance);
         }
 
+        function deployRoleQuestionBanks() {
+            const tabs = [
+                ['script', '專屬劇本', 'fa-scroll'], ['tech', '專業邏輯', 'fa-wrench'], ['product', '職務速覽', 'fa-microchip'],
+                ['motiv', '動機特質', 'fa-fire'], ['behav', '經歷行為', 'fa-briefcase'], ['sit', '情境應變', 'fa-shield-alt'], ['combat', '實戰攻防', 'fa-bolt']
+            ];
+            const banks = {
+                assembly: {
+                    name: 'ASML Assembly', eyebrow: 'ASML · FINAL ASSEMBLY',
+                    title: '從組裝到系統穩定，我對交付結果負責。',
+                    summary: '以 PVD 現場實戰、機械背景與跨部門協作，證明自己能把組裝、校正、測試和改善串成可靠的系統交付。',
+                    script: [
+                        ['為什麼想從設備維護走到 Assembly？', '我喜歡把模組組裝、校正與功能測試串成穩定的整機。PVD 現場讓我理解：設備可用性不只靠修復，更取決於前端裝配品質、測試紀錄與交接；我希望把現場經驗轉為可複製的整合能力。', '先講「整機交付」的吸引力，不要說只是想換工作環境。'],
+                        ['為什麼 ASML、為什麼是 E-beam Assembly？', '我重視高精密設備中機構、電控、軟體與測試的連動。這個職位能讓我在無塵室完成組裝與 qualification，也有機會把系統交付延伸到客戶端，符合我想從第一線實務累積系統整合能力的方向。', '用職務內容回答，不空泛地說「公司很有名」。'],
+                        ['你能帶給團隊的三個價值？', '第一是無塵室與設備紀律；第二是以 log、現場觀察縮小異常範圍的排障習慣；第三是把問題、處置與交接寫清楚，讓跨班與跨部門協作可追溯。', '三點都要連回職務需求：品質、獨立性、溝通。'],
+                        ['為何離開台積電？', '我珍惜台積讓我接觸先進製程設備與高標準維護文化。下一步我想把既有的現場排障能力，往整機組裝、校正與系統整合延伸；這是職涯能力範圍的擴張，不是對前公司的否定。', '避免抱怨工時、制度或主管。'],
+                        ['輪班、週末支援與出差 10–30% 可以配合嗎？', '可以。我理解這是產品交付和客戶支援的一部分。我會事先做好交接、紀錄與體力安排，確保高壓時仍能維持檢查品質；並把出差的問題與解法回饋為團隊知識。', '回答要直接、穩定，不要加「但如果太頻繁」。']
+                    ],
+                    tech: [
+                        ['如何處理一個異常 test result？', '我會先確認測試條件、版本與 acceptance criteria，再與 golden data 或前次結果比較。接著從單一模組、介面、參數到系統性偏移建立假設，以紀錄和可重複的測試逐步縮小範圍，必要時帶著完整證據向 TS、PE 或 D&E 升級。', '重點是「驗證假設」，不是立刻猜根因。'],
+                        ['系統校正與 qualification 的核心是什麼？', '校正是把系統調整到規格基準，qualification 是透過功能與性能測試證明系統能穩定符合該基準。我的做法會重視前置條件、測試結果可追溯性、異常判定邊界與最終交接資料完整。', '使用規格、基準、可追溯三個字。'],
+                        ['若裝配進度落後，你如何處理？', '我先確認品質與安全不能被壓縮，再拆出卡點、受影響工序、可平行工作與需支援資源。當天向 team leader 回報現況、風險與可行的新計畫，確認後逐項追蹤 action，而不是等到最後才報告延誤。', '展現主動管理，而非只通報問題。'],
+                        ['如何面對 recurring issue？', '我會整理發生條件、影響、暫行措施和已驗證結果，與相關團隊確認根因；再把改善落到 checklist、SOP、工具防呆或訓練。最後追蹤重複率、工時或測試通過率，確認問題沒有被移到下一站。', '一定要說到防再發與效果追蹤。'],
+                        ['你怎麼寫 technical report？', '報告會先讓讀者一眼看懂結論與風險，再依序寫背景、測試條件、現象與數據、已排除事項、根因假設、建議 action 與 owner。這能讓 TS、PE、主管快速決定下一步。', '用條理證明你可以獨立作業。']
+                    ],
+                    product: [
+                        ['你如何理解 Assembly 的工作流程？', '從元件卸載與模組安裝開始，依計畫完成整機整合，接著進行校正、功能測試與 qualification，確認性能後完成紀錄與交接；若在工廠或客戶端執行，還要兼顧現場協作、進度與技術支援。', '回答流程時要帶入品質門檻。'],
+                        ['機構、電子與軟體測試如何互相影響？', '整機異常不應先假設只屬於某一領域。機構裝配精度可能影響感測或性能，電子介面與軟體版本也可能改變 test result；我會以測試條件與系統介面為線索，和各領域一起縮小範圍。', '展現 multi-disciplinary team 意識。'],
+                        ['為何 workflow logging 很重要？', '它讓每次中斷、處置、等待與恢復都有脈絡，可用來交接、排程、分析重複問題和改善 cycle time。在高精密設備環境，良好紀錄也是品質與責任的基礎。', '不要把紀錄講成行政工作。'],
+                        ['Prototype transfer 到工廠時的挑戰？', '原型機的知識常分散在開發團隊與現場。我會特別重視版本、關鍵組裝條件、測試基準、已知風險與回饋機制，讓工廠能穩定複製，而不只靠少數人記憶。', '連回 knowledge transfer。']
+                    ],
+                    motiv: [
+                        ['你對技術的熱情是什麼？', '我最有成就感的是把模糊異常變成可以驗證的問題，再和團隊找到可持續的解法。這種從現場觀察、數據比對到改善落地的過程，正是我願意持續投入設備與整合工作的原因。', '熱情要有具體工作行為支撐。'],
+                        ['如何面對高壓與多任務？', '我會先以安全、品質、交期排序，將任務拆成可追蹤 action，主動讓利害關係人知道風險與需求。壓力不能靠硬撐，清楚的優先順序和交接才是穩定交付的方法。', '避免只說「我抗壓性很好」。'],
+                        ['怎麼把知識分享給新人？', '先確認對方目前理解，再用實際流程、關鍵檢查點與常見失誤講解，讓他能做一次、我觀察一次。最後以 checklist 或簡短文件留下可重複的版本，避免知識只停在口頭。', '符合 JD 的 train colleagues。'],
+                        ['跨文化溝通的原則？', '我會以事實、版本、時間點和下一步 action 溝通，不假設對方理解相同背景；重要議題用書面整理，確認 owner 與 due date。尊重差異，同時讓資訊足夠精準。', '英文不求華麗，求明確。']
+                    ],
+                    behav: [
+                        ['請說一個設備異常排查的經驗。', '可用台積 PVD 維護經驗回答：先描述異常影響與安全確認，再說你如何查看 log、比對狀態、現場觀察硬體，最後如何和資深同仁、PE 或 Vendor 共同驗證。結果請用實際的恢復、風險降低或交接改善說明。', '務必填入你實際遇到的案例細節，不要虛構數字。'],
+                        ['你如何和 Vendor 或 PE 合作？', '我不把自己定位成聯絡窗口。我的責任是先準備完整現象、條件、紀錄與初步判斷，讓 PE 能評估製程影響、Vendor 能有效檢修；確認解法後，再追蹤是否真的改善現場維護性與設備穩定。', '這題直接回應天虹主管的回饋。'],
+                        ['系統專案經驗如何幫助 Assembly？', '村田的 AS/RS 系統專案讓我理解專案規劃、介面溝通與進度管理；Assembly 也需要把零件、流程、人員和測試串起來。我會把這種全局觀帶進每日工作與問題追蹤。', '不要誇大技術相同，強調可轉移能力。'],
+                        ['封裝與材料研究經驗有何價值？', '日月光的產品與封裝經驗、研究所的散熱材料研究，讓我習慣用實驗條件、數據與可靠度來驗證結論。對 Assembly 而言，這能幫助我尊重規格、理解變因，並把測試結果轉成合理判斷。', '連回 test discipline。']
+                    ],
+                    sit: [
+                        ['客戶現場安裝時出現關鍵異常，怎麼做？', '先確保人員與設備安全，依既定 escalation 和客戶溝通機制控制現場。接著保存測試條件與現象、確認可逆的基本檢查，並與遠端專家建立同一份事實基礎；我會定時更新客戶目前狀態與下一次更新時間。', '避免承諾未驗證的修復時間。'],
+                        ['資深同仁的做法與你判斷不同？', '我會先理解他的經驗依據與風險考量，再以測試數據、規格或小範圍驗證提出我的看法。決策確定後我會全力執行並記錄結果，重點是讓系統與團隊更好，而不是證明誰對。', '尊重是核心。'],
+                        ['同時有品質問題與交期壓力？', '品質和安全是底線。我會提出可行選項，例如平行排查、調整排程、增加支援或分段驗證，讓主管決定資源取捨；不會為了趕交期跳過必要測試。', '展現判斷與升級能力。'],
+                        ['交接時發現前一班紀錄不完整？', '先補足目前可取得的事實與狀態，避免帶著未知繼續操作；再和前一班或主管釐清。事後我會建議將關鍵欄位納入 checklist，降低跨班資訊斷裂。', '不責怪個人，聚焦流程。']
+                    ],
+                    combat: [
+                        ['英文自我介紹（90 秒）', 'My background combines mechanical engineering, semiconductor packaging research, and hands-on equipment experience in a cleanroom. In PVD maintenance, I learned to troubleshoot by checking data, observing hardware, and working with specialists. I am applying for Assembly because I want to grow from equipment troubleshooting into system integration, calibration, and high-quality delivery.', '語速放慢；不要背得像逐字稿。'],
+                        ['What do you enjoy outside work?', 'I enjoy learning practical tools and organizing complex information into clear steps. It helps me stay curious and patient, which is also useful when I troubleshoot equipment issues or learn a new system.', '選一個真實興趣；不可為了英文硬編。'],
+                        ['Are you considering other equipment companies?', 'I am exploring roles that fit my long-term direction in high-precision equipment and system integration. However, this Assembly role is especially attractive because it combines hands-on build, calibration, functional testing, and ownership of system delivery.', '承認求職事實，但立刻說明此職缺的獨特契合。'],
+                        ['如何回答陌生技術題？', '我會先說明我的判斷原則，例如安全、規格、資料與驗證；若沒有直接經驗，我會誠實說明，再連回我在 PVD 排障或專案協作中用過的相同思考流程。', '不硬答；把球導回你的可驗證能力。']
+                    ]
+                },
+                fstech: {
+                    name: '台塑勝高｜生產製程工程師', eyebrow: 'FORMOSA SUMCO TECHNOLOGY',
+                    title: '把現場問題轉成穩定量產的製程改善。',
+                    summary: '以 PVD 設備經驗、封裝與材料研究、產品工程及供應商協作為基礎，建立品質、效率、成本與自動化並重的製程工程師定位。',
+                    script: [
+                        ['為什麼從設備工程走向生產製程？', '設備現場讓我直接看見異常如何影響產出；我希望下一步不只把設備恢復，更能用數據理解製程條件、良率與量產效率。這是把第一線實務延伸成系統化改善，而不是離開技術現場。', '把轉職說成能力擴張。'],
+                        ['為什麼想加入台塑勝高？', '我希望投入與晶圓供應鏈緊密相關、重視量產穩定與製程改善的環境。這個職位同時包含生產管理、異常分析、效率與成本專案、設備及自動化導入，正好能讓我把設備與製程經驗整合起來。', '以 JD 五項工作內容逐一對應。'],
+                        ['你能帶來什麼價值？', '我具備無塵室紀律與設備排障觀點，知道現場資料和實際硬體都不能忽略；也有封裝產品、材料研究與供應商協作經驗，能在品質、製程、設備與外部資源之間用共同的問題定義推進改善。', '避免說成自己全都會。'],
+                        ['離開台積電的原因？', '台積讓我養成安全、紀律與先進設備維護的標準。現在我希望把這些基礎延伸到製程優化和量產支援，培養對良率、效率與成本更完整的責任範圍。', '正向、具體、不比較公司好壞。'],
+                        ['你未來三到五年的規劃？', '短期先熟悉產品、關鍵製程、品質標準與生產節奏，成為能獨立處理異常與改善專案的人；中期希望能主導跨部門效率或品質改善，累積自動化與量產技術整合能力。', '不要急著說轉管理職。']
+                    ],
+                    tech: [
+                        ['製程異常的處理順序？', 'Contain、Analyze、Verify、Standardize。先控制產品與人員風險，再用 SPC 趨勢、批次、機台、材料與作業條件切分問題；用 5 Why 或魚骨圖形成假設，安排驗證，確認有效後更新規格、SOP 和監控點。', '先止血，再找根因。'],
+                        ['SPC 異常你會怎麼看？', '先確認量測系統、資料完整性與規格定義，再判斷是單點異常、趨勢、偏移或變異放大。接著對照批次、機台、原料、操作與維護紀錄，將可能因子排序，不會只因一個點超限就直接改參數。', '強調資料品質與變因切分。'],
+                        ['什麼時候使用 5 Why，什麼時候使用魚骨圖？', '當問題鏈條相對明確時，5 Why 能一路追到可行的系統原因；當可能因子多且跨人、機、料、法、環境、量測時，我會先用魚骨圖展開，再以數據驗證。兩者都不能代替證據。', '不要把工具當答案。'],
+                        ['如何設計製程改善驗證？', '先定義目標、基準、風險與成功指標，選擇小範圍、可回復的試驗；控制其他變因並記錄條件，確認品質無負面影響後再擴大。若涉及多因子，我會和製程團隊規劃適當 DOE。', '說出量產風險意識。'],
+                        ['設備異常與製程異常如何切分？', '兩者常互相影響。我會先從製程結果與設備 log、alarm、維護紀錄交叉比對，找時間與條件的關聯；不急著把責任丟給設備或製程，而是先縮小能被驗證的交集。', '這題是你的設備背景優勢。']
+                    ],
+                    product: [
+                        ['你如何理解生產製程工程師的角色？', '不只是調參或救火，而是連結生產、設備、品質與技術支援：讓量產在規格內穩定運作，遇到異常能快速控制並找出根因，同時持續改善效率、成本與自動化程度。', '用「穩定量產」作為一句話定位。'],
+                        ['生產效率要看哪些指標？', '依現場定義，我會看產出、cycle time、瓶頸站、設備稼動與非計畫停機，也會同時看良率和報廢，因為只追產能而犧牲品質不是真正的效率。', '主動說明指標需要和公司定義一致。'],
+                        ['成本改善如何避免傷害品質？', '改善案開始就把品質規格、可靠度風險和監控指標列為 gate。任何降低耗材、工時或等待的做法，都先在小範圍驗證，再看良率、異常率和客訴風險是否有副作用。', '成本與品質不可二選一。'],
+                        ['自動化導入的第一步？', '先定義明確痛點與基準資料，例如重複人工、錯誤率、等待時間或安全風險；確認流程穩定後再談自動化，否則只是把不穩定流程放大。', '很適合連到 AS/RS 專案經驗。']
+                    ],
+                    motiv: [
+                        ['你對製程改善的熱情是什麼？', '我喜歡把現場的模糊問題轉成可觀察、可驗證、可標準化的改善。當改善不只解決一次異常，還能降低重複問題、幫助同事更容易維持品質，這是我最有成就感的地方。', '要比「我喜歡挑戰」更具體。'],
+                        ['如何面對重複、細節多的量產工作？', '量產的價值在穩定和紀律。我會把重複工作中的異常、等待與資訊斷點視為改善來源；先穩定遵守規範，再從資料找出值得優化的地方。', '展現定性，不要讓人覺得容易膩。'],
+                        ['如何和主管溝通改善提案？', '先用共同關心的指標說明現況與影響，再提出選項、風險、資源需求和預期驗證方式。我會尊重主管對全局的考量，不把提案包裝成只有一種答案。', '回應「要尊重主管」的回饋。'],
+                        ['遇到壓力如何保持穩定？', '我先把安全、品質和時效排序，將問題拆成可執行 action；遇到不確定事項會及早升級，而不是自己硬撐。清楚的紀錄與交接能讓團隊在壓力下仍做出一致判斷。', '避免只說運動或睡覺紓壓。']
+                    ],
+                    behav: [
+                        ['請說一個用資料排障的經驗。', '可用 PVD 維護案例：說明異常現象與影響後，描述你如何查看 log、比對狀態、做現場觀察、和相關人員確認假設。結尾用實際恢復、縮短排查、降低風險或完善交接說明結果。', '先寫下你真實案例的日期、設備現象與結果。'],
+                        ['你如何與 Vendor、PE 或供應商合作？', '我會先整理問題定義、數據、現場現象和限制條件，讓對方不必從零猜測；過程中我站在設備穩定、製程風險與維護便利性角度追蹤，確認解法能在現場持續運作。', '避免把自己說成 Call Vendor。'],
+                        ['研究所材料研究如何幫助製程工作？', '散熱材料和可靠度研究讓我習慣控制實驗條件、分析界面與相變化、用測試驗證結論。雖然產品不同，但這種對變因、數據和可靠度的態度可以直接用在製程改善。', '不要宣稱自己做過不熟悉的磊晶製程。'],
+                        ['產品工程與封裝經驗可帶來什麼？', '日月光的產品與覆晶封裝經驗讓我理解品質、材料、製程和客戶需求彼此連動。我會用更完整的角度看異常，不只盯著單一機台或單一數字。', '突出跨域，而不誇大職責。']
+                    ],
+                    sit: [
+                        ['良率突然下滑但原因不明，怎麼做？', '先確認資料真實、範圍與是否需要 hold；再依批次、機台、材料、時間和操作條件切分，建立優先假設並安排最小風險驗證。過程同步生產、設備、品質，讓每個人知道控制措施和更新節點。', '不要直接大幅調參。'],
+                        ['產能壓力下，主管要求先放行有疑慮批次？', '我會清楚說明已知風險、規格依據與可能影響，提出加嚴檢驗、分段處置或補充資料等替代選項。最終依公司品質程序與主管決策執行，但必要風險必須被明確記錄與升級。', '穩定、尊重、守住品質底線。'],
+                        ['跨班資訊不完整造成重工，如何改善？', '先補足現況並避免錯誤延續，之後檢視交接流程缺的是欄位、責任或工具。將關鍵條件、異常狀態、下一步 action 和 owner 標準化，並追蹤改善後的重工或等待情形。', '從個人問題導向系統改善。'],
+                        ['自動化專案遭現場同仁抗拒？', '我會先理解他們擔心的是操作負擔、安全、技能或流程不穩定，讓使用者早期參與需求與測試。用小規模試行和可見數據證明效益，再完善訓練與異常應變，不用命令式推行。', '你的 AS/RS 專案可作延伸案例。']
+                    ],
+                    combat: [
+                        ['面試官說「你不是製程本科，為何適合？」', '我的優勢不是只懂單一領域。機械背景讓我理解設備與結構，封裝研究訓練我用數據和實驗驗證，PVD 經驗讓我懂現場異常與紀律。這些基礎能幫我更快把設備訊號轉成可用的製程改善。', '不要先自我否定。'],
+                        ['你如何定義自己的天賦與熱情？', '我擅長把複雜、模糊的現場問題整理成有步驟的判斷：先找事實、再縮小範圍、和不同專業的人協作、最後留下可重複的改善。這是我在設備、研究和專案工作中都持續投入的事情。', '回答要堅定，不加「可能、應該」。'],
+                        ['你的缺點是什麼？', '我對不確定問題會想先把資料釐清，早期有時會花太多時間自己整理。現在我會設定初步判斷時間點，及早和主管或同仁同步，讓速度和嚴謹能兼顧。', '缺點要有已採取的改善行動。'],
+                        ['如何回答「你還有其他選擇，為何我們要錄取你？」', '我會先重申自己要走的是高科技製造中的設備與製程整合方向。這個職位讓我能真正負責量產改善；而我能帶來現場排障、資料驗證和跨部門協作的基礎，能快速融入並持續累積價值。', '不比較薪資或品牌，回到契合度。']
+                    ]
+                }
+            };
+
+            function buildExpansion(context) {
+                const { discipline, outcome, evidence, partners } = context;
+                return {
+                    script: [
+                        ['入職前 90 天你會怎麼做？', `前 30 天我會熟悉 ${discipline} 的安全規範、流程、文件與關鍵指標；60 天開始在指導下獨立處理常見任務；90 天希望能用 ${evidence} 的方法，提出一項能幫助 ${outcome} 的具體改善。`, '展現學習計畫，不要承諾還不熟悉的技術成果。'],
+                        ['你認為自己目前最大的能力缺口是什麼？', `我會誠實說明對公司內部產品、工具或流程仍需學習，但我的做法是先建立基礎知識地圖、跟著標準作業做、記錄問題並主動求證。${evidence} 已讓我熟悉高標準現場，因此我有信心把缺口快速縮小。`, '承認缺口後，立刻給出學習方法。'],
+                        ['新工作環境中，你如何建立信任？', `我會先做到準時、紀錄完整、遵守安全和品質規範；遇到不確定的事情及早確認，不逞強。對 ${partners} 的承諾，我會明確回覆進度、風險和下一步，讓團隊能放心交付工作。`, '信任來自可靠，不是高調表現。'],
+                        ['這個職位最吸引你的日常工作是什麼？', `最吸引我的是能從現場資料、實作和團隊協作中，持續讓 ${outcome} 更穩定。我不只期待處理單次問題，更期待把經驗整理成流程和標準，讓團隊長期受益。`, '回答日常職責，不要只談品牌或福利。'],
+                        ['若入職後發現工作比想像更困難，你會怎麼辦？', `我會先把困難拆成知識、流程或協作問題，設定學習與求助節點；不懂就確認、做完就復盤。對我而言，${discipline} 的複雜度正是累積專業深度的機會，而不是退縮的理由。`, '語氣要平穩、有承擔。'],
+                        ['你希望主管如何帶領你？', '我期待主管能在目標、品質標準和優先順序上給清楚方向；在執行上我會主動回報、準備選項，不會把每個問題都丟回給主管決定。', '這題同時展現尊重與獨立性。']
+                    ],
+                    tech: [
+                        ['你會先看哪些資料再做技術判斷？', `我會先確認資料來源、版本、時間點和量測條件，再對照正常基準、歷史趨勢與相關紀錄。處理 ${discipline} 時，資料和現場觀察必須互相驗證，不能只依單一 alarm 或單一數字下結論。`, '先確認資料可信度。'],
+                        ['何時應停止操作並升級處理？', `只要涉及人員安全、品質規格、設備可能損傷，或超出我的授權和經驗邊界，我會立即停止不必要操作、保存現況，依程序通知 ${partners}。快速升級不是能力不足，而是對 ${outcome} 負責。`, '先說停損，再說溝通。'],
+                        ['你如何確認改善真的有效？', `我會事先定義成功標準與觀察期間，改善後比對關鍵數據、異常重複率和現場操作狀況；若結果不穩定，就回到假設重新檢查。只有可重複驗證的結果，才能說改善完成。`, '避免「問題暫時不見」就結案。'],
+                        ['資料與現場現象不一致時怎麼辦？', '我不會先選擇相信其中一邊，而是重新確認資料取得方式、時間同步、量測條件與現場狀態，必要時做受控的重測。矛盾通常代表還有未被看見的變因。', '展現科學態度，不急著選邊。'],
+                        ['如何避免技術變更造成新風險？', `任何變更前我會確認影響範圍、回復方案、驗證條件和通知對象；小範圍驗證後再擴大。這能同時守住 ${outcome} 與交期，不讓改善變成新的不穩定來源。`, '關鍵字：change control、rollback、verification。'],
+                        ['你會用什麼指標追蹤技術改善？', `除了直接結果，我會追蹤與 ${outcome} 最相關的指標，例如異常重複率、通過率、cycle time、downtime 或重工情形；指標需在改善前先定義，才能避免只看對自己有利的數字。`, '指標要能連回工作目標。']
+                    ],
+                    product: [
+                        ['你會如何快速理解這個職位的全流程？', `我會從輸入、關鍵步驟、品質 gate、輸出與例外處理畫出流程，再和 ${partners} 確認各自的介面和痛點。這比只背 SOP 更能幫我理解 ${discipline} 對整體 ${outcome} 的影響。`, '先建立系統圖，再鑽細節。'],
+                        ['這個職位的上游與下游關係是什麼？', `我會主動理解前一站提供的條件和限制，也要知道下一站如何使用我的輸出。當 ${discipline} 出現問題，不能只看自己站點，必須評估它對品質、交期和後續作業的連鎖影響。`, '展現系統觀，不只顧自己的工作。'],
+                        ['你怎麼定義這份工作中的品質？', `品質不只是結果符合一次規格，也包含流程可追溯、條件可重複、異常被及早控制，且交接資訊完整。這些元素一起才構成可持續的 ${outcome}。`, '用可追溯、可重複、可控管回答。'],
+                        ['如何平衡速度與嚴謹？', '我會先分辨哪些檢查是安全與品質底線、不能省；哪些是可平行或可用標準化縮短的工作。用清楚的優先順序提升速度，而不是跳過必要確認。', '不要回答「我會盡量兼顧」。'],
+                        ['你會如何發現流程中的浪費？', '我會觀察重複等待、重工、資訊來回、人工抄寫與常見中斷，並用資料確認頻率和影響。先選擇影響大、風險可控的項目試行改善。', '自然銜接效率、成本與自動化。'],
+                        ['如何把現場經驗轉成標準？', '將關鍵條件、判斷邊界、例外處理與常見錯誤整理成 checklist 或 SOP，請實際使用者驗證可行性；再依結果修訂。標準化不是把文件寫厚，而是讓正確做法更容易被執行。', '把知識傳承說得具體。']
+                    ],
+                    motiv: [
+                        ['你如何持續學習新技術？', `我會先建立基本原理和流程架構，再用實際任務驗證理解；遇到問題記下來，向 ${partners} 請教後再整理成自己的筆記。${evidence} 讓我知道，技術學習要能回到現場解決問題才有價值。`, '不要只列出上過的課。'],
+                        ['收到主管負面回饋時怎麼做？', '我會先確認回饋指向的是事實、行為還是結果，避免急著辯解；接著整理可立刻調整的做法與追蹤方式。對我來說，回饋是讓工作更可靠的校正，而不是否定個人。', '直接回應你近期的面試回饋。'],
+                        ['什麼情況下你會主動提出改善？', `當我看到同類問題反覆出現、資訊交接常斷裂，或流程明顯增加風險和等待時，我會先收集事實，再提出小範圍、可驗證的方案。我的目標是幫助 ${outcome}，不是證明自己比較聰明。`, '提案前先有證據。'],
+                        ['你如何維持工作上的細心？', '我會把高風險步驟轉成明確檢查點，在執行前、中、後分別確認；對容易受時間壓力影響的工作，尤其依賴紀錄與互相覆核，而不是只相信記憶。', '細心要有方法，不是人格標籤。'],
+                        ['你如何處理重複失敗？', '我會先回顧假設、資料與操作條件是否遺漏，再尋求不同專業的觀點；若仍無法確認，會把目前證據和風險透明地升級。持續嘗試不等於固執重複同一方法。', '展現 persistence 與彈性。'],
+                        ['你偏好的團隊合作方式？', `我習慣先把目標、分工、資料與決策點講清楚；執行中主動同步進度，遇到分歧回到事實和共同目標。這能讓 ${partners} 在高壓下仍有效合作。`, '避免說「我什麼角色都可以」。']
+                    ],
+                    behav: [
+                        ['請說一次你犯錯後如何處理。', '選一個真實、可承擔的例子：先說你如何發現影響、立即控制、誠實回報，再說如何補救與防再發。重點不是把錯說得很小，而是展現負責任的處置方式。', '請在正式面試前填入真實案例。'],
+                        ['如何處理跨部門目標衝突？', `我會先理解每一方關心的是品質、交期、成本還是資源，再把爭點轉成可比較的事實和風險。和 ${partners} 找到能兼顧 ${outcome} 的選項，必要時把取捨與決策層級說清楚。`, '不要把對方描述成不配合。'],
+                        ['你曾如何說服他人接受你的建議？', '我不會只靠立場說服，而是先了解對方顧慮，再用現場現象、數據、小範圍試行或風險比較建立共同基礎。即使方案不是我的，也會支持團隊已確認的最佳決策。', '這題的關鍵是 influence，不是辯贏。'],
+                        ['如何在資訊不完整時做決定？', '我會先分清楚哪些資訊缺失會影響安全、品質或不可逆風險；高風險事項先升級或暫停，低風險事項則用最小可行驗證補資料。決策與假設都要留下紀錄。', '展現有原則的判斷。'],
+                        ['請說一次你主動承擔額外責任的經驗。', `可從 ${evidence} 選一個真實案例，說明原本職責、你主動補上的問題、如何和相關人員協作，以及最後為團隊減少了什麼風險或等待。`, '只選自己真的做過的事。'],
+                        ['如何確保交接品質？', '我會交代目前狀態、已完成事項、未解風險、下一步 action、關鍵資料位置和需要注意的條件；必要時口頭確認對方理解。好的交接讓工作可以不中斷地延續。', '跨班、出差與專案都適用。']
+                    ],
+                    sit: [
+                        ['同時出現三件急事，你如何排優先？', '我先依安全、品質、對產出影響與時間敏感度排序；可委派或平行的工作立即分工，並向主管同步資源缺口。每個人知道下一步和更新時間，才能避免大家都在救最吵的問題。', '不要只說「看情況」。'],
+                        ['你不認同現場的既有做法，怎麼做？', '我會先理解它存在的歷史原因與限制，不直接否定；再用數據、風險或小範圍驗證提出改善建議。若團隊決定維持原做法，我也會尊重並確實執行。', '展現尊重與成熟度。'],
+                        ['發現可能的安全風險但進度很趕？', '安全優先。我會先停止或隔離不安全作業，依程序通知相關人員，保存現況並提出可行的復原計畫。進度可以重排，但安全事故的代價不能用交期合理化。', '這題回答要果斷。'],
+                        ['遇到完全沒接觸過的問題？', '我先確認邊界與風險，查閱標準文件、既有案例和可取得資料；提出初步假設後向有經驗的人求證。我的目標是快速建立可靠的判斷，而不是假裝自己早就懂。', '誠實且主動。'],
+                        ['合作對象回覆很慢，影響進度怎麼辦？', '我會把需要的資訊、截止時間和對方不回覆的影響寫清楚，先提供他容易回覆的選項；同時準備不依賴該資訊的工作，必要時依正常 escalation 尋求協助。', '不情緒化抱怨。'],
+                        ['改善案效果不如預期怎麼回報？', '我會如實呈現原目標、實際數據、已驗證與未驗證假設、造成落差的可能原因，並提出下一輪選項。透明回報能避免資源繼續投入在錯誤方向。', '失敗也能展現專業。']
+                    ],
+                    combat: [
+                        ['面試官質疑你經歷太分散，怎麼回答？', `我的經歷看似跨設備、封裝、材料和系統專案，但核心一致：在高科技製造環境，把複雜問題轉成可驗證的行動。${evidence} 讓我同時具備現場紀律、數據思考和跨部門協作，現在要把它聚焦在 ${discipline}。`, '把跨域說成累積，不要辯解。'],
+                        ['你如何回答「你看起來沒有定性」？', `我現在的方向很明確：深耕高科技製造中的 ${discipline}，持續累積從現場問題到系統改善的能力。過去不同經驗不是搖擺，而是讓我確認自己最投入的是 ${outcome}。`, '先給結論，語氣不要防衛。'],
+                        ['英文被問到不熟悉技術題怎麼答？', 'I would first clarify the condition and the expected standard. Then I would check available data and follow the procedure to narrow down the possible causes. If needed, I would escalate with a clear summary of what I observed and what I have verified.', '練習短句、邏輯與停頓，不追求艱深單字。'],
+                        ['你想問面試官什麼？', `我會問：這個職位在前六個月最重要的學習目標是什麼？團隊目前最希望新同仁協助改善的 ${discipline} 挑戰是什麼？這能讓我理解成功標準，也展現我想真正投入。`, '避開第一題就問福利或休假。'],
+                        ['如果沒有具體 KPI，如何描述成果？', '可以描述你讓問題從不清楚變成可定位、讓風險被控制、讓交接更完整，或讓團隊有可依循的流程；但要清楚說明自己的角色與證據，不能暗示未發生的數字成果。', '誠實比華麗數字重要。'],
+                        ['面試結尾如何收尾？', `我會重申：我理解這個角色需要 ${discipline} 的實作、紀律與協作；我有 ${evidence} 作為基礎，也願意持續學習。我期待有機會把這些能力投入在團隊的 ${outcome}。`, '30 秒內收尾，穩定有力。']
+                    ]
+                };
+            }
+
+            const expansionContexts = {
+                assembly: { discipline: '組裝、校正、functional test 與系統整合', outcome: '高品質交付與系統性能', evidence: 'PVD 現場排障、無塵室紀律及系統專案', partners: 'TS、PE、D&E 與客戶' },
+                fstech: { discipline: '量產製程、SPC、良率與生產管理', outcome: '穩定量產、品質與效率', evidence: 'PVD 設備維護、封裝研究與產品工程', partners: '生產、設備、品質與技術支援' }
+            };
+            Object.entries(expansionContexts).forEach(([companyId, context]) => {
+                const expansion = buildExpansion(context);
+                tabs.forEach(([tabId]) => banks[companyId][tabId].push(...expansion[tabId]));
+            });
+
+            function questionCard([question, answer, tip], index) {
+                return `<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between gap-3 items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">必練 ${String(index + 1).padStart(2, '0')}</span><br>${question}</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 leading-relaxed"><p>${answer}</p><p class="mt-3 rounded-lg bg-[#f5f4f0] px-3 py-2 text-[12px] text-slate-600"><b class="text-[#1f3654]">面試提醒：</b>${tip}</p></div></div></div></div>`;
+            }
+
+            Object.entries(banks).forEach(([companyId, config]) => {
+                const section = document.getElementById(`section-${companyId}`);
+                if (!section) return;
+                const theme = companyId === 'assembly' ? 'assembly-theme' : 'fstech-theme';
+                const navigation = tabs.map(([id, label, icon], index) => `<button onclick="switchSubTab('${companyId}','${id}')" id="tab-${companyId}-${id}" class="btn-press sub-tab-btn ${theme} ${index === 0 ? 'active' : ''} flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2" aria-controls="content-${companyId}-${id}"><i class="fas ${icon}"></i>${label}</button>`).join('');
+                const contents = tabs.map(([id], tabIndex) => {
+                    const count = config[id].length;
+                    const intro = id === 'script' ? `<div class="workspace-hero rounded-2xl shadow-md p-5 text-white mb-4"><div class="flex items-start justify-between gap-3"><div><p class="text-[11px] font-bold tracking-[.14em] text-[#d8e4d5]">${config.eyebrow}</p><h2 class="text-xl font-black mt-1">${config.title}</h2></div><span class="role-meta"><i class="fas fa-layer-group"></i> ${Object.values(config).filter(Array.isArray).flat().length} 題</span></div><p class="mt-2 text-[13px] text-slate-200 leading-relaxed">${config.summary}</p></div>` : '';
+                    const toolbar = `<div class="study-toolbar flex items-center gap-2"><div class="search-box-wrapper"><i class="fas fa-search"></i><input type="search" class="study-search" aria-label="搜尋本分組題庫" placeholder="搜尋本分組題目、關鍵字或案例..." oninput="filterInterviewCards(this,'content-${companyId}-${id}')"></div><span class="question-count" data-result-count>${count} 題</span><button onclick="randomPractice('content-${companyId}-${id}')" aria-label="隨機抽一題練習" class="btn-press flex-shrink-0 bg-[#d9823b] text-white px-3 py-2 rounded-lg text-xs font-black hover:bg-[#bd6c2e] transition"><i class="fas fa-dice"></i><span class="hidden sm:inline ml-1">抽題</span></button></div>`;
+                    return `<div id="content-${companyId}-${id}" class="sub-content ${tabIndex === 0 ? 'block' : 'hidden'} space-y-3">${intro}${toolbar}${config[id].map(questionCard).join('')}</div>`;
+                }).join('');
+                section.innerHTML = `<nav class="section-nav flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4" aria-label="${config.name} 題庫分類">${navigation}</nav>${contents}`;
+            });
+        }
+
         function switchCompany(companyId) {
             document.querySelectorAll('.company-tab').forEach(el => {
-                el.classList.remove('active', 'active-asml', 'active-swancor', 'active-skyeuv', 'active-micron');
+                el.classList.remove('active', 'active-asml', 'active-swancor', 'active-skyeuv', 'active-micron', 'active-assembly', 'active-fstech');
             });
             const activeTab = document.getElementById('comp-' + companyId);
             if(activeTab) activeTab.classList.add('active', 'active-' + companyId);
@@ -1513,6 +1801,8 @@
                 targetSection.removeAttribute('hidden');
                 targetSection.style.display = 'block';
             }
+
+            localStorage.setItem('interview-active-company', companyId);
 
             switchSubTab(companyId, 'script');
             
@@ -1542,7 +1832,8 @@
             });
             
             section.querySelectorAll('.sub-tab-btn').forEach(el => {
-                el.classList.remove('active', 'asml-theme', 'swancor-theme', 'skyeuv-theme', 'micron-theme');
+                el.classList.remove('active', 'asml-theme', 'swancor-theme', 'skyeuv-theme', 'micron-theme', 'assembly-theme', 'fstech-theme');
+                el.setAttribute('aria-selected', 'false');
             });
             
             const targetContent = document.getElementById(`content-${companyId}-${subTabId}`);
@@ -1560,7 +1851,28 @@
                 if(companyId === 'swancor') activeBtn.classList.add('swancor-theme');
                 if(companyId === 'skyeuv') activeBtn.classList.add('skyeuv-theme');
                 if(companyId === 'micron') activeBtn.classList.add('micron-theme');
+                if(companyId === 'assembly') activeBtn.classList.add('assembly-theme');
+                if(companyId === 'fstech') activeBtn.classList.add('fstech-theme');
+                activeBtn.setAttribute('aria-selected', 'true');
             }
+        }
+
+        function toggleArchive() {
+            const drawer = document.getElementById('archive-drawer');
+            const isOpen = drawer.classList.toggle('open');
+            drawer.setAttribute('aria-hidden', String(!isOpen));
+            document.querySelectorAll('[aria-controls="archive-drawer"]').forEach(button => button.setAttribute('aria-expanded', String(isOpen)));
+        }
+
+        function toggleMastered(button, index) {
+            const card = button.closest('.qa-card');
+            const key = `interview-mastered-${index}`;
+            const mastered = localStorage.getItem(key) !== 'true';
+            localStorage.setItem(key, String(mastered));
+            card?.classList.toggle('mastered', mastered);
+            button.classList.toggle('mastered-badge', mastered);
+            button.classList.toggle('text-slate-600', !mastered);
+            button.innerHTML = `<i class="fas fa-check"></i> ${mastered ? '已掌握' : '標記掌握'}`;
         }
 
 
@@ -1571,6 +1883,9 @@
             content.querySelectorAll('.qa-card').forEach(card => {
                 card.classList.toggle('search-hidden', keyword && !card.innerText.toLowerCase().includes(keyword));
             });
+            const visibleCount = content.querySelectorAll('.qa-card:not(.search-hidden)').length;
+            const count = content.querySelector('[data-result-count]');
+            if (count) count.textContent = `${visibleCount} 題`;
         }
 
         function randomPractice(contentId) {
@@ -1595,6 +1910,7 @@
             if (!wrapper || !wrapper.classList.contains('accordion-wrapper')) return;
             const willOpen = !wrapper.classList.contains('open');
             wrapper.classList.toggle('open', willOpen);
+            button.setAttribute('aria-expanded', String(willOpen));
             if (icon) icon.style.transform = willOpen ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
