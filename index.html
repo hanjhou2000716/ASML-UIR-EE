@@ -54,6 +54,7 @@
         .company-tab.active-skyeuv { color: var(--skyeuv-color); border-bottom-color: var(--skyeuv-color); background: linear-gradient(to top, #f5f3ff, transparent); }
         .company-tab.active-micron { color: var(--micron-color); border-bottom-color: var(--micron-color); background: linear-gradient(to top, #e0f2fe, transparent); }
         .company-tab.active-assembly, .company-tab.active-fstech { color: var(--asml-color); border-bottom-color: var(--accent-sage); background: linear-gradient(to top, #edf2ea, transparent); }
+        .company-tab.active-benq { color: #4f667d; border-bottom-color: #8aa6b7; background: linear-gradient(to top, #eef4f6, transparent); }
 
         /* Sub-navigation Pills */
         .sub-tab-btn { 
@@ -68,6 +69,7 @@
         .sub-tab-btn.active.skyeuv-theme { background: var(--skyeuv-color); color: #ffffff; box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2); }
         .sub-tab-btn.active.micron-theme { background: var(--micron-color); color: #ffffff; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.2); }
         .sub-tab-btn.active.assembly-theme, .sub-tab-btn.active.fstech-theme { background: var(--asml-color); color: #ffffff; box-shadow: 0 4px 10px rgba(31,54,84,.2); }
+        .sub-tab-btn.active.benq-theme { background: #4f667d; color: #ffffff; box-shadow: 0 4px 10px rgba(79,102,125,.2); }
 
         /* Smooth Accordion with CSS Grid (Optimized for zero lag) */
         .accordion-wrapper {
@@ -189,6 +191,9 @@
             </button>
             <button onclick="switchCompany('fstech')" id="comp-fstech" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
                 <i class="fas fa-chart-line text-lg mb-0.5"></i> 台塑勝高
+            </button>
+            <button onclick="switchCompany('benq')" id="comp-benq" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
+                <i class="fas fa-layer-group text-lg mb-0.5"></i> 明基材料
             </button>
         </div>
     </header>
@@ -750,6 +755,8 @@
             <div id="content-fstech-process" class="sub-content hidden space-y-3"><div class="focus-card rounded-2xl p-4 text-sm text-slate-600"><h3 class="font-black text-[#536d52]">四個面試主軸</h3><ol class="mt-2 space-y-2"><li><b>品質：</b>良率、規格、異常隔離與再發防止。</li><li><b>效率：</b>瓶頸站、cycle time、停機損失與排程。</li><li><b>成本：</b>改善前後以耗材、工時、報廢或產能衡量。</li><li><b>自動化：</b>先定義痛點、資料與風險，再驗證導入成效。</li></ol></div><div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">如何推動效率或成本改善專案？</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">先用數據定義基準與目標，找最大損失點；小範圍試驗確認對品質沒有副作用，再擴大導入。專案溝通會同時呈現產能、品質風險、成本效益與執行責任人，讓改善能落地而非停在簡報。</div></div></div></div></div>
             <div id="content-fstech-case" class="sub-content hidden space-y-3"><div class="focus-card rounded-2xl p-4 text-sm leading-relaxed text-slate-600"><h3 class="font-black text-[#536d52]">STAR 案例填寫模板</h3><p class="mt-2"><b>S 情境：</b>哪個機台／製程現象影響了什麼指標？</p><p><b>T 任務：</b>你負責釐清或改善的範圍是什麼？</p><p><b>A 行動：</b>你看了哪些 log、觀察到什麼硬體現象、與誰協作、怎麼驗證？</p><p><b>R 結果：</b>downtime、重複率、工時、品質或風險降低了多少？若無數字，說明可觀察到的改善。</p></div></div>
         </div>
+
+        <div id="section-benq" class="company-section hidden"></div>
 
         <div id="section-micron" class="company-section hidden">
             
@@ -1707,6 +1714,55 @@
                         ['你的缺點是什麼？', '我對不確定問題會想先把資料釐清，早期有時會花太多時間自己整理。現在我會設定初步判斷時間點，及早和主管或同仁同步，讓速度和嚴謹能兼顧。', '缺點要有已採取的改善行動。'],
                         ['如何回答「你還有其他選擇，為何我們要錄取你？」', '我會先重申自己要走的是高科技製造中的設備與製程整合方向。這個職位讓我能真正負責量產改善；而我能帶來現場排障、資料驗證和跨部門協作的基礎，能快速融入並持續累積價值。', '不比較薪資或品牌，回到契合度。']
                     ]
+                },
+                benq: {
+                    name: '明基材料｜塗佈製程技術工程師', eyebrow: 'BENQ MATERIALS · COATING PROCESS',
+                    title: '用數據與現場感，把塗佈製程做得更穩定。',
+                    summary: '以機械、設備排障、封裝材料研究與跨部門協作經驗為基礎，對應塗佈製程異常、SPC、8D、SOP、客訴與自動化改善。',
+                    script: [
+                        ['為什麼想應徵塗佈製程技術工程師？', '我希望把設備現場的問題感、材料研究的變因控制，以及量產環境的紀律整合成更完整的製程改善能力。塗佈製程同時牽涉材料、設備、條件控制與品質，正是我想長期深耕的跨域方向。', '不要假裝已有塗佈經驗；強調可轉移能力與學習動機。'],
+                        ['你的背景與這個職缺如何匹配？', '機械背景讓我理解設備、張力與結構；封裝材料研究訓練我控制實驗條件和以數據驗證；PVD 經驗讓我熟悉無塵室、異常排查與 SOP。這些能力能幫助我快速理解塗佈的材料、設備與製程連動。', '用三段式回答：設備、材料、量產紀律。'],
+                        ['你如何看待日夜輪班？', '我理解這份工作每三個月輪日夜班、每月約二十個工作天。輪班製程的關鍵是交接完整與判斷一致；我會維持規律作息、清楚記錄異常與條件，確保不同班別都能延續正確的處置。', '回答直接，不要附帶保留條件。'],
+                        ['為何離開台積電，轉向明基材料？', '我很珍惜台積讓我建立的安全、設備與高壓現場基礎。下一步我希望更深入參與製程能力提升、品質改善與自動化專案；明基材料這個職位的責任範圍正好能讓我往這條路累積。', '聚焦職涯拉力，避免批評前公司。'],
+                        ['前九十天的目標是什麼？', '前期先熟悉產品、塗佈設備、關鍵品質指標、SOP 與交接方式；接著用現場觀察和數據理解常見異常；三個月內希望能在主管指導下獨立完成一次異常分析或小型改善的追蹤。', '學習計畫要具體但不可過度承諾。']
+                    ],
+                    tech: [
+                        ['塗佈製程異常的分析順序？', '先確認異常範圍與是否需要隔離產品，再從人、機、料、法、環、測六個面向切分：原料批次、黏度或固含、塗佈速度、間隙、張力、烘乾條件、環境與量測資料。再用 SPC 與現場紀錄建立優先假設並驗證。', '先 Contain，再 Analyze，不要直接改參數。'],
+                        ['你如何理解 SPC 在製程管理的用途？', 'SPC 不是只看有沒有超規，而是用趨勢、偏移與變異提早發現製程失控。我要先確認量測系統和規格定義，再結合設備、材料和操作條件，找出變異來源並驗證改善。', '提到趨勢與變異，比只講管制圖更有深度。'],
+                        ['8D、PFMEA 和 Control Plan 如何串起來？', '8D 用於系統化處理已發生的問題：圍堵、根因、矯正與防再發；PFMEA 用來事前辨識失效模式與風險；Control Plan 則把重要製程參數、檢查方法、頻率和反應計畫落地。三者要形成從預防到改善的閉環。', '不要只背名詞，要說明彼此用途。'],
+                        ['沒有卷對卷經驗，如何快速補足？', '我會先理解材料流動路徑和每個站點的輸入輸出，再學習張力、速度、對位、塗佈條件與乾燥對品質的影響；同時跟著資深同仁觀察異常處置。我的設備與材料背景能幫助我用系統化方法縮短學習曲線。', '誠實承認缺口，但立刻說明學習路徑。'],
+                        ['如何判斷製程能力是否提升？', '先定義關鍵品質特性與基準，再比較改善前後的良率、變異、Cp/Cpk、報廢或重工情形；也要觀察改善是否在不同批次和班別能穩定重複，避免只是一段時間的偶然結果。', '效果要以資料和持續性證明。']
+                    ],
+                    product: [
+                        ['你如何理解塗佈製程工程師的角色？', '角色不只是處理異常，而是把材料、設備、作業條件、品質與生產節奏連結起來，讓製程在規格內穩定運作；同時將改善結果寫入文件、SOP 和 control plan，降低客訴與重複問題。', '用「穩定、可追溯、可複製」概括角色。'],
+                        ['對卷對卷或卷對片製程，你會關注什麼？', '我會先關注材料進出、張力與速度穩定性、塗佈均勻性、對位、乾燥條件與收卷品質；也會理解哪些參數是關鍵品質特性，以及出現異常時如何快速追溯到批次、設備與操作紀錄。', '這是理解框架，不要假裝自己已操作過。'],
+                        ['客訴異常發生時的處理原則？', '先快速確認客戶端現象、批次範圍和品質風險，啟動圍堵並保持透明溝通；內部用 8D 找根因，提出短期矯正和長期防再發。回覆客戶時以事實、時程和驗證結果為主，不過早承諾未確認的原因。', '展現客戶意識與品質紀律。'],
+                        ['如何看待技術文件與 SOP？', 'SOP 是讓不同人、不同班別能做出一致品質的工具，不是行政負擔。我會把關鍵條件、判斷點、異常反應和紀錄要求寫清楚，並在現場驗證可操作性，定期依改善結果更新。', '呼應 JD 的文件撰寫與維護。']
+                    ],
+                    motiv: [
+                        ['你對持續改善的熱情來自哪裡？', '我最有成就感的是把現場模糊問題整理成可驗證的假設，最後變成 SOP、檢查點或防呆，讓團隊少走彎路。這種從一次異常到長期穩定的過程，是我投入製程工作的原因。', '熱情要落在工作行為。'],
+                        ['如何面對細節多、重複性高的製程工作？', '量產的核心就是穩定與紀律。我會先確實遵守標準，再從重複的異常、等待和資訊斷點中找改善機會；重複不代表沒有價值，反而能累積最可靠的資料與判斷。', '展現定性，不要讓人覺得容易膩。'],
+                        ['你如何面對主管的修正？', '我會先理解主管的判斷依據和期待，不急著辯解；再把回饋轉成具體行動，例如補足資料、調整溝通方式或重新安排優先順序。收到修正後能穩定改善，才是專業。', '直接回應你收到的面試回饋。'],
+                        ['Python 或 Auto ML 經驗不足怎麼辦？', '我不會假裝已有經驗，但我對資料化改善有高度興趣。會先從 Python 的資料整理、趨勢視覺化與基礎統計開始，將實際製程問題當作學習題目；同時與資料或自動化同仁合作，理解模型輸入、驗證和現場限制。', '誠實、主動，且不濫用 AI 名詞。']
+                    ],
+                    behav: [
+                        ['請說一個你用資料排除異常的經驗。', '以 PVD 維護經驗作答：先說異常影響，再描述如何查看 log、比對狀態、現場觀察硬體、和相關人員驗證假設。最後說明實際恢復、風險降低或交接改善；請在面試前補入真實情境與結果。', '不要為了完整而虛構數字。'],
+                        ['如何與設備、品質和生產部門合作？', '我會先把問題定義、數據、影響與目前假設整理清楚；理解各部門關心的是產能、規格、設備風險或交期，再用共同指標討論選項。我的角色是推動事實一致與 action 落地，而不是只當傳話窗口。', '直接回應跨部門合作需求。'],
+                        ['材料研究經驗如何應用於塗佈？', '研究所的材料與可靠度研究讓我習慣控制變因、記錄實驗條件、觀察材料界面並用數據驗證結論。雖然材料系統不同，但我能把這種實驗紀律用在塗佈條件、品質異常與改善驗證。', '不可聲稱已有塗佈配方開發經驗。'],
+                        ['自動化專案經驗能帶來什麼？', '村田的 AS/RS 系統專案讓我理解需求、介面、流程與現場使用者要一起被考慮。若推動製程自動化，我會先定義痛點、資料、風險和驗收標準，再小範圍試行，不把不穩定流程直接自動化。', '連回 JD 的自動化改善專案。']
+                    ],
+                    sit: [
+                        ['夜班發現品質趨勢異常，主管不在怎麼辦？', '依既有 reaction plan 先確認資料和產品範圍，必要時停止或隔離受影響批次，並按 escalation 流程通知相關人員。完整保留條件、時間點和處置紀錄，讓日班能無縫接續；不會因為夜班就延後風險處理。', '輪班題先講品質與交接。'],
+                        ['產能壓力大，但你認為某批產品有風險？', '我會以規格、資料與可能影響清楚說明風險，提出加嚴檢驗、分段處置或補充驗證等選項。最終遵循品質程序與主管決策，但不會為了趕產能跳過必要的風險揭露。', '尊重決策，同時守住品質底線。'],
+                        ['改善案效果不如預期，如何處理？', '我會如實比較目標、實際結果與假設，檢查資料、試驗設計和未控制變因；再提出下一輪驗證或停止投入的建議。透明回報能避免團隊在錯誤方向上花更多資源。', '失敗時更要展現工程紀律。'],
+                        ['客戶要求快速回覆，但根因還未確認？', '我會先回覆已知事實、影響範圍、目前圍堵措施與下一次更新時間；對根因和永久對策保持謹慎，等驗證完成再正式承諾。速度重要，但未確認的答案會傷害信任。', '客訴題的關鍵是透明與節奏。']
+                    ],
+                    combat: [
+                        ['面試官說你沒有塗佈經驗，為何要錄取你？', '我不會把自己說成已具備塗佈專家經驗；我的價值是能快速學習且有可轉移的基礎：機械理解設備、材料研究理解變因控制、PVD 經驗理解無塵室與異常處置。我會用資料、現場觀察和跨部門協作，快速建立塗佈製程的判斷能力。', '先承認，再說明可驗證的遷移能力。'],
+                        ['如何回答「你是否能適應斗六與輪班」？', '可以。我已理解此職位需要在斗六廠輪日夜班、重視跨班交接與現場穩定。我對製程工作有明確方向，也會事先規劃生活與作息，確保能長期、穩定地投入。', '回答不要含糊或說「先試試看」。'],
+                        ['英文：Why do you want to join BenQ Materials?', 'I want to grow in a process engineering role where materials, equipment, quality, and continuous improvement are closely connected. This position is attractive because it includes process troubleshooting, SPC, technical documentation, customer issue handling, and automation projects. My background in equipment support and materials research gives me a strong foundation to learn the coating process quickly and contribute to stable production.', '用短句、清楚停頓，不追求艱深字彙。'],
+                        ['你想反問主管什麼？', '我會問：新同仁在前六個月最需要先掌握哪些塗佈製程或品質指標？目前團隊最希望改善的異常或自動化痛點是什麼？這能了解成功標準，也展現我想解決實際問題。', '先問工作成功標準，最後才問制度。']
+                    ]
                 }
             };
 
@@ -1774,7 +1830,8 @@
 
             const expansionContexts = {
                 assembly: { discipline: '組裝、校正、functional test 與系統整合', outcome: '高品質交付與系統性能', evidence: 'PVD 現場排障、無塵室紀律及系統專案', partners: 'TS、PE、D&E 與客戶' },
-                fstech: { discipline: '量產製程、SPC、良率與生產管理', outcome: '穩定量產、品質與效率', evidence: 'PVD 設備維護、封裝研究與產品工程', partners: '生產、設備、品質與技術支援' }
+                fstech: { discipline: '量產製程、SPC、良率與生產管理', outcome: '穩定量產、品質與效率', evidence: 'PVD 設備維護、封裝研究與產品工程', partners: '生產、設備、品質與技術支援' },
+                benq: { discipline: '塗佈製程、SPC、品質與自動化改善', outcome: '塗佈品質、穩定量產與客戶滿意度', evidence: 'PVD 設備維護、材料研究與系統專案', partners: '生產、設備、品質、客戶與技術支援' }
             };
             Object.entries(expansionContexts).forEach(([companyId, context]) => {
                 const expansion = buildExpansion(context);
@@ -1788,7 +1845,7 @@
             Object.entries(banks).forEach(([companyId, config]) => {
                 const section = document.getElementById(`section-${companyId}`);
                 if (!section) return;
-                const theme = companyId === 'assembly' ? 'assembly-theme' : 'fstech-theme';
+                const theme = companyId === 'assembly' ? 'assembly-theme' : companyId === 'benq' ? 'benq-theme' : 'fstech-theme';
                 const navigation = tabs.map(([id, label, icon], index) => `<button onclick="switchSubTab('${companyId}','${id}')" id="tab-${companyId}-${id}" class="btn-press sub-tab-btn ${theme} ${index === 0 ? 'active' : ''} flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2" aria-controls="content-${companyId}-${id}"><i class="fas ${icon}"></i>${label}</button>`).join('');
                 const contents = tabs.map(([id], tabIndex) => {
                     const count = config[id].length;
@@ -1802,7 +1859,7 @@
 
         function switchCompany(companyId) {
             document.querySelectorAll('.company-tab').forEach(el => {
-                el.classList.remove('active', 'active-asml', 'active-swancor', 'active-skyeuv', 'active-micron', 'active-assembly', 'active-fstech');
+                el.classList.remove('active', 'active-asml', 'active-swancor', 'active-skyeuv', 'active-micron', 'active-assembly', 'active-fstech', 'active-benq');
             });
             const activeTab = document.getElementById('comp-' + companyId);
             if(activeTab) activeTab.classList.add('active', 'active-' + companyId);
@@ -1851,7 +1908,7 @@
             });
             
             section.querySelectorAll('.sub-tab-btn').forEach(el => {
-                el.classList.remove('active', 'asml-theme', 'swancor-theme', 'skyeuv-theme', 'micron-theme', 'assembly-theme', 'fstech-theme');
+                el.classList.remove('active', 'asml-theme', 'swancor-theme', 'skyeuv-theme', 'micron-theme', 'assembly-theme', 'fstech-theme', 'benq-theme');
                 el.setAttribute('aria-selected', 'false');
             });
             
@@ -1872,6 +1929,7 @@
                 if(companyId === 'micron') activeBtn.classList.add('micron-theme');
                 if(companyId === 'assembly') activeBtn.classList.add('assembly-theme');
                 if(companyId === 'fstech') activeBtn.classList.add('fstech-theme');
+                if(companyId === 'benq') activeBtn.classList.add('benq-theme');
                 activeBtn.setAttribute('aria-selected', 'true');
             }
         }
