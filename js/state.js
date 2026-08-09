@@ -37,7 +37,9 @@
     const legacyActive = localStorage.getItem(LEGACY_ACTIVE);
     if (!candidate && legacyActive) state.activeCompanyId = legacyActive;
     document.querySelectorAll('.qa-card').forEach((card, index) => {
-      const id = card.dataset.questionId || `legacy.card.${index + 1}`;
+      const prompt = card.querySelector('button span')?.textContent?.replace(/\s+/g, ' ').trim() || '';
+      const digest = Array.from(prompt).reduce((hash, ch) => ((hash << 5) - hash + ch.charCodeAt(0)) | 0, 0).toString(36).replace('-', 'n');
+      const id = card.dataset.questionId || `question.${digest || index + 1}`;
       card.dataset.questionId = id;
       if (!candidate) {
         const old = localStorage.getItem(`${LEGACY_PREFIX}${index}`) === 'true';
@@ -64,7 +66,9 @@
   window.InterviewState = api;
   window.toggleMastered = (button, legacyIndex = 0) => {
     const card = button && button.closest('.qa-card');
-    const id = card?.dataset.questionId || `legacy.card.${legacyIndex + 1}`;
+    const prompt = card?.querySelector('button span')?.textContent?.replace(/\s+/g, ' ').trim() || '';
+    const digest = Array.from(prompt).reduce((hash, ch) => ((hash << 5) - hash + ch.charCodeAt(0)) | 0, 0).toString(36).replace('-', 'n');
+    const id = card?.dataset.questionId || `question.${digest || legacyIndex + 1}`;
     const record = toggle(id);
     if (card) card.classList.toggle('mastered', record.mastered);
     if (button) {
@@ -75,4 +79,12 @@
   };
   window.addEventListener('DOMContentLoaded', () => { migrateLegacy(); renderInsights(); }, { once: true });
   window.addEventListener('interview-state-change', renderInsights);
+  window.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    const drawer = document.getElementById('archive-drawer');
+    if (drawer?.classList.contains('open') && typeof window.toggleArchive === 'function') {
+      window.toggleArchive();
+      document.querySelector('[aria-controls="archive-drawer"]')?.focus();
+    }
+  });
 })();
