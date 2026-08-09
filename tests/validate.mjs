@@ -13,6 +13,7 @@ assert.doesNotMatch(html, /localStorage\.setItem\('interview-active-company'/);
 assert.match(state, /migrateLegacy/);
 assert.match(html, /prefers-reduced-motion/);
 assert.match(html, /aria-label/);
+assert.match(html, /Content-Security-Policy/);
 assert.doesNotMatch(html, /function preparePrint/);
 const cdnCount = (html.match(/https:\/\/cdn\.tailwindcss\.com/g) || []).length;
 assert.equal(cdnCount, 0, 'runtime Tailwind CDN must not be required');
