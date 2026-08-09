@@ -1,0 +1,19 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+
+const listeners = {};
+const window = { addEventListener: (name, fn) => { listeners[name] = fn; }, dispatchEvent: () => {} };
+const document = { querySelectorAll: () => [], getElementById: () => null, addEventListener: () => {} };
+const localStorage = { getItem: () => '{broken', setItem: () => { throw new Error('storage disabled'); } };
+const context = vm.createContext({ window, document, localStorage, CustomEvent: class {}, console });
+vm.runInContext(fs.readFileSync(new URL('../js/state.js', import.meta.url), 'utf8'), context);
+assert.equal(window.InterviewState.state.schemaVersion, 2);
+assert.equal(window.InterviewState.state.activeCompanyId, 'asml');
+const record = window.InterviewState.toggle('benq.tech.spc-purpose');
+assert.equal(record.mastered, true);
+assert.equal(record.attemptedCount, 1);
+assert.equal(record.practiceCount, 1);
+assert.ok(record.lastPracticedAt);
+assert.equal(window.InterviewState.getQuestion('benq.tech.spc-purpose').mastered, true);
+console.log('State schema smoke passed.');
