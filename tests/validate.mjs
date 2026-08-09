@@ -13,6 +13,7 @@ assert.match(html, /prefers-reduced-motion/);
 assert.match(html, /aria-label/);
 assert.doesNotMatch(html, /function preparePrint/);
 const cdnCount = (html.match(/https:\/\/cdn\.tailwindcss\.com/g) || []).length;
-assert.equal(cdnCount, 1, 'legacy CDN remains as a tracked migration item');
+assert.equal(cdnCount, 0, 'runtime Tailwind CDN must not be required');
+assert.ok(fs.existsSync(new URL('../assets/tailwind.generated.css', import.meta.url)), 'generated CSS is present');
 execFileSync(process.execPath, ['--check', 'js/state.js'], { stdio: 'inherit' });
 console.log('Interview workspace validation passed.');
