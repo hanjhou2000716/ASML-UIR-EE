@@ -527,12 +527,22 @@
                     name: '明基材料｜塗佈製程技術工程師', eyebrow: 'BENQ MATERIALS · COATING PROCESS',
                     title: '用數據與現場感，把塗佈製程做得更穩定。',
                     summary: '以機械、設備排障、封裝材料研究與跨部門協作經驗為基礎，對應塗佈製程異常、SPC、8D、SOP、客訴與自動化改善。',
+                    jobMeta: {
+                      items: [
+                        '工作地點｜雲林斗六科技工業區（科工七路 29 號）',
+                        '班別安排｜08:00–20:00／20:00–08:00，每三個月輪日夜班；每月約 20 天',
+                        '核心任務｜製程異常分析、製程能力提升、SOP／管理文件、客訴與自動化改善',
+                        '加分能力｜卷對卷／卷對片、Python／AutoML、8D、PFMEA／Control Plan、SPC'
+                      ]
+                    },
                     script: [
                         ['為什麼想應徵塗佈製程技術工程師？', '我希望把設備現場的問題感、材料研究的變因控制，以及量產環境的紀律整合成更完整的製程改善能力。塗佈製程同時牽涉材料、設備、條件控制與品質，正是我想長期深耕的跨域方向。', '不要假裝已有塗佈經驗；強調可轉移能力與學習動機。'],
                         ['你的背景與這個職缺如何匹配？', '機械背景讓我理解設備、張力與結構；封裝材料研究訓練我控制實驗條件和以數據驗證；PVD 經驗讓我熟悉無塵室、異常排查與 SOP。這些能力能幫助我快速理解塗佈的材料、設備與製程連動。', '用三段式回答：設備、材料、量產紀律。'],
                         ['你如何看待日夜輪班？', '我理解這份工作每三個月輪日夜班、每月約二十個工作天。輪班製程的關鍵是交接完整與判斷一致；我會維持規律作息、清楚記錄異常與條件，確保不同班別都能延續正確的處置。', '回答直接，不要附帶保留條件。'],
                         ['為何離開台積電，轉向明基材料？', '我很珍惜台積讓我建立的安全、設備與高壓現場基礎。下一步我希望更深入參與製程能力提升、品質改善與自動化專案；明基材料這個職位的責任範圍正好能讓我往這條路累積。', '聚焦職涯拉力，避免批評前公司。'],
-                        ['前九十天的目標是什麼？', '前期先熟悉產品、塗佈設備、關鍵品質指標、SOP 與交接方式；接著用現場觀察和數據理解常見異常；三個月內希望能在主管指導下獨立完成一次異常分析或小型改善的追蹤。', '學習計畫要具體但不可過度承諾。']
+                        ['前九十天的目標是什麼？', '前期先熟悉產品、塗佈設備、關鍵品質指標、SOP 與交接方式；接著用現場觀察和數據理解常見異常；三個月內希望能在主管指導下獨立完成一次異常分析或小型改善的追蹤。', '學習計畫要具體但不可過度承諾。'],
+                        ['如果遇到客訴，你會怎麼處理？', '先確認客訴批次、規格與影響範圍，立即做好產品隔離與追溯；接著比對製程履歷、量測結果與變更紀錄，和品質、製造一起建立暫時對策，再用 8D 找出根因與防再發措施，最後追蹤客戶回覆及成效。', '同時涵蓋速度、證據與閉環。'],
+                        ['沒有塗佈產線經驗，如何快速補足？', '我會先理解材料、供料、張力、塗佈間隙、線速與乾燥條件，再跟著現場確認正常窗口與常見失效模式。我的 PVD 設備排障與材料研究經驗，能讓我用假設、數據和小範圍驗證縮短學習曲線。', '誠實說明缺口，再提出具體學習路徑。']
                     ],
                     tech: [
                         ['塗佈製程異常的分析順序？', '先確認異常範圍與是否需要隔離產品，再從人、機、料、法、環、測六個面向切分：原料批次、黏度或固含、塗佈速度、間隙、張力、烘乾條件、環境與量測資料。再用 SPC 與現場紀錄建立優先假設並驗證。', '先 Contain，再 Analyze，不要直接改參數。'],
@@ -658,7 +668,7 @@
                 const navigation = tabs.map(([id, label, icon], index) => `<button data-action="switch-subtab" data-company="${companyId}" data-category="${id}" id="tab-${companyId}-${id}" role="tab" class="btn-press sub-tab-btn ${theme} ${index === 0 ? 'active' : ''} flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2" aria-controls="content-${companyId}-${id}" aria-selected="${index === 0 ? 'true' : 'false'}"><i class="fas ${icon}"></i>${label}</button>`).join('');
                 const contents = tabs.map(([id], tabIndex) => {
                     const count = config[id].length;
-                    const intro = id === 'script' ? `<div class="workspace-hero rounded-2xl shadow-md p-5 text-white mb-4"><div class="flex items-start justify-between gap-3"><div><p class="text-[11px] font-bold tracking-[.14em] text-[#d8e4d5]">${config.eyebrow}</p><h2 class="text-xl font-black mt-1">${config.title}</h2></div><span class="role-meta"><i class="fas fa-layer-group"></i> ${Object.values(config).filter(Array.isArray).flat().length} 題</span></div><p class="mt-2 text-[13px] text-slate-200 leading-relaxed">${config.summary}</p></div>` : '';
+                    const intro = id === 'script' ? `<div class="workspace-hero rounded-2xl shadow-md p-5 text-white mb-4"><div class="flex items-start justify-between gap-3"><div><p class="text-[11px] font-bold tracking-[.14em] text-[#d8e4d5]">${config.eyebrow}</p><h2 class="text-xl font-black mt-1">${config.title}</h2></div><span class="role-meta"><i class="fas fa-layer-group"></i> ${Object.values(config).filter(Array.isArray).flat().length} 題</span></div><p class="mt-2 text-[13px] text-slate-200 leading-relaxed">${config.summary}</p>${config.jobMeta ? `<div class="mt-4 grid gap-2 sm:grid-cols-2">${config.jobMeta.items.map(item => `<div class="rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-[11px] leading-relaxed text-slate-100">${item}</div>`).join('')}</div>` : ''}</div>` : '';
                     const toolbar = `<div class="study-toolbar flex items-center gap-2"><div class="search-box-wrapper"><i class="fas fa-search"></i><input type="search" class="study-search" aria-label="搜尋本分組題庫" placeholder="搜尋本分組題目、關鍵字或案例..." data-action="filter" data-content="content-${companyId}-${id}"></div><select class="status-filter" aria-label="篩選練習狀態" data-action="status-filter" data-content="content-${companyId}-${id}"><option value="all">全部</option><option value="unmastered">未掌握</option><option value="practiced">練習過</option><option value="mastered">已掌握</option></select><span class="question-count" data-result-count>${count} 題</span><button data-action="random" data-content="content-${companyId}-${id}" aria-label="隨機抽一題練習" class="btn-press flex-shrink-0 bg-[#d9823b] text-white px-3 py-2 rounded-lg text-xs font-black hover:bg-[#bd6c2e] transition"><i class="fas fa-dice"></i><span class="hidden sm:inline ml-1">抽題</span></button></div>`;
                     return `<div id="content-${companyId}-${id}" class="sub-content ${tabIndex === 0 ? 'block' : 'hidden'} space-y-3">${intro}${toolbar}${config[id].map(questionCard).join('')}</div>`;
                 }).join('');
