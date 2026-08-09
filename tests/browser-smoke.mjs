@@ -19,6 +19,7 @@ for (const id of ['asml', 'micron', 'swancor', 'skyeuv']) {
 assert.equal(document.querySelectorAll('[onclick],[oninput]').length, 0, 'no inline handlers');
 const ids = [...document.querySelectorAll('.qa-card[data-question-id]')].map(card => card.dataset.questionId);
 assert.equal(ids.length, new Set(ids).size, 'runtime question IDs unique');
+dom.window.ensureRoleBanks?.();
 assert.equal(dom.window.InterviewState?.state.schemaVersion, 2);
 assert.equal(dom.window.InterviewQuestionRegistry?.schemaVersion, 1);
 assert.ok(Object.keys(dom.window.InterviewQuestionRegistry?.companies || {}).length >= 7, 'all company banks normalized');
