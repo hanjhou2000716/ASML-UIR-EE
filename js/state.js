@@ -137,6 +137,25 @@
       window.expandAll = wrapped;
     }
   };
+  const buildQuestionRegistry = () => {
+    const registry = { schemaVersion: 1, companies: {} };
+    const legacy = window.LegacyQuestionData?.companies || {};
+    Object.entries(legacy).forEach(([id, company]) => { registry.companies[id] = company; });
+    const banks = window.InterviewQuestionBanks || {};
+    const digest = value => Math.abs(Array.from(value).reduce((hash, ch) => ((hash << 5) - hash + ch.charCodeAt(0)) | 0, 0)).toString(36);
+    Object.entries(banks).forEach(([companyId, config]) => {
+      const categories = Object.entries(config).filter(([, value]) => Array.isArray(value)).map(([categoryId, entries]) => ({
+        id: categoryId,
+        label: categoryId,
+        icon: '',
+        description: '',
+        questions: entries.map(([question, answer, tip], index) => ({ id: `${companyId}.${categoryId}.${digest(question)}${index ? '-' + index : ''}`, question, answerHtml: `<p>${answer}</p><p>${tip || ''}</p>`, tip: tip || '', priority: 'standard', language: /[A-Za-z]/.test(question) && !/[\u4e00-\u9fff]/.test(question) ? 'en' : 'zh-TW', tags: [] }))
+      }));
+      registry.companies[companyId] = { id: companyId, name: config.name || companyId, shortName: companyId, status: 'active', role: '', eyebrow: config.eyebrow || '', title: config.title || '', summary: config.summary || '', accent: 'navy', categories };
+    });
+    window.InterviewQuestionRegistry = registry;
+    return registry;
+  };
   const installDelegatedInteractions = () => {
     document.addEventListener('click', event => {
       const target = event.target.closest('[data-action]');
@@ -174,6 +193,6 @@
       button.innerHTML = `<i class="fas fa-check"></i> ${record.mastered ? '已掌握' : '標記掌握'}`;
     }
   };
-  window.addEventListener('DOMContentLoaded', () => { migrateLegacy(); mountWorkspaceShell(); enhanceAccordionA11y(); installDelegatedInteractions(); renderInsights(); }, { once: true });
+  window.addEventListener('DOMContentLoaded', () => { buildQuestionRegistry(); migrateLegacy(); mountWorkspaceShell(); enhanceAccordionA11y(); installDelegatedInteractions(); renderInsights(); }, { once: true });
   window.addEventListener('interview-state-change', renderInsights);
 })();
