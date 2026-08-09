@@ -282,13 +282,26 @@
     <script>
         let activeTimer = null;
         let speechSynthesisActive = false;
+        let roleBanksReady = false;
 
         window.addEventListener('DOMContentLoaded', () => {
-            deployRoleQuestionBanks();
-            injectPracticeTools(); 
-            document.querySelectorAll('.qa-card > button').forEach(button => button.setAttribute('aria-expanded', 'false'));
-            switchCompany(window.InterviewState?.state.activeCompanyId || 'asml');
+            const startRoleBanks = () => {
+                ensureRoleBanks();
+                document.querySelectorAll('.qa-card > button').forEach(button => button.setAttribute('aria-expanded', 'false'));
+                switchCompany(window.InterviewState?.state.activeCompanyId || 'asml');
+            };
+            if ('requestIdleCallback' in window) window.requestIdleCallback(startRoleBanks, { timeout: 1200 });
+            else window.setTimeout(startRoleBanks, 0);
         });
+
+        function ensureRoleBanks() {
+            if (roleBanksReady) return;
+            deployRoleQuestionBanks();
+            roleBanksReady = true;
+            injectPracticeTools();
+            window.InterviewState?.migrateLegacy?.();
+            window.refreshInterviewQuestionRegistry?.();
+        }
 
         function injectPracticeTools() {
             document.querySelectorAll('.accordion-inner > div').forEach((container, index) => {
@@ -650,6 +663,7 @@
         }
 
         function switchCompany(companyId) {
+            if (['assembly', 'fstech', 'benq'].includes(companyId)) ensureRoleBanks();
             document.querySelectorAll('.company-tab').forEach(el => {
                 el.classList.remove('active', 'active-asml', 'active-swancor', 'active-skyeuv', 'active-micron', 'active-assembly', 'active-fstech', 'active-benq');
             });
