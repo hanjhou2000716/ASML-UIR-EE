@@ -46,6 +46,15 @@ assert.equal(speechFallbackShown, true, 'speech fallback is graceful when API is
 const mastered = firstCard?.querySelector('[data-action="mastered"]');
 mastered?.click();
 assert.equal(dom.window.InterviewState.getQuestion(firstCard?.dataset.questionId).mastered, true, 'mastery action updates state');
+const quick = document.querySelector('#workspace-insights [data-practice-mode="unmastered"]');
+quick?.click();
+assert.ok(document.querySelector('#practice-session'), 'continuous practice session opens');
+document.querySelector('#practice-session [data-practice-action="reveal"]')?.click();
+assert.ok(!document.querySelector('#practice-session .practice-session-answer')?.classList.contains('hidden'), 'practice answer reveals');
+document.querySelector('#practice-session [data-practice-action="next"]')?.click();
+assert.ok(document.querySelector('#practice-session'), 'practice advances to next question');
+document.querySelector('#practice-session [data-practice-action="close"]')?.click();
+assert.equal(document.querySelector('#practice-session'), null, 'practice session closes');
 document.querySelector('[aria-controls="archive-drawer"]')?.click();
 assert.ok(document.querySelector('#archive-drawer')?.classList.contains('open'), 'archive drawer opens');
 const escapeEvent = new dom.window.Event('keydown');

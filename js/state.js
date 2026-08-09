@@ -5,6 +5,7 @@
   const LEGACY_PREFIX = 'interview-mastered-';
   const VALID_COMPANIES = new Set(['asml', 'assembly', 'fstech', 'benq', 'micron', 'swancor', 'skyeuv']);
   const memoryStore = new Map();
+  let practiceSession = null;
   const state = {
     schemaVersion: 2,
     activeCompanyId: 'asml',
@@ -84,23 +85,38 @@
       const percent = Math.round((value.mastered / value.total) * 100);
       return `<div class="insight-row"><div class="flex justify-between text-[11px] text-slate-600"><span>${name}</span><b>${value.mastered}/${value.total}</b></div><div class="insight-track"><span style="width:${percent}%"></span></div></div>`;
     }).join('');
-    panel.innerHTML = `<div class="flex items-center justify-between gap-3"><div><p class="text-xs font-black tracking-widest text-slate-500">實際練習洞察</p><h3 class="text-lg font-black text-slate-800 mt-1">進度與弱項</h3></div><span class="status-dot ${pending === 0 ? 'done' : ''}" aria-label="${pending === 0 ? '全部掌握' : '尚有未掌握題目'}"></span></div><div class="grid grid-cols-3 gap-2 mt-4 text-center"><div class="rounded-xl bg-slate-50 p-3"><b class="block text-xl text-slate-800">${mastered}</b><span class="text-[11px] text-slate-500">已掌握</span></div><div class="rounded-xl bg-slate-50 p-3"><b class="block text-xl text-slate-800">${attempted}</b><span class="text-[11px] text-slate-500">練習過</span></div><div class="rounded-xl bg-slate-50 p-3"><b class="block text-xl text-slate-800">${pending}</b><span class="text-[11px] text-slate-500">待複習</span></div></div><div class="mt-4 space-y-2"><p class="text-xs font-black text-slate-700">分類掌握</p>${categoryRows || '<p class="text-xs text-slate-500">尚未建立練習紀錄</p>'}</div><p class="text-xs text-slate-500 mt-3">目前弱項：${weakest ? weakest[0] : '尚無資料'}。數據來自本機實際操作，不推估分數或錄取機率。</p><div class="quick-practice"><button data-practice-mode="random">隨機一題</button><button data-practice-mode="unmastered">先練未掌握</button><button data-practice-mode="unpracticed">先練未練習</button></div>`;
+    panel.innerHTML = `<div class="flex items-center justify-between gap-3"><div><p class="text-xs font-black tracking-widest text-slate-500">實際練習洞察</p><h3 class="text-lg font-black text-slate-800 mt-1">進度與弱項</h3></div><span class="status-dot ${pending === 0 ? 'done' : ''}" aria-label="${pending === 0 ? '全部掌握' : '尚有未掌握題目'}"></span></div><div class="grid grid-cols-3 gap-2 mt-4 text-center"><div class="rounded-xl bg-slate-50 p-3"><b class="block text-xl text-slate-800">${mastered}</b><span class="text-[11px] text-slate-500">已掌握</span></div><div class="rounded-xl bg-slate-50 p-3"><b class="block text-xl text-slate-800">${attempted}</b><span class="text-[11px] text-slate-500">練習過</span></div><div class="rounded-xl bg-slate-50 p-3"><b class="block text-xl text-slate-800">${pending}</b><span class="text-[11px] text-slate-500">待複習</span></div></div><div class="mt-4 space-y-2"><p class="text-xs font-black text-slate-700">分類掌握</p>${categoryRows || '<p class="text-xs text-slate-500">尚未建立練習紀錄</p>'}</div><p class="text-xs text-slate-500 mt-3">目前弱項：${weakest ? weakest[0] : '尚無資料'}。數據來自本機實際操作，不推估分數或錄取機率。</p><div class="quick-practice"><button data-practice-mode="random">隨機一題</button><button data-practice-mode="unmastered">先練未掌握</button><button data-practice-mode="unpracticed">先練未練習</button><button data-practice-mode="current">目前分組</button></div>`;
     panel.querySelector('.status-dot')?.removeAttribute('aria-label');
     panel.querySelectorAll('[data-practice-mode]').forEach(button => button.addEventListener('click', () => quickPractice(button.dataset.practiceMode)));
   };
-  const quickPractice = mode => {
+  const practiceCards = mode => {
     const active = document.querySelector('.company-section.block') || document.querySelector('.company-section:not(.hidden)');
-    if (!active) return;
-    let cards = [...active.querySelectorAll('.qa-card:not(.search-hidden)')];
+    const current = active?.querySelector('.sub-content.block') || active?.querySelector('.sub-content:not(.hidden)');
+    if (!active) return [];
+    let cards = [...(mode === 'current' ? current || active : active).querySelectorAll('.qa-card:not(.search-hidden)')];
     if (mode === 'unmastered') cards = cards.filter(card => !getQuestion(card.dataset.questionId).mastered);
     if (mode === 'unpracticed') cards = cards.filter(card => !getQuestion(card.dataset.questionId).attemptedCount);
-    if (!cards.length) { active.querySelector('.qa-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
-    const card = cards[Math.floor(Math.random() * cards.length)];
-    const button = card.querySelector(':scope > button');
-    if (button && !button.nextElementSibling?.classList.contains('open')) window.toggleCard?.(button);
-    card.classList.add('practice-highlight');
-    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => card.classList.remove('practice-highlight'), 2200);
+    return cards;
+  };
+  const renderPracticeSession = () => {
+    if (!practiceSession?.cards.length) return;
+    let panel = document.getElementById('practice-session');
+    if (!panel) { panel = document.createElement('section'); panel.id = 'practice-session'; panel.className = 'practice-session'; panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'true'); document.body.appendChild(panel); }
+    const card = practiceSession.cards[practiceSession.index];
+    const question = card.querySelector(':scope > button span')?.textContent?.replace(/必練\s*\d+\s*/, '').trim() || '面試題目';
+    const answer = card.querySelector('.accordion-inner')?.innerHTML || '<p>請回到題卡查看參考答案。</p>';
+    panel.innerHTML = `<div class="practice-session-card"><div class="flex items-center justify-between gap-3"><span class="text-xs font-black tracking-widest text-slate-500">連續練習 · ${practiceSession.index + 1}/${practiceSession.cards.length}</span><button data-action="practice" data-practice-action="close" class="practice-session-close" aria-label="關閉練習">×</button></div><h2 class="mt-4 text-xl font-black text-slate-800">${question}</h2><div class="practice-session-answer ${practiceSession.revealed ? '' : 'hidden'} mt-4">${answer}</div><div class="practice-session-actions"><button data-action="practice" data-practice-action="reveal">${practiceSession.revealed ? '收合答案' : '揭露參考答案'}</button><button data-action="practice" data-practice-action="master">${getQuestion(card.dataset.questionId).mastered ? '取消已掌握' : '標記已掌握'}</button><button data-action="practice" data-practice-action="next" class="primary">下一題</button></div><p class="mt-3 text-xs text-slate-500">快捷鍵：Enter 揭露答案 · M 標記掌握 · N 下一題 · Esc 關閉</p></div>`;
+    panel.querySelector('[data-practice-action="reveal"]')?.focus();
+  };
+  const closePractice = () => { document.getElementById('practice-session')?.remove(); practiceSession = null; };
+  const quickPractice = mode => { const cards = practiceCards(mode); if (!cards.length) return; practiceSession = { mode, cards, index: Math.floor(Math.random() * cards.length), revealed: false }; renderPracticeSession(); };
+  const practiceAction = action => {
+    if (!practiceSession) return;
+    const card = practiceSession.cards[practiceSession.index];
+    if (action === 'close') return closePractice();
+    if (action === 'reveal') { practiceSession.revealed = !practiceSession.revealed; return renderPracticeSession(); }
+    if (action === 'master') { toggle(card.dataset.questionId); return renderPracticeSession(); }
+    if (action === 'next') { practiceSession.index = (practiceSession.index + 1) % practiceSession.cards.length; practiceSession.revealed = false; return renderPracticeSession(); }
   };
   const mountWorkspaceShell = () => {
     const main = document.getElementById('main-container');
@@ -113,7 +129,7 @@
     rail.querySelectorAll('[data-rail-company]').forEach(button => button.addEventListener('click', () => window.switchCompany(button.dataset.railCompany)));
     rail.querySelector('[data-rail-archive]').addEventListener('click', () => window.toggleArchive());
     const style = document.createElement('style');
-    style.textContent = `.workspace-layout{display:grid;grid-template-columns:220px minmax(0,1fr) 280px;gap:24px;max-width:1440px;margin:0 auto;padding:24px}.workspace-rail{position:sticky;top:92px;height:max-content;background:#fbfaf6;border:1px solid #dfddd6;border-radius:20px;padding:18px;box-shadow:0 8px 24px rgba(38,52,66,.05)}.rail-brand{display:flex;gap:10px;align-items:center;color:#1f3654}.rail-mark{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:#1f3654;color:#fff;font-weight:900}.rail-brand small{display:block;color:#71866e;font-size:10px;margin-top:3px}.rail-label{margin:20px 0 8px;color:#8a918a;font-size:10px;font-weight:900;letter-spacing:.14em}.rail-links{display:grid;gap:5px}.rail-links button,.rail-archive{width:100%;text-align:left;border:0;background:transparent;border-radius:10px;padding:10px;color:#536170;font-size:12px;font-weight:800;cursor:pointer}.rail-links button:hover,.rail-links button:focus-visible,.rail-archive:hover,.rail-archive:focus-visible{background:#edf2ea;color:#1f3654}.workspace-main{max-width:none;margin:0;padding:0}.workspace-insights{min-height:100px}.insight-row{display:grid;gap:4px}.insight-track{height:6px;border-radius:99px;background:#e8e8e2;overflow:hidden}.insight-track span{display:block;height:100%;background:#91a48e;border-radius:inherit;transition:width .3s ease}.quick-practice{display:grid;gap:7px;margin-top:14px}.quick-practice button{border:1px solid #d8ddd5;background:#fff;border-radius:10px;padding:9px;text-align:left;color:#1f3654;font-size:11px;font-weight:800;cursor:pointer}.quick-practice button:hover,.quick-practice button:focus-visible{border-color:#d9823b;background:#fffaf5}@media(max-width:1100px){.workspace-layout{grid-template-columns:190px minmax(0,1fr)}.workspace-layout>#workspace-insights{grid-column:2}.workspace-rail{padding:14px}}@media(max-width:760px){.workspace-layout{display:block;padding:12px}.workspace-rail{position:static;margin-bottom:12px;display:flex;align-items:center;gap:8px;overflow:auto}.rail-brand,.rail-label,.rail-archive{display:none}.rail-links{display:flex;min-width:max-content}.rail-links button{white-space:nowrap;padding:9px 12px}.workspace-main{width:100%}}@media(prefers-reduced-motion:reduce){.insight-track span{transition:none}}`;
+    style.textContent = `.workspace-layout{display:grid;grid-template-columns:220px minmax(0,1fr) 280px;gap:24px;max-width:1440px;margin:0 auto;padding:24px}.workspace-rail{position:sticky;top:92px;height:max-content;background:#fbfaf6;border:1px solid #dfddd6;border-radius:20px;padding:18px;box-shadow:0 8px 24px rgba(38,52,66,.05)}.rail-brand{display:flex;gap:10px;align-items:center;color:#1f3654}.rail-mark{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:#1f3654;color:#fff;font-weight:900}.rail-brand small{display:block;color:#71866e;font-size:10px;margin-top:3px}.rail-label{margin:20px 0 8px;color:#8a918a;font-size:10px;font-weight:900;letter-spacing:.14em}.rail-links{display:grid;gap:5px}.rail-links button,.rail-archive{width:100%;text-align:left;border:0;background:transparent;border-radius:10px;padding:10px;color:#536170;font-size:12px;font-weight:800;cursor:pointer}.rail-links button:hover,.rail-links button:focus-visible,.rail-archive:hover,.rail-archive:focus-visible{background:#edf2ea;color:#1f3654}.workspace-main{max-width:none;margin:0;padding:0}.workspace-insights{min-height:100px}.insight-row{display:grid;gap:4px}.insight-track{height:6px;border-radius:99px;background:#e8e8e2;overflow:hidden}.insight-track span{display:block;height:100%;background:#91a48e;border-radius:inherit;transition:width .3s ease}.quick-practice{display:grid;gap:7px;margin-top:14px}.quick-practice button{border:1px solid #d8ddd5;background:#fff;border-radius:10px;padding:9px;text-align:left;color:#1f3654;font-size:11px;font-weight:800;cursor:pointer}.quick-practice button:hover,.quick-practice button:focus-visible{border-color:#d9823b;background:#fffaf5}.practice-session{position:fixed;inset:0;z-index:100;background:rgba(31,54,84,.28);display:grid;place-items:center;padding:18px}.practice-session-card{width:min(620px,100%);max-height:90vh;overflow:auto;background:#fcfbf8;border:1px solid #dfddd6;border-radius:22px;padding:24px;box-shadow:0 20px 60px rgba(31,54,84,.25)}.practice-session-close{width:40px;height:40px;border:1px solid #d8ddd5;border-radius:12px;background:#fff;color:#536170;font-size:24px;line-height:1}.practice-session-answer{border-top:1px solid #e4e1da;padding-top:14px;color:#536170;line-height:1.7}.practice-session-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.practice-session-actions button{border:1px solid #d8ddd5;border-radius:10px;background:#fff;color:#1f3654;padding:10px 14px;font-weight:800;cursor:pointer}.practice-session-actions button.primary{background:#d9823b;color:#fff;border-color:#d9823b}@media(max-width:760px){.workspace-layout{display:block;padding:12px}.workspace-rail{position:static;margin-bottom:12px;display:flex;align-items:center;gap:8px;overflow:auto}.rail-brand,.rail-label,.rail-archive{display:none}.rail-links{display:flex;min-width:max-content}.rail-links button{white-space:nowrap;padding:9px 12px}.workspace-main{width:100%}}@media(prefers-reduced-motion:reduce){.insight-track span{transition:none}.practice-session{transition:none}}`;
     document.head.appendChild(style);
     const shell = document.createElement('div'); shell.className = 'workspace-layout';
     main.parentNode.insertBefore(shell, rail); shell.appendChild(rail); shell.appendChild(main);
@@ -172,7 +188,9 @@
       if (action === 'speak') window.speakText?.(target);
       if (action === 'mastered') window.toggleMastered?.(target, Number(target.dataset.legacyIndex || 0));
       if (action === 'random') window.randomPractice?.(target.dataset.content);
+      if (action === 'practice') practiceAction(target.dataset.practiceAction);
     });
+    document.addEventListener('click', event => { const target = event.target.closest('[data-practice-mode]'); if (target) quickPractice(target.dataset.practiceMode); });
     document.addEventListener('input', event => {
       const target = event.target.closest('[data-action="filter"]');
       if (target) window.filterInterviewCards?.(target, target.dataset.content);
@@ -197,6 +215,12 @@
   window.addEventListener('DOMContentLoaded', () => { buildQuestionRegistry(); migrateLegacy(); mountWorkspaceShell(); enhanceAccordionA11y(); installDelegatedInteractions(); renderInsights(); }, { once: true });
   window.addEventListener('interview-state-change', renderInsights);
   window.addEventListener('keydown', event => {
+    if (practiceSession && !['INPUT', 'TEXTAREA'].includes(event.target.tagName)) {
+      if (event.key === 'Escape') return closePractice();
+      if (event.key === 'Enter') return practiceAction('reveal');
+      if (event.key.toLowerCase() === 'm') return practiceAction('master');
+      if (event.key.toLowerCase() === 'n') return practiceAction('next');
+    }
     if (event.key !== 'Escape') return;
     const drawer = document.getElementById('archive-drawer');
     if (drawer?.classList.contains('open') && typeof window.toggleArchive === 'function') {
