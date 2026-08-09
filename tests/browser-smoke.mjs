@@ -65,7 +65,11 @@ assert.equal(dom.window.InterviewState.getQuestion(firstCard?.dataset.questionId
 const quick = document.querySelector('#workspace-insights [data-practice-mode="unmastered"]');
 quick?.click();
 assert.ok(document.querySelector('#practice-session'), 'continuous practice session opens');
-document.querySelector('#practice-session [data-practice-action="reveal"]')?.click();
+const spaceEvent = new dom.window.KeyboardEvent('keydown', { key: ' ' });
+dom.window.dispatchEvent(spaceEvent);
+assert.ok(!document.querySelector('#practice-session .practice-session-answer')?.classList.contains('hidden'), 'space reveals practice answer');
+dom.window.dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 't' }));
+assert.ok(document.querySelector('.timer-display.timer-active'), 'T starts the current question timer');
 assert.ok(!document.querySelector('#practice-session .practice-session-answer')?.classList.contains('hidden'), 'practice answer reveals');
 document.querySelector('#practice-session [data-practice-action="next"]')?.click();
 assert.ok(document.querySelector('#practice-session'), 'practice advances to next question');
