@@ -6,6 +6,7 @@
   const VALID_COMPANIES = new Set(['asml', 'assembly', 'fstech', 'benq', 'micron', 'swancor', 'skyeuv']);
   const memoryStore = new Map();
   let practiceSession = null;
+  let practiceTrigger = null;
   const state = {
     schemaVersion: 2,
     activeCompanyId: 'asml',
@@ -116,11 +117,11 @@
     const card = practiceSession.cards[practiceSession.index];
     const question = card.querySelector(':scope > button span')?.textContent?.replace(/必練\s*\d+\s*/, '').trim() || '面試題目';
     const answer = card.querySelector('.accordion-inner')?.innerHTML || '<p>請回到題卡查看參考答案。</p>';
-    panel.innerHTML = `<div class="practice-session-card"><div class="flex items-center justify-between gap-3"><span class="text-xs font-black tracking-widest text-slate-500">連續練習 · ${practiceSession.index + 1}/${practiceSession.cards.length}</span><button data-action="practice" data-practice-action="close" class="practice-session-close" aria-label="關閉練習">×</button></div><h2 class="mt-4 text-xl font-black text-slate-800">${question}</h2><div class="practice-session-answer ${practiceSession.revealed ? '' : 'hidden'} mt-4">${answer}</div><div class="practice-session-actions"><button data-action="practice" data-practice-action="reveal">${practiceSession.revealed ? '收合答案' : '揭露參考答案'}</button><button data-action="practice" data-practice-action="master">${getQuestion(card.dataset.questionId).mastered ? '取消已掌握' : '標記已掌握'}</button><button data-action="practice" data-practice-action="next" class="primary">下一題</button></div><p class="mt-3 text-xs text-slate-500">快捷鍵：Enter 揭露答案 · M 標記掌握 · N 下一題 · Esc 關閉</p></div>`;
+    panel.innerHTML = `<div class="practice-session-card"><div class="flex items-center justify-between gap-3"><span class="text-xs font-black tracking-widest text-slate-500">連續練習 · ${practiceSession.index + 1}/${practiceSession.cards.length}</span><button data-action="practice" data-practice-action="close" class="practice-session-close" aria-label="關閉練習">×</button></div><h2 class="mt-4 text-xl font-black text-slate-800">${question}</h2><div class="practice-session-answer ${practiceSession.revealed ? '' : 'hidden'} mt-4">${answer}</div><div class="practice-session-actions"><button data-action="practice" data-practice-action="reveal">${practiceSession.revealed ? '收合答案' : '揭露參考答案'}</button><button data-action="practice" data-practice-action="master">${getQuestion(card.dataset.questionId).mastered ? '取消已掌握' : '標記已掌握'}</button><button data-action="practice" data-practice-action="next" class="primary">下一題</button></div><p class="mt-3 text-xs text-slate-500">快捷鍵：Space／Enter 揭露答案 · M 標記掌握 · N 下一題 · T 計時 · Esc 關閉</p></div>`;
     panel.querySelector('[data-practice-action="reveal"]')?.focus();
   };
-  const closePractice = () => { document.getElementById('practice-session')?.remove(); practiceSession = null; };
-  const quickPractice = mode => { const cards = practiceCards(mode); if (!cards.length) return; practiceSession = { mode, cards, index: Math.floor(Math.random() * cards.length), revealed: false }; renderPracticeSession(); };
+  const closePractice = () => { document.getElementById('practice-session')?.remove(); practiceSession = null; practiceTrigger?.focus?.(); practiceTrigger = null; };
+  const quickPractice = mode => { const cards = practiceCards(mode); if (!cards.length) return; practiceTrigger = document.activeElement; practiceSession = { mode, cards, index: Math.floor(Math.random() * cards.length), revealed: false }; renderPracticeSession(); };
   const renderGlobalResults = term => {
     const results = document.getElementById('global-search-results');
     if (!results) return;
@@ -293,9 +294,10 @@
   window.addEventListener('keydown', event => {
     if (practiceSession && !['INPUT', 'TEXTAREA'].includes(event.target.tagName)) {
       if (event.key === 'Escape') return closePractice();
-      if (event.key === 'Enter') return practiceAction('reveal');
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); return practiceAction('reveal'); }
       if (event.key.toLowerCase() === 'm') return practiceAction('master');
       if (event.key.toLowerCase() === 'n') return practiceAction('next');
+      if (event.key.toLowerCase() === 't') return practiceSession.cards[practiceSession.index]?.querySelector('[data-action="timer"]')?.click();
     }
     if (event.key !== 'Escape') return;
     const drawer = document.getElementById('archive-drawer');
