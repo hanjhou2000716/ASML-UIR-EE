@@ -290,7 +290,7 @@
                 document.querySelectorAll('.qa-card > button').forEach(button => button.setAttribute('aria-expanded', 'false'));
                 switchCompany(window.InterviewState?.state.activeCompanyId || 'asml');
             };
-            window.setTimeout(startRoleBanks, 3000);
+            window.setTimeout(startRoleBanks, 10000);
         });
 
         function ensureRoleBanks() {
