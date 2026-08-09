@@ -465,6 +465,16 @@
             const section = document.getElementById('section-' + companyId);
             if(!section) return;
             if (window.LegacyQuestionData?.companies?.[companyId]) window.renderLegacyCategory?.(companyId, subTabId);
+            if (!document.getElementById(`content-${companyId}-${subTabId}`) && section._categoryRegistry) {
+                const category = section._categoryRegistry.find(item => item.id === subTabId);
+                if (category && window.InterviewRenderer) {
+                    section.insertAdjacentHTML('beforeend', window.InterviewRenderer.renderCategory(companyId, category, 1));
+                    injectPracticeTools();
+                    window.AppIcons?.hydrate(section);
+                    window.InterviewState?.migrateLegacy?.();
+                    window.enhanceInterviewA11y?.();
+                }
+            }
             
             section.querySelectorAll('.sub-content').forEach(el => {
                 el.classList.add('hidden');

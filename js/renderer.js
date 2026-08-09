@@ -20,7 +20,8 @@
     const categories = company.categories || [];
     const first = firstCategoryId || categories.find(category => category.questions?.length)?.id || categories[0]?.id;
     const nav = categories.map(category => `<button data-action="switch-subtab" data-company="${escapeHtml(companyId)}" data-category="${escapeHtml(category.id)}" id="tab-${escapeHtml(companyId)}-${escapeHtml(category.id)}" role="tab" class="btn-press sub-tab-btn ${escapeHtml(theme)} ${category.id === first ? 'active' : ''}" aria-controls="content-${escapeHtml(companyId)}-${escapeHtml(category.id)}" aria-selected="${category.id === first ? 'true' : 'false'}">${window.AppIcons?.render(category.icon || 'grid', { className: 'mr-1' }) || ''}${escapeHtml(category.label)}</button>`).join('');
-    section.innerHTML = `<nav class="section-nav flex overflow-x-auto hide-scrollbar pb-4 gap-2" role="tablist" aria-label="${escapeHtml(company.name)} 題庫分類">${nav}</nav>${categories.map((category, index) => renderCategory(companyId, category, index)).join('')}`;
+    section.innerHTML = `<nav class="section-nav flex overflow-x-auto hide-scrollbar pb-4 gap-2" role="tablist" aria-label="${escapeHtml(company.name)} 題庫分類">${nav}</nav>${first ? renderCategory(companyId, categories.find(category => category.id === first), 0) : ''}`;
+    section._categoryRegistry = categories;
     window.AppIcons?.hydrate(section);
     section.dataset.rendered = 'true';
     section.dataset.renderedCategories = first || '';
