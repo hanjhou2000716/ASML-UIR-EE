@@ -506,6 +506,7 @@
             const drawer = document.getElementById('archive-drawer');
             const isOpen = drawer.classList.toggle('open');
             drawer.setAttribute('aria-hidden', String(!isOpen));
+            drawer.toggleAttribute('inert', !isOpen);
             document.querySelectorAll('[aria-controls="archive-drawer"]').forEach(button => button.setAttribute('aria-expanded', String(isOpen)));
         }
 

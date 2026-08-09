@@ -5,7 +5,8 @@
   "scripts": {
     "build:css": "tailwindcss -i assets/tailwind.css -o assets/tailwind.generated.css --minify",
     "validate": "npm run build:css && node tests/validate.mjs && node tests/state.mjs && node tests/browser-smoke.mjs",
-    "visual": "node tests/visual.mjs"
+    "visual": "node tests/visual.mjs",
+    "a11y": "node tests/a11y.mjs"
   },
   "devDependencies": {
     "axe-core": "^4.10.2",
