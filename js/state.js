@@ -173,6 +173,7 @@
     window.InterviewQuestionRegistry = registry;
     return registry;
   };
+  window.refreshInterviewQuestionRegistry = buildQuestionRegistry;
   const installDelegatedInteractions = () => {
     document.addEventListener('click', event => {
       const target = event.target.closest('[data-action]');
