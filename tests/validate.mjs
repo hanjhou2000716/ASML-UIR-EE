@@ -9,6 +9,7 @@ assert.match(html, /id="section-(asml|assembly|fstech|benq)"/);
 assert.match(html, /section-benq/);
 assert.match(html, /rel="icon"[^>]+interview-app\.jpg/);
 assert.match(html, /js\/legacy-sections\.js/);
+assert.match(html, /js\/renderer\.js/);
 assert.match(html, /js\/icons\.js/);
 assert.doesNotMatch(html, /setTimeout\(startRoleBanks/);
 assert.match(state, /InterviewQuestionRegistry\?\.companies/);
@@ -41,5 +42,6 @@ assert.ok(fs.existsSync(new URL('../assets/tailwind.generated.css', import.meta.
 execFileSync(process.execPath, ['--check', 'js/state.js'], { stdio: 'inherit' });
 execFileSync(process.execPath, ['--check', 'js/icons.js'], { stdio: 'inherit' });
 execFileSync(process.execPath, ['--check', 'js/legacy-sections.js'], { stdio: 'inherit' });
+execFileSync(process.execPath, ['--check', 'js/renderer.js'], { stdio: 'inherit' });
 execFileSync(process.execPath, ['--check', 'js/legacy-data.js'], { stdio: 'inherit' });
 console.log('Interview workspace validation passed.');
