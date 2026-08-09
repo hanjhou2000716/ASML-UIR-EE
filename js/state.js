@@ -44,16 +44,9 @@
     Object.assign(state, normalise(candidate));
     const legacyActive = storageGet(LEGACY_ACTIVE);
     if (!candidate && VALID_COMPANIES.has(legacyActive)) state.activeCompanyId = legacyActive;
-    const legacyIds = new Map();
     document.querySelectorAll('.qa-card').forEach(card => {
-      const content = card.closest('.sub-content')?.id?.replace(/^content-/, '').split('-') || [];
-      const company = content.shift() || 'legacy';
-      const category = content.join('-') || 'general';
-      const fallback = card.id || card.dataset.legacyKey || `legacy.${company}.${category}.unregistered`;
-      const occurrence = legacyIds.get(fallback) || 0;
-      legacyIds.set(fallback, occurrence + 1);
-      const id = card.dataset.questionId || `${fallback}${occurrence ? `-${occurrence + 1}` : ''}`;
-      card.dataset.questionId = id;
+      const id = card.dataset.questionId;
+      if (!id) return;
       if (!candidate) {
         const old = storageGet(`${LEGACY_PREFIX}${id}`) === 'true';
         if (old) state.questions[id] = { mastered: true, attemptedCount: 0, practiceCount: 0, lastPracticedAt: null };
