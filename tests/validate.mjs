@@ -7,6 +7,7 @@ const state = fs.readFileSync(new URL('../js/state.js', import.meta.url), 'utf8'
 const legacy = fs.readFileSync(new URL('../js/legacy-data.js', import.meta.url), 'utf8');
 assert.match(html, /id="section-(asml|assembly|fstech|benq)"/);
 assert.match(html, /section-benq/);
+assert.match(html, /rel="icon"[^>]+interview-app\.jpg/);
 assert.match(html, /js\/legacy-sections\.js/);
 for (const id of ['asml', 'micron', 'swancor', 'skyeuv']) assert.match(legacy, new RegExp(`"${id}"`));
 const questionIds = [...legacy.matchAll(/"id":"([^"]+)"/g)].map(match => match[1]).filter(id => id.split('.').length >= 3);
