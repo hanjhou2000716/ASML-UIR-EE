@@ -114,6 +114,25 @@
     main.parentNode.insertBefore(shell, rail); shell.appendChild(rail); shell.appendChild(main);
     const context = document.createElement('aside'); context.id = 'workspace-context'; context.className = 'workspace-context'; context.setAttribute('aria-label', '練習進度與快速操作'); shell.appendChild(context);
   };
+  const enhanceAccordionA11y = () => {
+    document.querySelectorAll('.qa-card > button').forEach((button, index) => {
+      const wrapper = button.nextElementSibling;
+      if (!wrapper?.classList.contains('accordion-wrapper')) return;
+      const id = wrapper.id || `accordion-${index + 1}`;
+      wrapper.id = id;
+      button.setAttribute('aria-controls', id);
+      button.setAttribute('aria-expanded', String(wrapper.classList.contains('open')));
+      button.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); window.toggleCard?.(button); button.setAttribute('aria-expanded', String(wrapper.classList.contains('open'))); }
+      });
+    });
+    const originalExpandAll = window.expandAll;
+    if (typeof originalExpandAll === 'function' && !originalExpandAll.__a11yWrapped) {
+      const wrapped = () => { originalExpandAll(); document.querySelectorAll('.company-section.block .qa-card > button').forEach(button => button.setAttribute('aria-expanded', 'true')); };
+      wrapped.__a11yWrapped = true;
+      window.expandAll = wrapped;
+    }
+  };
   const api = { KEY, state, migrateLegacy, getQuestion, mark, toggle, save };
   window.InterviewState = api;
   window.toggleMastered = (button, legacyIndex = 0) => {
@@ -130,6 +149,6 @@
       button.innerHTML = `<i class="fas fa-check"></i> ${record.mastered ? '已掌握' : '標記掌握'}`;
     }
   };
-  window.addEventListener('DOMContentLoaded', () => { migrateLegacy(); mountWorkspaceShell(); renderInsights(); }, { once: true });
+  window.addEventListener('DOMContentLoaded', () => { migrateLegacy(); mountWorkspaceShell(); enhanceAccordionA11y(); renderInsights(); }, { once: true });
   window.addEventListener('interview-state-change', renderInsights);
 })();
