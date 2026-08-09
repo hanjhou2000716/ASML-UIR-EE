@@ -12,7 +12,10 @@ dom.window.HTMLElement.prototype.scrollIntoView = () => {};
 dom.window.scrollTo = () => {};
 assert.ok(document.querySelector('#workspace-rail'), 'workspace rail mounted');
 assert.ok(document.querySelector('#workspace-context'), 'workspace context mounted');
-for (const id of ['asml', 'micron', 'swancor', 'skyeuv']) assert.ok(document.querySelectorAll(`#section-${id} .qa-card`).length > 0, `${id} questions rendered`);
+for (const id of ['asml', 'micron', 'swancor', 'skyeuv']) {
+  dom.window.switchCompany?.(id);
+  assert.ok(document.querySelectorAll(`#section-${id} .qa-card`).length > 0, `${id} questions rendered`);
+}
 assert.equal(document.querySelectorAll('[onclick],[oninput]').length, 0, 'no inline handlers');
 const ids = [...document.querySelectorAll('.qa-card[data-question-id]')].map(card => card.dataset.questionId);
 assert.equal(ids.length, new Set(ids).size, 'runtime question IDs unique');

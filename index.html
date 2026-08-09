@@ -664,6 +664,7 @@
             });
             const targetSection = document.getElementById('section-' + companyId);
             if(targetSection) {
+                if (window.LegacyQuestionData?.companies?.[companyId]) window.renderLegacyCompany?.(companyId);
                 targetSection.classList.remove('hidden');
                 targetSection.classList.add('block');
                 targetSection.removeAttribute('hidden');
