@@ -16,4 +16,6 @@ assert.equal(record.attemptedCount, 1);
 assert.equal(record.practiceCount, 1);
 assert.ok(record.lastPracticedAt);
 assert.equal(window.InterviewState.getQuestion('benq.tech.spc-purpose').mastered, true);
+assert.equal(window.InterviewState.state.practiceHistory.length, 1);
+assert.equal(window.InterviewState.state.practiceHistory[0].questionId, 'benq.tech.spc-purpose');
 console.log('State schema smoke passed.');
