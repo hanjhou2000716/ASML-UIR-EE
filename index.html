@@ -1842,6 +1842,7 @@
                 return `<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button onclick="toggleCard(this)" class="btn-press w-full p-4 text-left flex justify-between gap-3 items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">必練 ${String(index + 1).padStart(2, '0')}</span><br>${question}</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 leading-relaxed"><p>${answer}</p><p class="mt-3 rounded-lg bg-[#f5f4f0] px-3 py-2 text-[12px] text-slate-600"><b class="text-[#1f3654]">面試提醒：</b>${tip}</p></div></div></div></div>`;
             }
 
+            window.InterviewQuestionBanks = banks;
             Object.entries(banks).forEach(([companyId, config]) => {
                 const section = document.getElementById(`section-${companyId}`);
                 if (!section) return;
@@ -1997,13 +1998,6 @@
                 activeCompany.querySelectorAll('.accordion-wrapper').forEach(w => w.classList.add('open'));
                 activeCompany.querySelectorAll('.fa-chevron-down').forEach(i => i.style.transform = 'rotate(180deg)');
             }
-        }
-
-        function preparePrint() {
-            expandAll();
-            setTimeout(() => {
-                window.print();
-            }, 400);
         }
 
         function scrollToTop() {

@@ -11,6 +11,7 @@ assert.doesNotMatch(state, /interview-mastered-\$\{index\}/);
 assert.match(state, /migrateLegacy/);
 assert.match(html, /prefers-reduced-motion/);
 assert.match(html, /aria-label/);
+assert.doesNotMatch(html, /function preparePrint/);
 const cdnCount = (html.match(/https:\/\/cdn\.tailwindcss\.com/g) || []).length;
 assert.equal(cdnCount, 1, 'legacy CDN remains as a tracked migration item');
 execFileSync(process.execPath, ['--check', 'js/state.js'], { stdio: 'inherit' });
