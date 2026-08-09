@@ -6,12 +6,12 @@ Run date: 2026-08-09, headless Chrome, Lighthouse categories: performance, acces
 
 | Metric | Result |
 | --- | ---: |
-| Performance | 86/100 |
-| Accessibility | 96/100 |
-| Best Practices | 96/100 |
-| First Contentful Paint | 1.91 s |
-| Largest Contentful Paint | 1.91 s |
-| Total Blocking Time | 427 ms |
+| Performance | 91/100 |
+| Accessibility | 97/100 |
+| Best Practices | 100/100 |
+| First Contentful Paint | 1.4 s |
+| Largest Contentful Paint | 1.4 s |
+| Total Blocking Time | 360 ms |
 | Cumulative Layout Shift | 0 |
 
-The score is a measured production assessment, not a synthetic readiness or hiring probability. Repeated runs varied from 72–86 because of network/runner variance; the latest run is recorded above. The explicit 90-point target is not yet met. Category-level lazy rendering reduced initial DOM/style work, but style/layout remains the primary performance cost and needs a dedicated profiling pass.
+The score is a measured production assessment, not a synthetic readiness or hiring probability. An earlier run scored 86/100; the latest run above meets the explicit 90-point target. Results can vary with network and runner conditions, so future changes should rerun Lighthouse rather than infer performance from code size alone.
