@@ -427,7 +427,6 @@
                 el.classList.add('hidden');
                 el.classList.remove('block');
                 el.setAttribute('hidden', '');
-                el.style.display = '';
             });
             const targetSection = document.getElementById('section-' + companyId);
             if(targetSection) {
@@ -435,7 +434,6 @@
                 targetSection.classList.remove('hidden');
                 targetSection.classList.add('block');
                 targetSection.removeAttribute('hidden');
-                targetSection.style.display = 'block';
             }
 
             if (window.InterviewState) {
@@ -472,7 +470,6 @@
                 el.classList.add('hidden');
                 el.classList.remove('block');
                 el.setAttribute('hidden', '');
-                el.style.display = '';
             });
             
             section.querySelectorAll('.sub-tab-btn').forEach(el => {
@@ -485,7 +482,6 @@
                 targetContent.classList.remove('hidden');
                 targetContent.classList.add('block');
                 targetContent.removeAttribute('hidden');
-                targetContent.style.display = 'block';
             }
             
             const activeBtn = document.getElementById(`tab-${companyId}-${subTabId}`);
@@ -578,14 +574,14 @@
             const willOpen = !wrapper.classList.contains('open');
             wrapper.classList.toggle('open', willOpen);
             button.setAttribute('aria-expanded', String(willOpen));
-            if (icon) icon.style.transform = willOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+            if (icon) icon.classList.toggle('is-rotated', willOpen);
         }
 
         function expandAll() {
             const activeCompany = document.querySelector('.company-section.block');
             if(activeCompany){
                 activeCompany.querySelectorAll('.accordion-wrapper').forEach(w => w.classList.add('open'));
-                activeCompany.querySelectorAll('.app-icon').forEach(i => i.style.transform = 'rotate(180deg)');
+                activeCompany.querySelectorAll('.app-icon').forEach(i => i.classList.add('is-rotated'));
             }
         }
 
