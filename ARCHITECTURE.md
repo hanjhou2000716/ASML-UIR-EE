@@ -3,18 +3,18 @@
 ## Runtime flow
 
 ```text
-Question bank (deployRoleQuestionBanks)
+Question bank (deployRoleQuestionBanks + explicit role IDs)
         ↓
-DOM renderer (company/category sections)
+Unified runtime renderer + legacy data adapter
         ↓
-Stable question identity (company.category.content-digest)
+Stable question identity (explicit immutable registry IDs)
         ↓
 InterviewState schema v2
         ↓
 Progress insights and practice actions
 ```
 
-The current site remains a modular vanilla-JavaScript application so it can be served directly by GitHub Pages. `index.html` owns the existing content renderer; `js/state.js` owns persistence, migration, analytics and the workspace shell. New state must never depend on DOM order.
+The current site remains a modular vanilla-JavaScript application so it can be served directly by GitHub Pages. `index.html` owns role-bank composition, `js/legacy-sections.js` adapts structured legacy records, and `js/state.js` owns persistence, migration, analytics and the workspace shell. Runtime UI icons are supplied by the trusted inline SVG registry in `js/icons.js`; runtime FontAwesome nodes are hydrated away. New state must never depend on DOM order or question-text digests.
 
 The workspace shell also provides cross-company search, a current-category status filter (all/unmastered/practiced/mastered), and a confirmed local progress reset. Search results retain company, category, and stable question ID context so selecting a result returns to the source card.
 
@@ -26,7 +26,7 @@ The workspace shell also provides cross-company search, a current-category statu
   activeCompanyId: 'asml',
   activeCategoryByCompany: {},
   questions: {
-    'benq.tech.content-digest': {
+    'benq.tech.spc-purpose': {
       mastered: false,
       attemptedCount: 0,
       practiceCount: 0,
@@ -40,8 +40,8 @@ Corrupt JSON, invalid companies and unavailable browser storage fall back to an 
 
 ## Adding content
 
-Add a company/category to the structured bank in `deployRoleQuestionBanks()`, keep each question as `[question, answer, tip]`, and ensure the category has at least ten questions. The renderer publishes the bank as `window.InterviewQuestionBanks`; the state layer derives stable IDs from company, category and prompt content.
+Add a company/category to the structured bank in `deployRoleQuestionBanks()`, keep each question as `[question, answer, tip]`, and add its immutable ID to `roleQuestionIds`. Ensure the category has at least ten questions. The renderer publishes the bank as `window.InterviewQuestionBanks`; the state layer consumes the explicit ID manifest.
 
 Run `npm run validate` before opening a PR. The workflow in `.github/workflows/validate.yml` is the merge gate.
 
-The browser smoke suite covers company/category navigation, cross-company search, status filtering, reset confirmation, keyboard/ARIA behavior, practice sessions, speech fallback, archive state, and axe critical/serious violations.
+The browser smoke suite covers company/category navigation, cross-company search, status filtering, reset confirmation, keyboard/ARIA behavior, practice sessions, speech fallback, archive state, and axe critical/serious violations. `npm run visual` runs real Chromium at 360, 390, 768, 1024 and 1440px, captures main/BenQ/practice/archive states, and gates visible SVG geometry, tab touch height, sticky layout and horizontal overflow.

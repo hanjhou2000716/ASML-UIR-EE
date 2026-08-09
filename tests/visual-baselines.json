@@ -1,0 +1,9 @@
+{
+  "viewports": [360, 390, 768, 1024, 1440],
+  "states": ["main", "benq", "practice", "archive"],
+  "geometry": {
+    "categoryTabMinHeight": 44,
+    "zeroSizedVisibleIcons": 0,
+    "horizontalOverflow": false
+  }
+}

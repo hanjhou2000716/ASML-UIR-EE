@@ -16,6 +16,7 @@
     <link rel="manifest" href="manifest.webmanifest">
     
     <link rel="stylesheet" href="assets/tailwind.generated.css">
+    <link rel="stylesheet" href="assets/app.css">
     <!-- Icons and fonts intentionally use local/system fallbacks for offline-safe Pages rendering. -->
     
     <style>
@@ -30,6 +31,7 @@
             --accent-sage: #91a48e;
             --accent-orange: #d9823b;
         }
+        html, body { overflow-x: clip; }
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
             background: radial-gradient(circle at 10% -10%, rgba(145,164,142,.16), transparent 30rem), var(--app-bg);
@@ -38,6 +40,11 @@
             padding-bottom: env(safe-area-inset-bottom);
         }
         .fas { font-family: inherit; font-style: normal; display: inline-block; width: 1em; text-align: center; }
+        .app-icon { display: inline-block; width: 1.1em; height: 1.1em; flex: 0 0 auto; vertical-align: -0.16em; }
+        .app-icon-xs { width: .85em; height: .85em; }
+        .app-icon-lg { width: 1.35em; height: 1.35em; }
+        /* Legacy class names are hydration hooks only; never render Unicode glyph fallbacks. */
+        .fas::before, .far::before, .fab::before, [class*=" fa-"]::before { content: none !important; }
         .fa-chevron-down::before { content: '⌄'; }
         .fa-chevron-up::before { content: '⌃'; }
         .fa-search::before { content: '⌕'; }
@@ -75,6 +82,7 @@
             border: 1px solid #e2e8f0;
             background: #ffffff;
             color: #64748b;
+            min-height: 44px;
         }
         .sub-tab-btn.active { border-color: transparent; }
         .sub-tab-btn.active.asml-theme { background: var(--asml-color); color: #ffffff; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
@@ -290,12 +298,9 @@
         let roleBanksReady = false;
 
         window.addEventListener('DOMContentLoaded', () => {
-            const startRoleBanks = () => {
-                ensureRoleBanks();
-                document.querySelectorAll('.qa-card > button').forEach(button => button.setAttribute('aria-expanded', 'false'));
-                switchCompany(window.InterviewState?.state.activeCompanyId || 'asml');
-            };
-            window.setTimeout(startRoleBanks, 10000);
+            ensureRoleBanks();
+            document.querySelectorAll('.qa-card > button').forEach(button => button.setAttribute('aria-expanded', 'false'));
+            switchCompany(window.InterviewState?.state.activeCompanyId || 'asml');
         });
 
         function ensureRoleBanks() {
@@ -303,6 +308,7 @@
             deployRoleQuestionBanks();
             roleBanksReady = true;
             injectPracticeTools();
+            window.AppIcons?.hydrate(document);
             window.InterviewState?.migrateLegacy?.();
             window.refreshInterviewQuestionRegistry?.();
         }
@@ -423,6 +429,12 @@
                 ['script', '專屬劇本', 'fa-scroll'], ['tech', '專業邏輯', 'fa-wrench'], ['product', '職務速覽', 'fa-microchip'],
                 ['motiv', '動機特質', 'fa-fire'], ['behav', '經歷行為', 'fa-briefcase'], ['sit', '情境應變', 'fa-shield-alt'], ['combat', '實戰攻防', 'fa-bolt']
             ];
+            const roleQuestionIds = {
+                assembly: { script: ['assembly.script.overview','assembly.script.progress-plan','assembly.script.cleanroom-discipline','assembly.script.quality-gate','assembly.script.installation-risk','assembly.script.transfer'], tech: ['assembly.tech.test-result','assembly.tech.qualification','assembly.tech.interface','assembly.tech.recurring-issue','assembly.tech.report','assembly.tech.calibration'], product: ['assembly.product.installation','assembly.product.integration','assembly.product.workflow','assembly.product.prototype','assembly.product.customer'], motiv: ['assembly.motiv.ownership','assembly.motiv.learning','assembly.motiv.cross-team','assembly.motiv.stress','assembly.motiv.travel'], behav: ['assembly.behav.issue-analysis','assembly.behav.vendor-partner','assembly.behav.knowledge-share','assembly.behav.feedback','assembly.behav.leadership'], sit: ['assembly.sit.schedule-slip','assembly.sit.test-fail','assembly.sit.interference','assembly.sit.leak','assembly.sit.escalation'], combat: ['assembly.combat.root-cause','assembly.combat.quality-risk','assembly.combat.communication','assembly.combat.customer','assembly.combat.improvement'] },
+                fstech: { script: ['fstech.script.intro','fstech.script.process-fit','fstech.script.shift','fstech.script.transition','fstech.script.goal'], tech: ['fstech.tech.abnormality','fstech.tech.spc','fstech.tech.8d','fstech.tech.capability','fstech.tech.data'], product: ['fstech.product.yield','fstech.product.cost','fstech.product.sop','fstech.product.quality','fstech.product.support'], motiv: ['fstech.motiv.motivation','fstech.motiv.improvement','fstech.motiv.pressure','fstech.motiv.learning','fstech.motiv.future'], behav: ['fstech.behav.issue','fstech.behav.vendor','fstech.behav.cross-team','fstech.behav.feedback','fstech.behav.leadership'], sit: ['fstech.sit.abnormality','fstech.sit.capacity','fstech.sit.quality','fstech.sit.cost','fstech.sit.escalation'], combat: ['fstech.combat.process','fstech.combat.kpi','fstech.combat.customer','fstech.combat.change','fstech.combat.challenge'] },
+                benq: { script: ['benq.script.motivation','benq.script.background-fit','benq.script.shift-readiness','benq.script.tsmc-transition','benq.script.first-90-days','benq.script.customer-complaint','benq.script.coating-ramp'], tech: ['benq.tech.abnormality','benq.tech.spc-purpose','benq.tech.8d-fmea-control-plan','benq.tech.roll-to-roll-gap','benq.tech.capability','benq.tech.python-automl','benq.tech.coating-uniformity'], product: ['benq.product.coating-quality','benq.product.automation','benq.product.customer-complaint','benq.product.sop','benq.product.improvement'], motiv: ['benq.motiv.why-coating','benq.motiv.shift','benq.motiv.learning','benq.motiv.ownership','benq.motiv.future'], behav: ['benq.behav.issue-analysis','benq.behav.cross-team','benq.behav.vendor','benq.behav.feedback','benq.behav.shift-handover'], sit: ['benq.sit.customer-complaint','benq.sit.out-of-control','benq.sit.capacity','benq.sit.sop-gap','benq.sit.stop-line'], combat: ['benq.combat.root-cause','benq.combat.kpi','benq.combat.customer','benq.combat.automation','benq.combat.challenge'] }
+            };
+            window.InterviewQuestionIds = roleQuestionIds;
             const banks = {
                 assembly: {
                     name: 'ASML Assembly', eyebrow: 'ASML · FINAL ASSEMBLY',
@@ -655,9 +667,14 @@
                 const expansion = buildExpansion(context);
                 tabs.forEach(([tabId]) => banks[companyId][tabId].push(...expansion[tabId]));
             });
+            Object.entries(banks).forEach(([companyId, config]) => tabs.forEach(([categoryId]) => {
+                const ids = roleQuestionIds[companyId][categoryId] || (roleQuestionIds[companyId][categoryId] = []);
+                while (ids.length < config[categoryId].length) ids.push(`${companyId}.${categoryId}.supplement-${ids.length + 1}`);
+            }));
 
-            function questionCard([question, answer, tip], index) {
-                return `<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button data-action="toggle-card" class="btn-press w-full p-4 text-left flex justify-between gap-3 items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">必練 ${String(index + 1).padStart(2, '0')}</span><br>${question}</span><i class="fas fa-chevron-down text-slate-400"></i></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 leading-relaxed"><p>${answer}</p><p class="mt-3 rounded-lg bg-[#f5f4f0] px-3 py-2 text-[12px] text-slate-600"><b class="text-[#1f3654]">面試提醒：</b>${tip}</p></div></div></div></div>`;
+            function questionCard([question, answer, tip], index, companyId, categoryId) {
+                const questionId = roleQuestionIds[companyId]?.[categoryId]?.[index] || `${companyId}.${categoryId}.unregistered-${index + 1}`;
+                return `<div data-question-id="${questionId}" class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button data-action="toggle-card" class="btn-press w-full p-4 text-left flex justify-between gap-3 items-center"><span class="font-bold text-[14px] text-slate-700"><span class="tag tag-must mb-1">必練 ${String(index + 1).padStart(2, '0')}</span><br>${question}</span>${window.AppIcons?.render('chevron', { className: 'text-slate-400' }) || ''}</button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 text-[13px] text-slate-600 border-t pt-3 leading-relaxed"><p>${answer}</p><p class="mt-3 rounded-lg bg-[#f5f4f0] px-3 py-2 text-[12px] text-slate-600"><b class="text-[#1f3654]">面試提醒：</b>${tip}</p></div></div></div></div>`;
             }
 
             window.InterviewQuestionBanks = banks;
@@ -665,12 +682,12 @@
                 const section = document.getElementById(`section-${companyId}`);
                 if (!section) return;
                 const theme = companyId === 'assembly' ? 'assembly-theme' : companyId === 'benq' ? 'benq-theme' : 'fstech-theme';
-                const navigation = tabs.map(([id, label, icon], index) => `<button data-action="switch-subtab" data-company="${companyId}" data-category="${id}" id="tab-${companyId}-${id}" role="tab" class="btn-press sub-tab-btn ${theme} ${index === 0 ? 'active' : ''} flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2" aria-controls="content-${companyId}-${id}" aria-selected="${index === 0 ? 'true' : 'false'}"><i class="fas ${icon}"></i>${label}</button>`).join('');
+                const navigation = tabs.map(([id, label, icon], index) => `<button data-action="switch-subtab" data-company="${companyId}" data-category="${id}" id="tab-${companyId}-${id}" role="tab" class="btn-press sub-tab-btn ${theme} ${index === 0 ? 'active' : ''} flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold flex items-center gap-2" aria-controls="content-${companyId}-${id}" aria-selected="${index === 0 ? 'true' : 'false'}">${window.AppIcons?.fromClass(icon) || ''}${label}</button>`).join('');
                 const contents = tabs.map(([id], tabIndex) => {
                     const count = config[id].length;
-                    const intro = id === 'script' ? `<div class="workspace-hero rounded-2xl shadow-md p-5 text-white mb-4"><div class="flex items-start justify-between gap-3"><div><p class="text-[11px] font-bold tracking-[.14em] text-[#d8e4d5]">${config.eyebrow}</p><h2 class="text-xl font-black mt-1">${config.title}</h2></div><span class="role-meta"><i class="fas fa-layer-group"></i> ${Object.values(config).filter(Array.isArray).flat().length} 題</span></div><p class="mt-2 text-[13px] text-slate-200 leading-relaxed">${config.summary}</p>${config.jobMeta ? `<div class="mt-4 grid gap-2 sm:grid-cols-2">${config.jobMeta.items.map(item => `<div class="rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-[11px] leading-relaxed text-slate-100">${item}</div>`).join('')}</div>` : ''}</div>` : '';
-                    const toolbar = `<div class="study-toolbar flex items-center gap-2"><div class="search-box-wrapper"><i class="fas fa-search"></i><input type="search" class="study-search" aria-label="搜尋本分組題庫" placeholder="搜尋本分組題目、關鍵字或案例..." data-action="filter" data-content="content-${companyId}-${id}"></div><select class="status-filter" aria-label="篩選練習狀態" data-action="status-filter" data-content="content-${companyId}-${id}"><option value="all">全部</option><option value="unmastered">未掌握</option><option value="practiced">練習過</option><option value="mastered">已掌握</option></select><span class="question-count" data-result-count>${count} 題</span><button data-action="random" data-content="content-${companyId}-${id}" aria-label="隨機抽一題練習" class="btn-press flex-shrink-0 bg-[#d9823b] text-white px-3 py-2 rounded-lg text-xs font-black hover:bg-[#bd6c2e] transition"><i class="fas fa-dice"></i><span class="hidden sm:inline ml-1">抽題</span></button></div>`;
-                    return `<div id="content-${companyId}-${id}" class="sub-content ${tabIndex === 0 ? 'block' : 'hidden'} space-y-3">${intro}${toolbar}${config[id].map(questionCard).join('')}</div>`;
+                    const intro = id === 'script' ? `<div class="workspace-hero rounded-2xl shadow-md p-5 text-white mb-4"><div class="flex items-start justify-between gap-3"><div><p class="text-[11px] font-bold tracking-[.14em] text-[#d8e4d5]">${config.eyebrow}</p><h2 class="text-xl font-black mt-1">${config.title}</h2></div><span class="role-meta">${window.AppIcons?.render('layers') || ''} ${Object.values(config).filter(Array.isArray).flat().length} 題</span></div><p class="mt-2 text-[13px] text-slate-200 leading-relaxed">${config.summary}</p>${config.jobMeta ? `<div class="mt-4 grid gap-2 sm:grid-cols-2">${config.jobMeta.items.map(item => `<div class="rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-[11px] leading-relaxed text-slate-100">${item}</div>`).join('')}</div>` : ''}</div>` : '';
+                    const toolbar = `<div class="study-toolbar flex items-center gap-2"><div class="search-box-wrapper">${window.AppIcons?.render('search') || ''}<input type="search" class="study-search" aria-label="搜尋本分組題庫" placeholder="搜尋本分組題目、關鍵字或案例..." data-action="filter" data-content="content-${companyId}-${id}"></div><select class="status-filter" aria-label="篩選練習狀態" data-action="status-filter" data-content="content-${companyId}-${id}"><option value="all">全部</option><option value="unmastered">未掌握</option><option value="practiced">練習過</option><option value="mastered">已掌握</option></select><span class="question-count" data-result-count>${count} 題</span><button data-action="random" data-content="content-${companyId}-${id}" aria-label="隨機抽一題練習" class="btn-press flex-shrink-0 bg-[#d9823b] text-white px-3 py-2 rounded-lg text-xs font-black hover:bg-[#bd6c2e] transition">${window.AppIcons?.render('random') || ''}<span class="hidden sm:inline ml-1">抽題</span></button></div>`;
+                    return `<div id="content-${companyId}-${id}" class="sub-content ${tabIndex === 0 ? 'block' : 'hidden'} space-y-3">${intro}${toolbar}${config[id].map((entry, index) => questionCard(entry, index, companyId, id)).join('')}</div>`;
                 }).join('');
                 section.innerHTML = `<nav class="section-nav flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4" role="tablist" aria-label="${config.name} 題庫分類">${navigation}</nav>${contents}`;
             });
@@ -854,6 +871,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
+    <script src="js/icons.js" defer></script>
     <script src="js/legacy-data.js" defer></script>
     <script src="js/legacy-sections.js" defer></script>
     <script src="js/state.js" defer></script>
