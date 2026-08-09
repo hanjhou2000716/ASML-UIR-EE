@@ -97,7 +97,7 @@
         }
         
         /* Card Hover Effects */
-        .qa-card { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; background: var(--paper); }
+        .qa-card { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; background: var(--paper); content-visibility: auto; contain-intrinsic-size: 92px; }
         .qa-card:hover { border-color: #cfd7cb; box-shadow: 0 8px 20px rgba(38,52,66,.07); }
         .qa-card:active { transform: scale(0.99); }
 
@@ -117,7 +117,7 @@
 
         /* Weakness review and study tools */
         .weakness-card { border-left: 4px solid #ef4444; background: linear-gradient(135deg,#fff 0%,#fff7ed 100%); }
-        .study-toolbar { position: sticky; top: 102px; z-index: 42; padding: 8px; margin-bottom: 12px; border: 1px solid #dfddd6; border-radius: 14px; background: rgba(252,251,248,.94); backdrop-filter: blur(10px); box-shadow: 0 6px 18px rgba(15,23,42,.06); }
+        .study-toolbar { position: sticky; top: 102px; z-index: 42; padding: 8px; margin-bottom: 12px; border: 1px solid #dfddd6; border-radius: 14px; background: rgba(252,251,248,.97); box-shadow: 0 6px 18px rgba(15,23,42,.06); }
         .study-search { width: 100%; padding: 9px 12px 9px 34px; border: 1px solid #cbd5e1; border-radius: 10px; background: #f8fafc; font-size: 13px; outline: none; }
         .study-search:focus { background:#fff; border-color:#6366f1; box-shadow:0 0 0 3px rgba(99,102,241,.12); }
         .search-box-wrapper { position:relative; flex:1; }
