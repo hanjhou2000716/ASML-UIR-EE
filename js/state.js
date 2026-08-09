@@ -38,13 +38,17 @@
     Object.assign(state, normalise(candidate));
     const legacyActive = storageGet(LEGACY_ACTIVE);
     if (!candidate && VALID_COMPANIES.has(legacyActive)) state.activeCompanyId = legacyActive;
+    const seenIds = new Map();
     document.querySelectorAll('.qa-card').forEach((card, index) => {
       const prompt = card.querySelector('button span')?.textContent?.replace(/\s+/g, ' ').trim() || '';
       const digest = Array.from(prompt).reduce((hash, ch) => ((hash << 5) - hash + ch.charCodeAt(0)) | 0, 0).toString(36).replace('-', 'n');
       const content = card.closest('.sub-content')?.id?.replace(/^content-/, '').split('-') || [];
       const company = content.shift() || 'legacy';
       const category = content.join('-') || 'general';
-      const id = card.dataset.questionId || `${company}.${category}.${digest || index + 1}`;
+      const baseId = `${company}.${category}.${digest || index + 1}`;
+      const occurrence = seenIds.get(baseId) || 0;
+      seenIds.set(baseId, occurrence + 1);
+      const id = card.dataset.questionId || (occurrence ? `${baseId}-${occurrence + 1}` : baseId);
       card.dataset.questionId = id;
       if (!candidate) {
         const old = storageGet(`${LEGACY_PREFIX}${index}`) === 'true';
