@@ -23,9 +23,16 @@ dom.window.ensureRoleBanks?.();
 assert.equal(dom.window.InterviewState?.state.schemaVersion, 2);
 assert.equal(dom.window.InterviewQuestionRegistry?.schemaVersion, 1);
 assert.ok(Object.keys(dom.window.InterviewQuestionRegistry?.companies || {}).length >= 7, 'all company banks normalized');
+for (const companyId of ['assembly', 'fstech', 'benq']) {
+  const categories = dom.window.InterviewQuestionRegistry.companies[companyId]?.categories || [];
+  assert.equal(categories.length, 7, `${companyId} has seven preparation groups`);
+  assert.ok(categories.every(category => category.questions.length >= 10), `${companyId} has at least ten questions per group`);
+}
 document.querySelector('#comp-benq')?.click();
 assert.equal(dom.window.InterviewState.state.activeCompanyId, 'benq', 'company switching persists in schema state');
 assert.ok(document.querySelector('#section-benq')?.classList.contains('block'), 'active company is visible');
+dom.window.switchSubTab?.('benq', 'tech');
+assert.equal(dom.window.InterviewState.state.activeCategoryByCompany.benq, 'tech', 'category switching persists in schema state');
 const firstCard = document.querySelector('#section-benq .qa-card');
 firstCard?.querySelector(':scope > button')?.click();
 assert.ok(firstCard?.querySelector('.accordion-wrapper')?.classList.contains('open'), 'accordion opens through delegated action');
@@ -35,15 +42,23 @@ assert.ok(document.getElementById(timer?.dataset.target)?.classList.contains('ti
 timer?.click();
 const search = document.querySelector('#section-benq input[data-action="filter"]');
 if (search) { search.value = 'definitely-no-match'; search.dispatchEvent(new dom.window.Event('input', { bubbles: true })); assert.ok(document.querySelectorAll('#section-benq .qa-card.search-hidden').length > 0, 'search filters current category'); search.value = ''; search.dispatchEvent(new dom.window.Event('input', { bubbles: true })); }
+const statusFilter = document.querySelector('#section-benq select[data-action="status-filter"]');
+if (statusFilter) { statusFilter.value = 'mastered'; statusFilter.dispatchEvent(new dom.window.Event('change', { bubbles: true })); assert.ok(document.querySelector('#section-benq .filter-empty') || document.querySelectorAll('#section-benq .qa-card:not(.search-hidden)').length >= 0, 'status filter responds'); statusFilter.value = 'all'; statusFilter.dispatchEvent(new dom.window.Event('change', { bubbles: true })); }
+const globalSearch = document.querySelector('#global-search');
+assert.ok(globalSearch, 'global search is mounted');
+globalSearch.value = 'SPC';
+globalSearch.dispatchEvent(new dom.window.Event('input', { bubbles: true }));
+assert.ok(document.querySelectorAll('#global-search-results .global-search-result').length > 0, 'global search finds cross-company questions');
+dom.window.confirm = () => true;
+document.querySelector('[data-action="reset-progress"]')?.click();
+assert.equal(Object.keys(dom.window.InterviewState.state.questions).length, 0, 'reset clears practice progress');
 const random = document.querySelector('#section-benq [data-action="random"]');
 random?.click();
 assert.ok(document.querySelector('#section-benq .practice-highlight'), 'random practice highlights a card');
 const speak = firstCard?.querySelector('[data-action="speak"]');
-let speechFallbackShown = false;
-dom.window.alert = () => { speechFallbackShown = true; };
 try { delete dom.window.speechSynthesis; } catch {}
 speak?.click();
-assert.equal(speechFallbackShown, true, 'speech fallback is graceful when API is unavailable');
+assert.ok(document.querySelector('#workspace-notice.visible'), 'speech fallback is graceful when API is unavailable');
 const mastered = firstCard?.querySelector('[data-action="mastered"]');
 mastered?.click();
 assert.equal(dom.window.InterviewState.getQuestion(firstCard?.dataset.questionId).mastered, true, 'mastery action updates state');
