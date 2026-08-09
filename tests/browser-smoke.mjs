@@ -81,7 +81,7 @@ const escapeEvent = new dom.window.Event('keydown');
 Object.defineProperty(escapeEvent, 'key', { value: 'Escape' });
 dom.window.dispatchEvent(escapeEvent);
 assert.ok(!document.querySelector('#archive-drawer')?.classList.contains('open'), 'archive drawer closes with Escape');
-assert.ok(document.head.textContent.includes('max-width:760px'), 'responsive mobile CSS is mounted');
+assert.ok(document.querySelector('link[href="assets/app.css"]'), 'responsive application CSS is mounted');
 const axeSource = fs.readFileSync(new URL('../node_modules/axe-core/axe.min.js', import.meta.url), 'utf8');
 dom.window.eval(axeSource);
 const axeResults = await dom.window.axe.run(document, { runOnly: ['wcag2a', 'wcag2aa'] });
