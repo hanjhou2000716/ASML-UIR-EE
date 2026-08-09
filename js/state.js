@@ -23,8 +23,10 @@
     next.schemaVersion = 2;
     next.activeCompanyId = VALID_COMPANIES.has(next.activeCompanyId) ? next.activeCompanyId : 'asml';
     next.activeCategoryByCompany = next.activeCategoryByCompany && typeof next.activeCategoryByCompany === 'object' ? next.activeCategoryByCompany : {};
-    next.questions = next.questions && typeof next.questions === 'object' ? next.questions : {};
-    next.practiceHistory = Array.isArray(next.practiceHistory) ? next.practiceHistory.filter(item => item && item.questionId && item.at).slice(-30) : [];
+    const questionMap = window.LegacyQuestionIdMap || {};
+    const rawQuestions = next.questions && typeof next.questions === 'object' ? next.questions : {};
+    next.questions = Object.fromEntries(Object.entries(rawQuestions).map(([id, value]) => [questionMap[id] || id, value]));
+    next.practiceHistory = Array.isArray(next.practiceHistory) ? next.practiceHistory.filter(item => item && item.questionId && item.at).map(item => ({ ...item, questionId: questionMap[item.questionId] || item.questionId })).slice(-30) : [];
     Object.keys(next.questions).forEach(id => {
       const q = next.questions[id] || {};
       next.questions[id] = {
@@ -226,7 +228,11 @@
         label: categoryId,
         icon: '',
         description: '',
-        questions: entries.map(([question, answer, tip], index) => ({ id: window.InterviewQuestionIds?.[companyId]?.[categoryId]?.[index] || `${companyId}.${categoryId}.unregistered-${index + 1}`, question, answerHtml: `<p>${answer}</p><p>${tip || ''}</p>`, tip: tip || '', priority: 'standard', language: /[A-Za-z]/.test(question) && !/[\u4e00-\u9fff]/.test(question) ? 'en' : 'zh-TW', tags: [] }))
+        questions: entries.map(([question, answer, tip], index) => {
+          const id = window.InterviewQuestionIds?.[companyId]?.[categoryId]?.[index];
+          if (!id) throw new Error(`Missing immutable question ID: ${companyId}.${categoryId}[${index}]`);
+          return { id, question, answerHtml: `<p>${answer}</p><p>${tip || ''}</p>`, tip: tip || '', priority: 'standard', language: /[A-Za-z]/.test(question) && !/[\u4e00-\u9fff]/.test(question) ? 'en' : 'zh-TW', tags: [] };
+        })
       }));
       registry.companies[companyId] = { id: companyId, name: config.name || companyId, shortName: companyId, status: 'active', role: '', eyebrow: config.eyebrow || '', title: config.title || '', summary: config.summary || '', accent: 'navy', categories };
     });

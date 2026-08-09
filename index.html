@@ -83,48 +83,6 @@
         <!--                      COMPANY 1: ASML                      -->
         <!-- ========================================================= -->
         <div id="section-asml" class="company-section block"></div>
-        <div id="section-assembly" class="company-section hidden">
-            <nav class="flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4">
-                <button data-action="switch-subtab" data-company="assembly" data-category="script" id="tab-assembly-script" class="btn-press sub-tab-btn assembly-theme active flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">核心劇本</button>
-                <button data-action="switch-subtab" data-company="assembly" data-category="tech" id="tab-assembly-tech" class="btn-press sub-tab-btn assembly-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">整機技術</button>
-                <button data-action="switch-subtab" data-company="assembly" data-category="english" id="tab-assembly-english" class="btn-press sub-tab-btn assembly-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">英文 A4</button>
-                <button data-action="switch-subtab" data-company="assembly" data-category="feedback" id="tab-assembly-feedback" class="btn-press sub-tab-btn assembly-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">回饋校準</button>
-            </nav>
-            <div id="content-assembly-script" class="sub-content block space-y-3">
-                <div class="workspace-hero rounded-2xl p-5 text-white"><p class="text-xs font-bold text-[#d8e4d5]">ASML · FINAL ASSEMBLY</p><h2 class="text-xl font-black mt-1">從組裝到系統穩定：我對結果負責</h2><p class="text-sm text-slate-200 mt-2">定位：具備 PVD 現場實戰、機電基礎與紀律，能用紀錄和驗證把問題推到可執行的改善。</p></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button data-action="toggle-card" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">為什麼想做 Assembly，而不是只做設備維護？</span><span data-icon="chevron" class="text-slate-400"></span></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">我喜歡把零散的模組、校正與功能測試串成一個穩定系統。過去在 PVD 現場讓我知道，一台設備的可用性來自裝配品質、測試紀錄與跨團隊交接；我想把第一線觀察轉為更前端、可複製的整機改善能力。</div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button data-action="toggle-card" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">若進度落後，怎麼回報與挽救？</span><span data-icon="chevron" class="text-slate-400"></span></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed"><b>先結論：</b>我會先確保品質與安全，再提出可量化的新計畫。拆出卡點、影響工序、可平行的工作與需要支援的資源；當天向 team leader 報告現況、風險與選項，確認後追蹤每一項 action，而不是等到最後才說進度落後。</div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button data-action="toggle-card" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">輪班、週末支援、10–30% 出差是否可配合？</span><span data-icon="chevron" class="text-slate-400"></span></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">可以。我理解這是交付整機與客戶支援的一部分；我會事先做好交接、紀錄與體力安排，確保在高壓節奏下仍能維持檢查品質。也會把每次現場經驗整理成可供團隊複用的知識。</div></div></div></div>
-            </div>
-            <div id="content-assembly-tech" class="sub-content hidden space-y-3">
-                <div class="focus-card rounded-2xl p-4"><h3 class="font-black text-[#1f3654]">答題主軸：組裝 → 校正 → 功能測試 → 確認性能 → 完整交接</h3><p class="mt-2 text-sm text-slate-600">回答異常題時，先說安全與規格，再說：讀 test result／log、比對基準、做現場硬體觀察、縮小範圍、與 TS／PE／D&E 協作、提出並驗證方案、留下報告與防再發。</p></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button data-action="toggle-card" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">如何解讀異常 test result？</span><span data-icon="chevron" class="text-slate-400"></span></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">先確認量測條件與 acceptance criteria；再與 golden data／前次結果比對，判斷是單一模組、介面、軟體參數或系統性偏移。我的目標不是猜原因，而是以紀錄把問題縮小到可驗證的假設，再決定是否需要升級支援。</div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button data-action="toggle-card" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">遇到 recurring issue，會如何改善？</span><span data-icon="chevron" class="text-slate-400"></span></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">建立發生條件、影響與暫行措施的紀錄，和相關團隊確認根因；再把改善落到 checklist、SOP、工具防呆或訓練內容。最後追蹤改善後的重複率與工時，確保不是只把問題移到下一站。</div></div></div></div>
-            </div>
-            <div id="content-assembly-english" class="sub-content hidden space-y-3">
-                <div class="focus-card rounded-2xl p-4"><h3 class="font-black text-[#1f3654]">90 秒英文自我介紹</h3><p class="mt-2 text-sm text-slate-600">My background combines mechanical training with hands-on PVD equipment experience in a high-discipline cleanroom environment. I enjoy troubleshooting by checking data, observing hardware, and coordinating with specialists to verify solutions. For Assembly, I can bring execution discipline, a learning mindset, and ownership for system progress.</p></div>
-                <div class="focus-card rounded-2xl p-4 text-sm text-slate-600"><b class="text-[#1f3654]">必練四題：</b> What do you enjoy outside work? ／ Why did you leave TSMC? ／ Are you considering other equipment companies? ／ How would you communicate an assembly issue to an overseas team?</div>
-            </div>
-            <div id="content-assembly-feedback" class="sub-content hidden space-y-3"><div class="focus-card rounded-2xl p-4 text-sm leading-relaxed text-slate-600"><h3 class="font-black text-[#1f3654] mb-2">這個職缺要讓人感受到的特質</h3><p><b>定性：</b>避免「都可以、再看看」；改為「我理解要求，並已評估自己可配合。」</p><p class="mt-2"><b>尊重：</b>先承認資深同仁與主管的專業，再用 test data、現場觀察提出建議。</p><p class="mt-2"><b>主動：</b>不用「Vendor 會處理」；改為「我先完成初步排查與紀錄，讓協作更快找到根因。」</p></div></div>
-        </div>
-
-        <!-- ========================================================= -->
-        <!--                COMPANY: FORMOSA SUMCO TECH               -->
-        <!-- ========================================================= -->
-        <div id="section-fstech" class="company-section hidden">
-            <nav class="flex overflow-x-auto hide-scrollbar pb-4 gap-2 sticky top-[100px] z-40 bg-gradient-to-b from-[var(--app-bg)] via-[var(--app-bg)] to-transparent pt-2 -mx-4 px-4">
-                <button data-action="switch-subtab" data-company="fstech" data-category="script" id="tab-fstech-script" class="btn-press sub-tab-btn fstech-theme active flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">核心劇本</button>
-                <button data-action="switch-subtab" data-company="fstech" data-category="process" id="tab-fstech-process" class="btn-press sub-tab-btn fstech-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">製程改善</button>
-                <button data-action="switch-subtab" data-company="fstech" data-category="case" id="tab-fstech-case" class="btn-press sub-tab-btn fstech-theme flex-shrink-0 px-4 py-2 rounded-full text-[13px] font-bold">案例模板</button>
-            </nav>
-            <div id="content-fstech-script" class="sub-content block space-y-3">
-                <div class="rounded-2xl p-5 text-white shadow-md fstech-hero"><p class="text-xs font-bold text-[#e5eee3]">FORMOSA SUMCO TECHNOLOGY</p><h2 class="text-xl font-black mt-1">量產穩定，是我最想推動的改善。</h2><p class="text-sm text-[#edf3eb] mt-2">定位：把設備現場的問題感轉成數據化的製程判斷，兼顧品質、效率、成本與自動化。</p></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button data-action="toggle-card" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">為什麼從設備經驗轉向生產製程？</span><span data-icon="chevron" class="text-slate-400"></span></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">設備現場讓我理解異常如何影響產出；我希望下一步能更完整地看製程條件、良率與量產效率。這不是離開實務，而是把第一線觀察延伸成有數據、有驗證、有標準化的製程改善。</div></div></div></div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button data-action="toggle-card" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">遇到製程異常，你的處理順序？</span><span data-icon="chevron" class="text-slate-400"></span></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed"><b>Contain → Analyze → Verify → Standardize。</b>先確保產品與人員風險受控；以 SPC／趨勢、批次與機台條件切分問題；用 5 Why 或魚骨圖形成假設；安排驗證；確認有效後更新規格、SOP 與監控點。</div></div></div></div>
-            </div>
-            <div id="content-fstech-process" class="sub-content hidden space-y-3"><div class="focus-card rounded-2xl p-4 text-sm text-slate-600"><h3 class="font-black text-[#536d52]">四個面試主軸</h3><ol class="mt-2 space-y-2"><li><b>品質：</b>良率、規格、異常隔離與再發防止。</li><li><b>效率：</b>瓶頸站、cycle time、停機損失與排程。</li><li><b>成本：</b>改善前後以耗材、工時、報廢或產能衡量。</li><li><b>自動化：</b>先定義痛點、資料與風險，再驗證導入成效。</li></ol></div><div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden qa-card"><button data-action="toggle-card" class="btn-press w-full p-4 text-left flex justify-between items-center"><span class="font-bold">如何推動效率或成本改善專案？</span><span data-icon="chevron" class="text-slate-400"></span></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="px-4 pb-4 border-t pt-3 text-sm leading-relaxed">先用數據定義基準與目標，找最大損失點；小範圍試驗確認對品質沒有副作用，再擴大導入。專案溝通會同時呈現產能、品質風險、成本效益與執行責任人，讓改善能落地而非停在簡報。</div></div></div></div></div>
-            <div id="content-fstech-case" class="sub-content hidden space-y-3"><div class="focus-card rounded-2xl p-4 text-sm leading-relaxed text-slate-600"><h3 class="font-black text-[#536d52]">STAR 案例填寫模板</h3><p class="mt-2"><b>S 情境：</b>哪個機台／製程現象影響了什麼指標？</p><p><b>T 任務：</b>你負責釐清或改善的範圍是什麼？</p><p><b>A 行動：</b>你看了哪些 log、觀察到什麼硬體現象、與誰協作、怎麼驗證？</p><p><b>R 結果：</b>downtime、重複率、工時、品質或風險降低了多少？若無數字，說明可觀察到的改善。</p></div></div>
-        </div>
 
         <div id="section-benq" class="company-section hidden"></div>
 
@@ -137,6 +95,7 @@
     <script src="js/app.js" defer></script>
     <script src="js/icons.js" defer></script>
     <script src="js/legacy-data.js" defer></script>
+    <script src="js/legacy-id-map.js" defer></script>
     <script src="js/renderer.js" defer></script>
     <script src="js/legacy-sections.js" defer></script>
     <script src="js/state.js" defer></script>

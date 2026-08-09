@@ -4,9 +4,11 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { PNG } from 'pngjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const output = path.join(root, '.tmp-visual');
+const baselineOutput = path.join(root, 'tests', 'visual-baselines');
 const manifest = JSON.parse(await fs.readFile(path.join(root, 'tests/visual-baselines.json'), 'utf8'));
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.jpg': 'image/jpeg', '.png': 'image/png' };
 const server = http.createServer(async (request, response) => {
@@ -25,6 +27,40 @@ const browser = await chromium.launch({ headless: true, executablePath: process.
 const viewports = [{ name: '360', width: 360, height: 800 }, { name: '390', width: 390, height: 844 }, { name: '768', width: 768, height: 900 }, { name: '1024', width: 1024, height: 900 }, { name: '1440', width: 1440, height: 1000 }];
 assert.deepEqual(viewports.map(viewport => Number(viewport.name)), manifest.viewports, 'visual viewport matrix matches baseline manifest');
 try {
+  const compareScreenshot = async (page, state, viewportName) => {
+    const filename = `${state}-${viewportName}.png`;
+    await page.evaluate(async () => {
+      let previous = -1;
+      for (let attempt = 0; attempt < 8; attempt += 1) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        const current = document.documentElement.scrollHeight;
+        if (current === previous) return;
+        previous = current;
+      }
+    });
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const screenshot = await page.screenshot({ fullPage: false });
+    const localPath = path.join(output, filename);
+    await fs.writeFile(localPath, screenshot);
+    const baselinePath = path.join(baselineOutput, filename);
+    if (process.env.UPDATE_VISUAL_BASELINES === '1') {
+      await fs.mkdir(baselineOutput, { recursive: true });
+      await fs.writeFile(baselinePath, screenshot);
+      return;
+    }
+    assert.ok(await fs.stat(baselinePath).catch(() => null), `visual baseline exists: ${filename}`);
+    const actual = PNG.sync.read(screenshot);
+    const expected = PNG.sync.read(await fs.readFile(baselinePath));
+    assert.equal(actual.width, expected.width, `${filename} screenshot width matches baseline`);
+    assert.equal(actual.height, expected.height, `${filename} screenshot height matches baseline`);
+    let changed = 0;
+    for (let index = 0; index < actual.data.length; index += 4) {
+      const distance = Math.abs(actual.data[index] - expected.data[index]) + Math.abs(actual.data[index + 1] - expected.data[index + 1]) + Math.abs(actual.data[index + 2] - expected.data[index + 2]) + Math.abs(actual.data[index + 3] - expected.data[index + 3]);
+      if (distance > 48) changed += 1;
+    }
+    const ratio = changed / (actual.width * actual.height);
+    assert.ok(ratio <= 0.2, `${filename} pixel difference ${ratio.toFixed(3)} exceeds 0.2 threshold`);
+  };
   for (const viewport of viewports) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
     await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
@@ -58,21 +94,21 @@ try {
     assert.equal(baseline.zeroSizedIcons, 0, `${viewport.name}px has no zero-sized icons`);
     assert.ok(baseline.tabMinHeight >= 36, `${viewport.name}px category tabs retain touch height`);
     assert.ok(baseline.scrollWidth <= viewport.width, `${viewport.name}px has no horizontal overflow`);
-    await page.screenshot({ path: path.join(output, `main-${viewport.name}.png`), fullPage: true });
+    await compareScreenshot(page, 'main', viewport.name);
     await page.locator('#comp-benq').click();
     await page.waitForSelector('#section-benq .sub-tab-btn');
-    await page.screenshot({ path: path.join(output, `benq-${viewport.name}.png`), fullPage: true });
+    await compareScreenshot(page, 'benq', viewport.name);
     const benq = await page.evaluate(() => ({ active: document.querySelector('#comp-benq')?.classList.contains('active'), icons: document.querySelectorAll('#section-benq .app-icon').length, overflow: document.documentElement.scrollWidth > window.innerWidth }));
     assert.equal(benq.active, true, `${viewport.name}px BenQ navigation works`);
     assert.ok(benq.icons > 0, `${viewport.name}px BenQ has SVG category icons`);
     assert.equal(benq.overflow, false, `${viewport.name}px BenQ has no overflow`);
     await page.locator('[data-practice-mode="random"]').click();
     await page.waitForSelector('#practice-session[role="dialog"]');
-    await page.screenshot({ path: path.join(output, `practice-${viewport.name}.png`), fullPage: true });
+    await compareScreenshot(page, 'practice', viewport.name);
     await page.keyboard.press('Escape');
     await page.locator('[data-action="toggle-archive"][aria-controls="archive-drawer"]').click();
     await page.waitForSelector('#archive-drawer:not(.hidden)');
-    await page.screenshot({ path: path.join(output, `archive-${viewport.name}.png`), fullPage: true });
+    await compareScreenshot(page, 'archive', viewport.name);
     await page.close();
   }
   const screenshots = await fs.readdir(output);

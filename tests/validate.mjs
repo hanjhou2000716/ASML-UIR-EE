@@ -8,6 +8,7 @@ const app = fs.readFileSync(new URL('../js/app.js', import.meta.url), 'utf8');
 const renderer = fs.readFileSync(new URL('../js/renderer.js', import.meta.url), 'utf8');
 const appCss = fs.readFileSync(new URL('../assets/app.css', import.meta.url), 'utf8');
 const legacy = fs.readFileSync(new URL('../js/legacy-data.js', import.meta.url), 'utf8');
+const legacyMap = fs.readFileSync(new URL('../js/legacy-id-map.js', import.meta.url), 'utf8');
 assert.match(html, /id="section-(asml|assembly|fstech|benq)"/);
 assert.match(html, /section-benq/);
 assert.match(html, /rel="icon"[^>]+interview-app\.jpg/);
@@ -24,6 +25,8 @@ for (const id of ['asml', 'micron', 'swancor', 'skyeuv']) assert.match(legacy, n
 const questionIds = [...legacy.matchAll(/"id":"([^"]+)"/g)].map(match => match[1]).filter(id => id.split('.').length >= 3);
 assert.ok(questionIds.length >= 180, 'legacy question inventory is present');
 assert.equal(new Set(questionIds).size, questionIds.length, 'legacy question IDs are unique');
+assert.ok(questionIds.every(id => /^(asml|micron|swancor|skyeuv)\.[a-z-]+\.q\d+$/.test(id)), 'legacy IDs are explicit immutable IDs');
+assert.match(legacyMap, /LegacyQuestionIdMap/);
 assert.match(state, /schemaVersion:\s*2/);
 assert.doesNotMatch(state, /interview-mastered-\$\{index\}/);
 assert.doesNotMatch(html, /interview-mastered-\$\{index\}/);
@@ -51,4 +54,5 @@ execFileSync(process.execPath, ['--check', 'js/icons.js'], { stdio: 'inherit' })
 execFileSync(process.execPath, ['--check', 'js/legacy-sections.js'], { stdio: 'inherit' });
 execFileSync(process.execPath, ['--check', 'js/renderer.js'], { stdio: 'inherit' });
 execFileSync(process.execPath, ['--check', 'js/legacy-data.js'], { stdio: 'inherit' });
+execFileSync(process.execPath, ['--check', 'js/legacy-id-map.js'], { stdio: 'inherit' });
 console.log('Interview workspace validation passed.');
