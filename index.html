@@ -751,7 +751,8 @@
             if (!content) return;
             const keyword = input.value.trim().toLowerCase();
             content.querySelectorAll('.qa-card').forEach(card => {
-                card.classList.toggle('search-hidden', keyword && !card.innerText.toLowerCase().includes(keyword));
+                const text = card.innerText || card.textContent || '';
+                card.classList.toggle('search-hidden', keyword && !text.toLowerCase().includes(keyword));
             });
             const visibleCount = content.querySelectorAll('.qa-card:not(.search-hidden)').length;
             const count = content.querySelector('[data-result-count]');
