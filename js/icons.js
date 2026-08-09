@@ -25,27 +25,21 @@
     archive: '<path d="M4 7h16v13H4zM3 4h18v3H3zM9 11h6"></path>',
     grid: '<rect x="4" y="4" width="6" height="6" rx="1"></rect><rect x="14" y="4" width="6" height="6" rx="1"></rect><rect x="4" y="14" width="6" height="6" rx="1"></rect><rect x="14" y="14" width="6" height="6" rx="1"></rect>'
   };
-  const CLASS_TO_NAME = {
-    'fa-search': 'search', 'fa-dice': 'random', 'fa-layer-group': 'layers', 'fa-microchip': 'microchip',
-    'fa-screwdriver-wrench': 'assembly', 'fa-chart-line': 'chart', 'fa-scroll': 'script', 'fa-wrench': 'wrench',
-    'fa-route': 'assembly', 'fa-fire': 'motivation', 'fa-briefcase': 'briefcase', 'fa-shield-alt': 'shield',
-    'fa-bolt': 'combat', 'fa-stopwatch': 'timer', 'fa-volume-up': 'volume', 'fa-stop': 'stop',
-    'fa-check': 'check', 'fa-chevron-down': 'chevron', 'fa-arrow-up': 'arrowUp', 'fa-times': 'close',
-    'fa-archive': 'archive', 'fa-filter': 'filter'
-  };
   const render = (name, options = {}) => {
     const path = PATHS[name] || PATHS.grid;
     const size = options.size || 'md';
     const label = options.label ? ` role="img" aria-label="${String(options.label).replace(/[&<>"']/g, '')}"` : ' aria-hidden="true"';
     return `<svg class="app-icon app-icon-${size}${options.className ? ` ${options.className}` : ''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"${label}>${path}</svg>`;
   };
-  const fromClass = className => render(CLASS_TO_NAME[className] || 'grid');
+  const fromClass = className => render(className || 'grid');
+  const resolveName = node => node.dataset.icon || null;
   const hydrate = (root = document) => {
-    root.querySelectorAll('i.fas, i.far, i.fab').forEach(node => {
-      const iconClass = [...node.classList].find(name => CLASS_TO_NAME[name]);
-      if (!iconClass) return;
+    root.querySelectorAll('[data-icon]').forEach(node => {
+      const name = resolveName(node);
+      if (!name) return;
       const svg = document.createElement('span');
-      svg.innerHTML = render(CLASS_TO_NAME[iconClass], { className: [...node.classList].filter(name => !/^fa[srb]?(-|$)/.test(name)).join(' ') });
+      const className = [...node.classList].filter(className => className !== 'app-icon').join(' ');
+      svg.innerHTML = render(name, { className });
       node.replaceWith(svg.firstElementChild);
     });
   };
