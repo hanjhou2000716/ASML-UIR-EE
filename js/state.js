@@ -3,6 +3,8 @@
   const KEY = 'interview-workspace-state';
   const LEGACY_ACTIVE = 'interview-active-company';
   const LEGACY_PREFIX = 'interview-mastered-';
+  const VALID_COMPANIES = new Set(['asml', 'assembly', 'fstech', 'benq', 'micron', 'swancor', 'skyeuv']);
+  const memoryStore = new Map();
   const state = {
     schemaVersion: 2,
     activeCompanyId: 'asml',
@@ -10,13 +12,13 @@
     questions: {}
   };
 
-  const read = () => {
-    try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (_) { return null; }
-  };
+  const storageGet = key => { try { return localStorage.getItem(key); } catch (_) { return memoryStore.get(key) || null; } };
+  const storageSet = (key, value) => { try { localStorage.setItem(key, value); } catch (_) { memoryStore.set(key, value); } };
+  const read = () => { try { return JSON.parse(storageGet(KEY) || 'null'); } catch (_) { return null; } };
   const normalise = (candidate) => {
     const next = { ...state, ...(candidate && typeof candidate === 'object' ? candidate : {}) };
     next.schemaVersion = 2;
-    next.activeCompanyId = typeof next.activeCompanyId === 'string' ? next.activeCompanyId : 'asml';
+    next.activeCompanyId = VALID_COMPANIES.has(next.activeCompanyId) ? next.activeCompanyId : 'asml';
     next.activeCategoryByCompany = next.activeCategoryByCompany && typeof next.activeCategoryByCompany === 'object' ? next.activeCategoryByCompany : {};
     next.questions = next.questions && typeof next.questions === 'object' ? next.questions : {};
     Object.keys(next.questions).forEach(id => {
@@ -30,12 +32,12 @@
     });
     return next;
   };
-  const save = () => { localStorage.setItem(KEY, JSON.stringify(state)); window.dispatchEvent(new CustomEvent('interview-state-change')); };
+  const save = () => { storageSet(KEY, JSON.stringify(state)); window.dispatchEvent(new CustomEvent('interview-state-change')); };
   const migrateLegacy = () => {
     const candidate = read();
     Object.assign(state, normalise(candidate));
-    const legacyActive = localStorage.getItem(LEGACY_ACTIVE);
-    if (!candidate && legacyActive) state.activeCompanyId = legacyActive;
+    const legacyActive = storageGet(LEGACY_ACTIVE);
+    if (!candidate && VALID_COMPANIES.has(legacyActive)) state.activeCompanyId = legacyActive;
     document.querySelectorAll('.qa-card').forEach((card, index) => {
       const prompt = card.querySelector('button span')?.textContent?.replace(/\s+/g, ' ').trim() || '';
       const digest = Array.from(prompt).reduce((hash, ch) => ((hash << 5) - hash + ch.charCodeAt(0)) | 0, 0).toString(36).replace('-', 'n');
@@ -45,7 +47,7 @@
       const id = card.dataset.questionId || `${company}.${category}.${digest || index + 1}`;
       card.dataset.questionId = id;
       if (!candidate) {
-        const old = localStorage.getItem(`${LEGACY_PREFIX}${index}`) === 'true';
+        const old = storageGet(`${LEGACY_PREFIX}${index}`) === 'true';
         if (old) state.questions[id] = { mastered: true, attemptedCount: 0, practiceCount: 0, lastPracticedAt: null };
       }
     });
