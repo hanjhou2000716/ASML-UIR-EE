@@ -34,6 +34,12 @@ if (search) { search.value = 'definitely-no-match'; search.dispatchEvent(new dom
 const random = document.querySelector('#section-benq [data-action="random"]');
 random?.click();
 assert.ok(document.querySelector('#section-benq .practice-highlight'), 'random practice highlights a card');
+const speak = firstCard?.querySelector('[data-action="speak"]');
+let speechFallbackShown = false;
+dom.window.alert = () => { speechFallbackShown = true; };
+try { delete dom.window.speechSynthesis; } catch {}
+speak?.click();
+assert.equal(speechFallbackShown, true, 'speech fallback is graceful when API is unavailable');
 const mastered = firstCard?.querySelector('[data-action="mastered"]');
 mastered?.click();
 assert.equal(dom.window.InterviewState.getQuestion(firstCard?.dataset.questionId).mastered, true, 'mastery action updates state');
