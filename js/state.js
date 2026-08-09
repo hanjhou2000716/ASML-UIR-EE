@@ -184,6 +184,7 @@
     window.InterviewQuestionRegistry = registry;
     return registry;
   };
+  window.enhanceInterviewA11y = enhanceAccordionA11y;
   window.refreshInterviewQuestionRegistry = buildQuestionRegistry;
   const installDelegatedInteractions = () => {
     document.addEventListener('click', event => {

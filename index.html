@@ -689,7 +689,9 @@
                 window.InterviewState.save();
             }
 
-            switchSubTab(companyId, 'script');
+            const legacyCompany = window.LegacyQuestionData?.companies?.[companyId];
+            const initialCategory = legacyCompany?.categories.find(category => category.questions.length)?.id || 'script';
+            switchSubTab(companyId, initialCategory);
             
             setTimeout(() => {
                 const section = document.getElementById('content-' + companyId + '-script');
@@ -708,6 +710,7 @@
         function switchSubTab(companyId, subTabId) {
             const section = document.getElementById('section-' + companyId);
             if(!section) return;
+            if (window.LegacyQuestionData?.companies?.[companyId]) window.renderLegacyCategory?.(companyId, subTabId);
             
             section.querySelectorAll('.sub-content').forEach(el => {
                 el.classList.add('hidden');
