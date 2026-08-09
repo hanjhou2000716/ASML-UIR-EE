@@ -1,0 +1,6 @@
+{
+  "name": "asml-uir-ee-interview-workspace",
+  "private": true,
+  "type": "module",
+  "scripts": { "validate": "node tests/validate.mjs" }
+}

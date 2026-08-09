@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+
+const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const state = fs.readFileSync(new URL('../js/state.js', import.meta.url), 'utf8');
+assert.match(html, /id="section-(asml|assembly|fstech|benq)"/);
+assert.match(html, /section-benq/);
+assert.match(state, /schemaVersion:\s*2/);
+assert.doesNotMatch(state, /interview-mastered-\$\{index\}/);
+assert.match(state, /migrateLegacy/);
+assert.match(html, /prefers-reduced-motion/);
+assert.match(html, /aria-label/);
+const cdnCount = (html.match(/https:\/\/cdn\.tailwindcss\.com/g) || []).length;
+assert.equal(cdnCount, 1, 'legacy CDN remains as a tracked migration item');
+execFileSync(process.execPath, ['--check', 'js/state.js'], { stdio: 'inherit' });
+console.log('Interview workspace validation passed.');
