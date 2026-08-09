@@ -2,5 +2,11 @@
   "name": "asml-uir-ee-interview-workspace",
   "private": true,
   "type": "module",
-  "scripts": { "validate": "node tests/validate.mjs" }
+  "scripts": {
+    "build:css": "tailwindcss -i assets/tailwind.css -o assets/tailwind.generated.css --minify",
+    "validate": "npm run build:css && node tests/validate.mjs"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
 }
