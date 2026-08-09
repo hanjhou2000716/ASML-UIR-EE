@@ -29,6 +29,14 @@ try {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
     await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#section-asml .qa-card');
+    const idAudit = await page.evaluate(() => {
+      const ids = Object.values(window.InterviewQuestionIds || {}).flatMap(company => Object.values(company).flat());
+      const roleQuestions = Object.values(window.InterviewQuestionBanks || {}).flatMap(company => Object.entries(company).filter(([, value]) => Array.isArray(value)).flatMap(([category, entries]) => entries.map((_, index) => `${category}:${index}`)));
+      return { unique: new Set(ids).size === ids.length, explicit: ids.every(id => !/supplement|unregistered/.test(id)), expected: roleQuestions.length, actual: ids.length };
+    });
+    assert.equal(idAudit.unique, true, `${viewport.name}px role question IDs are unique`);
+    assert.equal(idAudit.explicit, true, `${viewport.name}px role question IDs are explicit`);
+    assert.equal(idAudit.actual, idAudit.expected, `${viewport.name}px role question ID coverage matches registry`);
     const baseline = await page.evaluate(() => {
       const icons = [...document.querySelectorAll('.app-icon')];
       const tabs = [...document.querySelectorAll('.sub-tab-btn')];
