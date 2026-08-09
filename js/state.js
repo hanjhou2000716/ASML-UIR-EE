@@ -196,4 +196,12 @@
   };
   window.addEventListener('DOMContentLoaded', () => { buildQuestionRegistry(); migrateLegacy(); mountWorkspaceShell(); enhanceAccordionA11y(); installDelegatedInteractions(); renderInsights(); }, { once: true });
   window.addEventListener('interview-state-change', renderInsights);
+  window.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    const drawer = document.getElementById('archive-drawer');
+    if (drawer?.classList.contains('open') && typeof window.toggleArchive === 'function') {
+      window.toggleArchive();
+      document.querySelector('[aria-controls="archive-drawer"]')?.focus();
+    }
+  });
 })();

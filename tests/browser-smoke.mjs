@@ -8,6 +8,8 @@ virtualConsole.on('jsdomError', error => { if (!/Could not load link|HTMLCanvasE
 const dom = await JSDOM.fromFile(fileURLToPath(new URL('../index.html', import.meta.url)), { runScripts: 'dangerously', resources: 'usable', virtualConsole });
 await new Promise(resolve => dom.window.addEventListener('load', () => setTimeout(resolve, 250), { once: true }));
 const { document } = dom.window;
+dom.window.HTMLElement.prototype.scrollIntoView = () => {};
+dom.window.scrollTo = () => {};
 assert.ok(document.querySelector('#workspace-rail'), 'workspace rail mounted');
 assert.ok(document.querySelector('#workspace-context'), 'workspace context mounted');
 for (const id of ['asml', 'micron', 'swancor', 'skyeuv']) assert.ok(document.querySelectorAll(`#section-${id} .qa-card`).length > 0, `${id} questions rendered`);
@@ -23,11 +25,25 @@ assert.ok(document.querySelector('#section-benq')?.classList.contains('block'), 
 const firstCard = document.querySelector('#section-benq .qa-card');
 firstCard?.querySelector(':scope > button')?.click();
 assert.ok(firstCard?.querySelector('.accordion-wrapper')?.classList.contains('open'), 'accordion opens through delegated action');
+const timer = firstCard?.querySelector('[data-action="timer"]');
+timer?.click();
+assert.ok(document.getElementById(timer?.dataset.target)?.classList.contains('timer-active'), 'timer starts');
+timer?.click();
+const search = document.querySelector('#section-benq input[data-action="filter"]');
+if (search) { search.value = 'definitely-no-match'; search.dispatchEvent(new dom.window.Event('input', { bubbles: true })); assert.ok(document.querySelectorAll('#section-benq .qa-card.search-hidden').length > 0, 'search filters current category'); search.value = ''; search.dispatchEvent(new dom.window.Event('input', { bubbles: true })); }
+const random = document.querySelector('#section-benq [data-action="random"]');
+random?.click();
+assert.ok(document.querySelector('#section-benq .practice-highlight'), 'random practice highlights a card');
 const mastered = firstCard?.querySelector('[data-action="mastered"]');
 mastered?.click();
 assert.equal(dom.window.InterviewState.getQuestion(firstCard?.dataset.questionId).mastered, true, 'mastery action updates state');
 document.querySelector('[aria-controls="archive-drawer"]')?.click();
 assert.ok(document.querySelector('#archive-drawer')?.classList.contains('open'), 'archive drawer opens');
+const escapeEvent = new dom.window.Event('keydown');
+Object.defineProperty(escapeEvent, 'key', { value: 'Escape' });
+dom.window.dispatchEvent(escapeEvent);
+assert.ok(!document.querySelector('#archive-drawer')?.classList.contains('open'), 'archive drawer closes with Escape');
+assert.ok(document.head.textContent.includes('max-width:760px'), 'responsive mobile CSS is mounted');
 const axeSource = fs.readFileSync(new URL('../node_modules/axe-core/axe.min.js', import.meta.url), 'utf8');
 dom.window.eval(axeSource);
 const axeResults = await dom.window.axe.run(document, { runOnly: ['wcag2a', 'wcag2aa'] });
