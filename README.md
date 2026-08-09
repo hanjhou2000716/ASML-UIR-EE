@@ -15,4 +15,6 @@
 
 完整的資料流、狀態契約與新增題庫方式請參考 [ARCHITECTURE.md](ARCHITECTURE.md)。
 
+Production Lighthouse baseline is recorded in [docs/lighthouse-2026-08-09.md](docs/lighthouse-2026-08-09.md)。
+
 進度資料只儲存在瀏覽器本機，不包含評分、錄取機率或其他虛構分析；分析應以實際練習次數、掌握狀態與最近練習時間為基礎。
