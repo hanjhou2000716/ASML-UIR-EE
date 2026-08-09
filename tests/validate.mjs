@@ -15,6 +15,8 @@ assert.match(html, /prefers-reduced-motion/);
 assert.match(html, /aria-label/);
 assert.match(html, /Content-Security-Policy/);
 assert.doesNotMatch(html, /function preparePrint/);
+assert.doesNotMatch(html, /\bonclick\s*=/i);
+assert.doesNotMatch(html, /\boninput\s*=/i);
 const cdnCount = (html.match(/https:\/\/cdn\.tailwindcss\.com/g) || []).length;
 assert.equal(cdnCount, 0, 'runtime Tailwind CDN must not be required');
 assert.ok(fs.existsSync(new URL('../assets/tailwind.generated.css', import.meta.url)), 'generated CSS is present');

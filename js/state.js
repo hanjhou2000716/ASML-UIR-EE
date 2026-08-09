@@ -133,6 +133,27 @@
       window.expandAll = wrapped;
     }
   };
+  const installDelegatedInteractions = () => {
+    document.addEventListener('click', event => {
+      const target = event.target.closest('[data-action]');
+      if (!target) return;
+      const action = target.dataset.action;
+      if (action === 'switch-company') { window.switchCompany?.(target.dataset.company); if (target.dataset.closeArchive) window.toggleArchive?.(); }
+      if (action === 'switch-subtab') window.switchSubTab?.(target.dataset.company, target.dataset.category);
+      if (action === 'toggle-card') window.toggleCard?.(target);
+      if (action === 'toggle-archive') window.toggleArchive?.();
+      if (action === 'scroll-top') window.scrollToTop?.();
+      if (action === 'expand-all') window.expandAll?.();
+      if (action === 'timer') window.startTimer?.(target.dataset.target, Number(target.dataset.seconds || 120));
+      if (action === 'speak') window.speakText?.(target);
+      if (action === 'mastered') window.toggleMastered?.(target, Number(target.dataset.legacyIndex || 0));
+      if (action === 'random') window.randomPractice?.(target.dataset.content);
+    });
+    document.addEventListener('input', event => {
+      const target = event.target.closest('[data-action="filter"]');
+      if (target) window.filterInterviewCards?.(target, target.dataset.content);
+    });
+  };
   const api = { KEY, state, migrateLegacy, getQuestion, mark, toggle, save };
   window.InterviewState = api;
   window.toggleMastered = (button, legacyIndex = 0) => {
@@ -149,6 +170,6 @@
       button.innerHTML = `<i class="fas fa-check"></i> ${record.mastered ? '已掌握' : '標記掌握'}`;
     }
   };
-  window.addEventListener('DOMContentLoaded', () => { migrateLegacy(); mountWorkspaceShell(); enhanceAccordionA11y(); renderInsights(); }, { once: true });
+  window.addEventListener('DOMContentLoaded', () => { migrateLegacy(); mountWorkspaceShell(); enhanceAccordionA11y(); installDelegatedInteractions(); renderInsights(); }, { once: true });
   window.addEventListener('interview-state-change', renderInsights);
 })();
