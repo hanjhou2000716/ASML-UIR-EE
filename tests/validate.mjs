@@ -4,8 +4,11 @@ import { execFileSync } from 'node:child_process';
 
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const state = fs.readFileSync(new URL('../js/state.js', import.meta.url), 'utf8');
+const legacy = fs.readFileSync(new URL('../js/legacy-sections.js', import.meta.url), 'utf8');
 assert.match(html, /id="section-(asml|assembly|fstech|benq)"/);
 assert.match(html, /section-benq/);
+assert.match(html, /js\/legacy-sections\.js/);
+for (const id of ['asml', 'micron', 'swancor', 'skyeuv']) assert.match(legacy, new RegExp(`section-${id}`));
 assert.match(state, /schemaVersion:\s*2/);
 assert.doesNotMatch(state, /interview-mastered-\$\{index\}/);
 assert.doesNotMatch(html, /interview-mastered-\$\{index\}/);
@@ -21,4 +24,5 @@ const cdnCount = (html.match(/https:\/\/cdn\.tailwindcss\.com/g) || []).length;
 assert.equal(cdnCount, 0, 'runtime Tailwind CDN must not be required');
 assert.ok(fs.existsSync(new URL('../assets/tailwind.generated.css', import.meta.url)), 'generated CSS is present');
 execFileSync(process.execPath, ['--check', 'js/state.js'], { stdio: 'inherit' });
+execFileSync(process.execPath, ['--check', 'js/legacy-sections.js'], { stdio: 'inherit' });
 console.log('Interview workspace validation passed.');
