@@ -8,6 +8,8 @@ assert.match(html, /id="section-(asml|assembly|fstech|benq)"/);
 assert.match(html, /section-benq/);
 assert.match(state, /schemaVersion:\s*2/);
 assert.doesNotMatch(state, /interview-mastered-\$\{index\}/);
+assert.doesNotMatch(html, /interview-mastered-\$\{index\}/);
+assert.doesNotMatch(html, /localStorage\.setItem\('interview-active-company'/);
 assert.match(state, /migrateLegacy/);
 assert.match(html, /prefers-reduced-motion/);
 assert.match(html, /aria-label/);

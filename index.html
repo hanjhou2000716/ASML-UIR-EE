@@ -1508,7 +1508,7 @@
             deployRoleQuestionBanks();
             injectPracticeTools(); 
             document.querySelectorAll('.qa-card > button').forEach(button => button.setAttribute('aria-expanded', 'false'));
-            switchCompany(localStorage.getItem('interview-active-company') || 'asml');
+            switchCompany(window.InterviewState?.state.activeCompanyId || 'asml');
         });
 
         function injectPracticeTools() {
@@ -1521,7 +1521,8 @@
                     return;
                 }
                 
-                const mastered = localStorage.getItem(`interview-mastered-${index}`) === 'true';
+                const legacyId = container.closest('.qa-card')?.dataset.questionId || `legacy.card.${index + 1}`;
+                const mastered = Boolean(window.InterviewState?.getQuestion(legacyId)?.mastered);
                 if (mastered) container.closest('.qa-card')?.classList.add('mastered');
                 const toolsHtml = `
                     <div class="practice-tools flex items-center justify-between gap-2 mb-3 bg-slate-50/50 p-2 rounded-lg border border-slate-100">
@@ -1890,7 +1891,10 @@
                 targetSection.style.display = 'block';
             }
 
-            localStorage.setItem('interview-active-company', companyId);
+            if (window.InterviewState) {
+                window.InterviewState.state.activeCompanyId = companyId;
+                window.InterviewState.save();
+            }
 
             switchSubTab(companyId, 'script');
             
@@ -1953,11 +1957,9 @@
             document.querySelectorAll('[aria-controls="archive-drawer"]').forEach(button => button.setAttribute('aria-expanded', String(isOpen)));
         }
 
-        function toggleMastered(button, index) {
+        function toggleMasteredLegacy(button, index) {
             const card = button.closest('.qa-card');
-            const key = `interview-mastered-${index}`;
-            const mastered = localStorage.getItem(key) !== 'true';
-            localStorage.setItem(key, String(mastered));
+            const mastered = window.InterviewState?.getQuestion(card?.dataset.questionId || `legacy.${index + 1}`)?.mastered || false;
             card?.classList.toggle('mastered', mastered);
             button.classList.toggle('mastered-badge', mastered);
             button.classList.toggle('text-slate-600', !mastered);
