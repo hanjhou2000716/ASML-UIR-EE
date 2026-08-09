@@ -282,7 +282,7 @@
     if (button) {
       button.classList.toggle('mastered-badge', record.mastered);
       button.classList.toggle('text-slate-600', !record.mastered);
-      button.innerHTML = `<i class="fas fa-check"></i> ${record.mastered ? '已掌握' : '標記掌握'}`;
+      button.innerHTML = `${window.AppIcons?.render('check') || ''} ${record.mastered ? '已掌握' : '標記掌握'}`;
     }
   };
   window.addEventListener('DOMContentLoaded', () => { buildQuestionRegistry(); migrateLegacy(); mountWorkspaceShell(); enhanceAccordionA11y(); installDelegatedInteractions(); renderInsights(); }, { once: true });
