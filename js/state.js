@@ -129,21 +129,28 @@
       const section = document.getElementById(`section-${companyId}`);
       if (section && !document.getElementById(`content-${companyId}-${category.id}`)) window.switchSubTab?.(companyId, category.id);
     }));
-    const cards = [...document.querySelectorAll('.qa-card')].filter(card => (card.textContent || '').toLocaleLowerCase().includes(query));
+    const cards = [...document.querySelectorAll('.qa-card')].map(card => {
+      const content = card.closest('.sub-content');
+      const [companyId, ...categoryParts] = (content?.id || '').replace(/^content-/, '').split('-');
+      const categoryId = categoryParts.join('-');
+      const company = registry[companyId] || window.CompanyRegistry?.get(companyId) || {};
+      const category = company.categories?.find(item => item.id === categoryId);
+      const context = `${company.name || companyId} ${company.shortName || ''} ${category?.label || categoryId}`;
+      return { card, companyId, categoryId, haystack: `${context} ${card.textContent || ''}`.toLocaleLowerCase() };
+    }).filter(record => record.haystack.includes(query));
     const summary = document.createElement('p');
     summary.className = 'global-search-summary';
     summary.textContent = `${cards.length} 筆結果`;
     results.appendChild(summary);
-    cards.slice(0, 20).forEach(card => {
-      const content = card.closest('.sub-content');
-      const [companyId, ...categoryParts] = (content?.id || '').replace(/^content-/, '').split('-');
+    cards.slice(0, 20).forEach(({ card, companyId, categoryId }) => {
       const result = document.createElement('button');
       result.type = 'button';
       result.className = 'global-search-result';
       result.dataset.company = companyId || '';
-      result.dataset.category = categoryParts.join('-');
+      result.dataset.category = categoryId;
       result.dataset.questionId = card.dataset.questionId || '';
-      result.textContent = (card.querySelector('button span')?.textContent || card.textContent || '').replace(/\s+/g, ' ').trim();
+      const company = registry[companyId] || window.CompanyRegistry?.get(companyId) || {};
+      result.textContent = `${company.shortName || company.name || companyId} · ${(card.querySelector('button span')?.textContent || card.textContent || '').replace(/\s+/g, ' ').trim()}`;
       results.appendChild(result);
     });
     if (!cards.length) {
