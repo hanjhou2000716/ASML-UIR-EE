@@ -18,6 +18,8 @@ The current site remains a modular vanilla-JavaScript application so it can be s
 
 The workspace shell also provides cross-company search, a current-category status filter (all/unmastered/practiced/mastered), and a confirmed local progress reset. Search results retain company, category, and stable question ID context so selecting a result returns to the source card. Non-active categories are rendered on demand, preventing duplicate hidden question banks in the initial DOM.
 
+Company navigation has explicit breakpoint ownership. The header `mobile-company-nav` is the compact primary selector below 761px; the workspace rail's `data-primary-company-nav="desktop"` is the sole desktop primary navigation at 761px and above. Both use the same `switchCompany()` state transition and expose `aria-selected`/`aria-current` state. Category controls are shared `CategoryPill`-style buttons with a 44px touch target, 9999px radius, normalized SVG icon sizing, and horizontal overflow behavior on narrow screens.
+
 ## State contract
 
 ```js
@@ -44,4 +46,4 @@ Add a company/category to the structured bank in `deployRoleQuestionBanks()`, ke
 
 Run `npm run validate` before opening a PR. The workflow in `.github/workflows/validate.yml` is the merge gate.
 
-The browser smoke suite covers company/category navigation, cross-company search, status filtering, reset confirmation, keyboard/ARIA behavior, practice sessions, speech fallback, archive state, and axe critical/serious violations. `npm run visual` runs real Chromium at 360, 390, 768, 1024 and 1440px, compares main, analytics, ASML, Assembly, FSTech, BenQ, search, empty-search, mastered, practice and archive states with committed PNG baselines, and gates visible SVG geometry, tab touch height, sticky layout and horizontal overflow. Use `npm run visual:update` only for reviewed intentional visual changes.
+The browser smoke suite covers company/category navigation, cross-company search, status filtering, reset confirmation, keyboard/ARIA behavior, practice sessions, speech fallback, archive state, and axe critical/serious violations. `npm run visual` runs real Chromium at 360, 390, 768, 1024 and 1440px, compares main, analytics, ASML, Assembly, FSTech, BenQ, search, empty-search, mastered, practice and archive states with committed PNG baselines, and gates visible SVG geometry, category-pill radius/padding/icon tokens, breakpoint-specific single primary navigation, sticky layout and horizontal overflow. Use `npm run visual:update` only for reviewed intentional visual changes.

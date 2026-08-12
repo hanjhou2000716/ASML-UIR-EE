@@ -419,9 +419,11 @@
             if (['assembly', 'fstech', 'benq'].includes(companyId)) ensureRoleBanks();
             document.querySelectorAll('.company-tab').forEach(el => {
                 el.classList.remove('active', 'active-asml', 'active-swancor', 'active-skyeuv', 'active-micron', 'active-assembly', 'active-fstech', 'active-benq');
+                el.setAttribute('aria-selected', 'false');
+                el.removeAttribute('aria-current');
             });
             const activeTab = document.getElementById('comp-' + companyId);
-            if(activeTab) activeTab.classList.add('active', 'active-' + companyId);
+            if(activeTab) { activeTab.classList.add('active', 'active-' + companyId); activeTab.setAttribute('aria-selected', 'true'); activeTab.setAttribute('aria-current', 'page'); }
 
             document.querySelectorAll('.company-section').forEach(el => {
                 el.classList.add('hidden');

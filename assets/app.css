@@ -48,13 +48,26 @@
         .company-tab.active-assembly, .company-tab.active-fstech { color: var(--asml-color); border-bottom-color: var(--accent-sage); background: linear-gradient(to top, #edf2ea, transparent); }
         .company-tab.active-benq { color: #4f667d; border-bottom-color: #8aa6b7; background: linear-gradient(to top, #eef4f6, transparent); }
 
+        /* Breakpoint ownership: the header is the mobile selector, the rail is desktop primary navigation. */
+        .mobile-company-nav { display: flex; }
+        .company-nav-card { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+        .company-nav-card .app-icon { width: 18px; height: 18px; flex: 0 0 18px; }
+        .company-nav-card.active { background: #edf2ea; color: var(--asml-color); }
+
         /* Sub-navigation Pills */
         .sub-tab-btn { 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
             transition: all 0.2s ease-in-out; 
             border: 1px solid #e2e8f0;
             background: #ffffff;
             color: #64748b;
             min-height: 44px;
+            padding: 9px 14px;
+            border-radius: 9999px;
+            white-space: nowrap;
         }
         .sub-tab-btn.active { border-color: transparent; }
         .sub-tab-btn.active.asml-theme { background: var(--asml-color); color: #ffffff; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
@@ -257,3 +270,5 @@
 .progress-98 { width: 98%; }
 .progress-99 { width: 99%; }
 .progress-100 { width: 100%; }
+@media(min-width:761px){.mobile-company-nav{display:none}.workspace-rail{display:block}}
+@media(max-width:760px){.workspace-rail{display:none}.mobile-company-nav{display:flex}.company-tab{min-width:108px}.company-tab .app-icon{width:18px;height:18px}}
