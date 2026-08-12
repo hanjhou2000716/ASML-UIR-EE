@@ -12,7 +12,7 @@ dom.window.HTMLElement.prototype.scrollIntoView = () => {};
 dom.window.scrollTo = () => {};
 assert.ok(document.querySelector('#workspace-rail'), 'workspace rail mounted');
 assert.ok(document.querySelector('#workspace-context'), 'workspace context mounted');
-for (const id of ['asml', 'micron', 'swancor', 'skyeuv']) {
+for (const id of ['lam', 'asml', 'fstech', 'benq', 'assembly', 'micron', 'swancor', 'skyeuv']) {
   dom.window.switchCompany?.(id);
   assert.ok(document.querySelectorAll(`#section-${id} .qa-card`).length > 0, `${id} questions rendered`);
 }
@@ -28,6 +28,18 @@ for (const companyId of ['assembly', 'fstech', 'benq']) {
   assert.equal(categories.length, 7, `${companyId} has seven preparation groups`);
   assert.ok(categories.every(category => category.questions.length >= 10), `${companyId} has at least ten questions per group`);
 }
+const lamCategories = dom.window.InterviewQuestionRegistry.companies.lam?.categories || [];
+assert.equal(lamCategories.length, 7, 'Lam has seven preparation groups');
+assert.equal(JSON.stringify([...lamCategories].map(category => category.questions.length)), JSON.stringify([10, 12, 10, 10, 10, 12, 12]), 'Lam has the exact 76-question distribution');
+assert.equal(lamCategories.flatMap(category => category.questions).length, 76, 'Lam question total is 76');
+assert.equal(dom.window.InterviewQuestionRegistry.companies.assembly.status, 'archived', 'Assembly is archived in registry');
+assert.equal(dom.window.InterviewQuestionRegistry.companies.lam.status, 'active', 'Lam is active in registry');
+assert.ok((dom.window.InterviewQuestionRegistry.companies.assembly.categories || []).some(category => category.questions.length > 0), 'Assembly archive retains questions');
+assert.equal(dom.window.LamJobTraceability.length, 7, 'Lam JD traceability covers seven requirement groups');
+const lamIds = new Set(lamCategories.flatMap(category => category.questions.map(question => question.id)));
+assert.equal(lamIds.size, 76, 'Lam immutable IDs are unique');
+assert.ok([...lamIds].every(id => /^lam\.[a-z]+\.q\d{2}$/.test(id)), 'Lam IDs are canonical and explicit');
+assert.ok(dom.window.LamJobTraceability.every(item => item.questionIds.every(id => lamIds.has(id))), 'Lam JD traceability points to registered questions');
 document.querySelector('#comp-benq')?.click();
 assert.equal(dom.window.InterviewState.state.activeCompanyId, 'benq', 'company switching persists in schema state');
 assert.ok(document.querySelector('#section-benq')?.classList.contains('block'), 'active company is visible');

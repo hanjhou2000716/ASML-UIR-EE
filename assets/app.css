@@ -41,6 +41,7 @@
             position: relative;
         }
         .company-tab.active { opacity: 1; font-weight: 800; }
+        .company-tab.active-lam { color: var(--asml-color); border-bottom-color: var(--asml-color); background: linear-gradient(to top, #edf2ea, transparent); }
         .company-tab.active-asml { color: var(--asml-color); border-bottom-color: var(--asml-color); background: linear-gradient(to top, #eff6ff, transparent); }
         .company-tab.active-swancor { color: var(--swancor-color); border-bottom-color: var(--swancor-color); background: linear-gradient(to top, #ecfdf5, transparent); }
         .company-tab.active-skyeuv { color: var(--skyeuv-color); border-bottom-color: var(--skyeuv-color); background: linear-gradient(to top, #f5f3ff, transparent); }

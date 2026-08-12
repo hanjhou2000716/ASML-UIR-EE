@@ -18,6 +18,8 @@ The current site remains a modular vanilla-JavaScript application so it can be s
 
 The workspace shell also provides cross-company search, a current-category status filter (all/unmastered/practiced/mastered), and a confirmed local progress reset. Search results retain company, category, and stable question ID context so selecting a result returns to the source card. Non-active categories are rendered on demand, preventing duplicate hidden question banks in the initial DOM.
 
+`js/company-registry.js` is the lifecycle source of truth. It defines active order (`lam`, `asml`, `fstech`, `benq`) and archived order (`assembly`, `micron`, `swancor`, `skyeuv`). Mobile navigation, the desktop rail, archive drawer, analytics status filtering, and state validation consume this metadata. `js/lam-bank.js` owns the Lam CE 76-question bank and JD traceability records; `js/app.js` adapts it into the shared renderer without copying ASML question content.
+
 Company navigation has explicit breakpoint ownership. The header `mobile-company-nav` is the compact primary selector below 761px; the workspace rail's `data-primary-company-nav="desktop"` is the sole desktop primary navigation at 761px and above. Both use the same `switchCompany()` state transition and expose `aria-selected`/`aria-current` state. Category controls are shared `CategoryPill`-style buttons with a 44px touch target, 9999px radius, normalized SVG icon sizing, and horizontal overflow behavior on narrow screens.
 
 ## State contract
