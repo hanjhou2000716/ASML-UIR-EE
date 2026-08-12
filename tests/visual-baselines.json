@@ -1,6 +1,6 @@
 {
   "viewports": [360, 390, 768, 1024, 1440],
-  "states": ["main", "benq", "practice", "archive"],
+  "states": ["main", "analytics", "asml", "assembly", "fstech", "benq", "search", "empty-search", "mastered", "practice", "archive"],
   "directory": "tests/visual-baselines",
   "pixelDifferenceThreshold": 0.2,
   "geometry": {
