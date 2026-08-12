@@ -77,6 +77,10 @@ try {
       const icons = [...document.querySelectorAll('.app-icon')];
       const tabs = [...document.querySelectorAll('.sub-tab-btn')];
       const rect = node => { const box = node.getBoundingClientRect(); return { width: box.width, height: box.height, top: box.top, bottom: box.bottom }; };
+      const visible = node => node.offsetParent !== null && getComputedStyle(node).visibility !== 'hidden';
+      const primaryNavs = [...document.querySelectorAll('[data-primary-company-nav]')];
+      const visiblePrimaryNavs = primaryNavs.filter(visible);
+      const categoryStyles = tabs.filter(visible).map(tab => ({ radius: parseFloat(getComputedStyle(tab).borderTopLeftRadius), height: rect(tab).height, paddingLeft: parseFloat(getComputedStyle(tab).paddingLeft), icon: rect(tab.querySelector('.app-icon')).width }));
       return {
         innerWidth: window.innerWidth,
         scrollWidth: document.documentElement.scrollWidth,
@@ -85,7 +89,10 @@ try {
         zeroSizedIcons: icons.filter(icon => { const box = icon.getBoundingClientRect(); return icon.offsetParent !== null && box.top < window.innerHeight && box.bottom > 0 && (box.width < 1 || box.height < 1); }).length,
         tabMinHeight: tabs.filter(tab => tab.offsetParent !== null).length ? Math.min(...tabs.filter(tab => tab.offsetParent !== null).map(tab => rect(tab).height)) : 0,
         tabRects: tabs.filter(tab => tab.offsetParent !== null).slice(0, 7).map(rect),
-        stickyTop: document.querySelector('.section-nav')?.getBoundingClientRect().top ?? -1
+        stickyTop: document.querySelector('.section-nav')?.getBoundingClientRect().top ?? -1,
+        primaryNavCount: primaryNavs.length,
+        visiblePrimaryNavCount: visiblePrimaryNavs.length,
+        categoryStyles
       };
     });
     assert.equal(baseline.innerWidth, viewport.width, `${viewport.name}px viewport applied`);
@@ -93,20 +100,29 @@ try {
     assert.equal(baseline.legacyIconCount, 0, `${viewport.name}px has no runtime FontAwesome nodes`);
     assert.equal(baseline.zeroSizedIcons, 0, `${viewport.name}px has no zero-sized icons`);
     assert.ok(baseline.tabMinHeight >= 36, `${viewport.name}px category tabs retain touch height`);
+    assert.equal(baseline.primaryNavCount, 2, `${viewport.name}px has explicit mobile/desktop navigation contracts`);
+    assert.equal(baseline.visiblePrimaryNavCount, 1, `${viewport.name}px exposes exactly one primary company navigation`);
+    assert.ok(baseline.categoryStyles.every(style => style.radius >= 999 || style.radius >= 18), `${viewport.name}px category navigation uses pill geometry`);
+    assert.ok(baseline.categoryStyles.every(style => style.paddingLeft >= 12 && style.icon >= 14), `${viewport.name}px category navigation has spacing and icon tokens`);
     assert.ok(baseline.scrollWidth <= viewport.width, `${viewport.name}px has no horizontal overflow`);
+    const clickCompany = async company => {
+      const headerTab = page.locator(`.company-tab[data-company="${company}"]`);
+      if (await headerTab.isVisible()) return headerTab.click();
+      return page.locator(`[data-rail-company="${company}"]`).click();
+    };
     await compareScreenshot(page, 'main', viewport.name);
     await page.locator('#workspace-insights').waitFor({ state: 'visible' });
     await compareScreenshot(page, 'analytics', viewport.name);
-    await page.locator('#comp-asml').click();
+    await clickCompany('asml');
     await page.waitForSelector('#section-asml .sub-tab-btn');
     await compareScreenshot(page, 'asml', viewport.name);
-    await page.locator('#comp-assembly').click();
+    await clickCompany('assembly');
     await page.waitForSelector('#section-assembly .sub-tab-btn');
     await compareScreenshot(page, 'assembly', viewport.name);
-    await page.locator('#comp-fstech').click();
+    await clickCompany('fstech');
     await page.waitForSelector('#section-fstech .sub-tab-btn');
     await compareScreenshot(page, 'fstech', viewport.name);
-    await page.locator('#comp-benq').click();
+    await clickCompany('benq');
     await page.waitForSelector('#section-benq .sub-tab-btn');
     await compareScreenshot(page, 'benq', viewport.name);
     const benq = await page.evaluate(() => ({ active: document.querySelector('#comp-benq')?.classList.contains('active'), icons: document.querySelectorAll('#section-benq .app-icon').length, overflow: document.documentElement.scrollWidth > window.innerWidth }));

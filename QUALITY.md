@@ -4,7 +4,7 @@
 
 Run `npm ci`, then `npm run validate`, `npm run a11y`, and `npm run visual`. The visual command launches real Chromium at 360, 390, 768, 1024, and 1440px and compares main, analytics, ASML, Assembly, FSTech, BenQ, search, empty-search, mastered, practice, and archive states with the committed PNG snapshots in `tests/visual-baselines/`. Use `npm run visual:update` only after reviewing an intentional UI change.
 
-The accessibility gate loads axe through the local test server so the production CSP remains strict. It fails on any critical or serious violation at both 360px and 1440px.
+The accessibility gate loads axe through the local test server so the production CSP remains strict. It fails on any critical or serious violation at both 360px and 1440px. The visual gate also asserts exactly one visible primary company navigation per breakpoint, 44px category touch targets, pill radius, spacing, and non-zero SVG icon geometry.
 
 ## Production verification
 

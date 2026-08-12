@@ -170,7 +170,8 @@
     main.classList.add('workspace-main');
     const rail = document.createElement('aside');
     rail.id = 'workspace-rail'; rail.className = 'workspace-rail'; rail.setAttribute('aria-label', '面試職缺導覽');
-    rail.innerHTML = `<div class="rail-brand"><span class="rail-mark">LZ</span><div><b>Interview<br>Workspace</b><small>local-first</small></div></div><p class="rail-label">準備中</p><nav class="rail-links">${[['asml','ASML UIR'],['assembly','ASML Assembly'],['fstech','台塑勝高'],['benq','明基材料｜塗佈']].map(([id, label]) => `<button data-rail-company="${id}">${label}</button>`).join('')}</nav><p class="rail-label">已完成面試</p><button class="rail-archive" data-rail-archive>美光・上緯・天虹</button>`;
+    rail.innerHTML = `<div class="rail-brand"><span class="rail-mark">LZ</span><div><b>Interview<br>Workspace</b><small>local-first</small></div></div><p class="rail-label">準備中</p><nav class="rail-links" data-primary-company-nav="desktop" aria-label="公司導覽" role="tablist">${[['asml','ASML UIR','microchip'],['assembly','ASML Assembly','screwdriver-wrench'],['fstech','台塑勝高','chart-line'],['benq','明基材料｜塗佈','layer-group']].map(([id, label, icon]) => `<button class="company-nav-card" data-rail-company="${id}" data-company="${id}" role="tab" aria-selected="${id === state.activeCompanyId}"${id === state.activeCompanyId ? ' aria-current="page"' : ''}><span data-icon="${icon}" aria-hidden="true"></span><span>${label}</span></button>`).join('')}</nav><p class="rail-label">已完成面試</p><button class="rail-archive" data-rail-archive>美光・上緯・天虹</button>`;
+    window.AppIcons?.hydrate(rail);
     main.parentNode.insertBefore(rail, main);
     rail.querySelectorAll('[data-rail-company]').forEach(button => button.addEventListener('click', () => window.switchCompany(button.dataset.railCompany)));
     rail.querySelector('[data-rail-archive]').addEventListener('click', () => window.toggleArchive());
@@ -190,6 +191,9 @@
       setTimeout(() => card?.classList.remove('practice-highlight'), 2200);
     });
     shell.appendChild(context);
+    const syncRail = () => rail.querySelectorAll('[data-rail-company]').forEach(button => { const active = button.dataset.railCompany === state.activeCompanyId; button.classList.toggle('active', active); button.setAttribute('aria-selected', String(active)); if (active) button.setAttribute('aria-current', 'page'); else button.removeAttribute('aria-current'); });
+    syncRail();
+    window.addEventListener('interview-state-change', syncRail);
   };
   const enhanceAccordionA11y = () => {
     document.querySelectorAll('.qa-card > button').forEach((button, index) => {

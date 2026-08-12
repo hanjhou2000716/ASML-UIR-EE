@@ -49,20 +49,20 @@
             <div class="flex gap-2"><button data-action="expand-all" aria-label="展開目前題庫" class="text-xs bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-200 transition btn-press"><span data-icon="layer-group" class=""></span></button><button data-action="toggle-archive" aria-expanded="false" aria-controls="archive-drawer" class="text-xs bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-200 transition btn-press">歷史紀錄</button></div>
         </div>
         
-        <div class="flex px-1 border-b border-slate-200 overflow-x-auto hide-scrollbar">
-            <button data-action="switch-company" data-company="asml" id="comp-asml" class="company-tab active active-asml flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
+        <nav class="mobile-company-nav flex px-1 border-b border-slate-200 overflow-x-auto hide-scrollbar" data-primary-company-nav="mobile" aria-label="公司導覽" role="tablist">
+            <button data-action="switch-company" data-company="asml" id="comp-asml" role="tab" aria-selected="true" aria-current="page" class="company-tab active active-asml flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
                 <span data-icon="microchip" class="text-lg mb-0.5"></span> ASML UIR
             </button>
-            <button data-action="switch-company" data-company="assembly" id="comp-assembly" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
+            <button data-action="switch-company" data-company="assembly" id="comp-assembly" role="tab" aria-selected="false" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
                 <span data-icon="screwdriver-wrench" class="text-lg mb-0.5"></span> ASML Assembly
             </button>
-            <button data-action="switch-company" data-company="fstech" id="comp-fstech" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
+            <button data-action="switch-company" data-company="fstech" id="comp-fstech" role="tab" aria-selected="false" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
                 <span data-icon="chart-line" class="text-lg mb-0.5"></span> 台塑勝高
             </button>
-            <button data-action="switch-company" data-company="benq" id="comp-benq" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
+            <button data-action="switch-company" data-company="benq" id="comp-benq" role="tab" aria-selected="false" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
                 <span data-icon="layer-group" class="text-lg mb-0.5"></span> 明基材料
             </button>
-        </div>
+        </nav>
     </header>
 
     <main class="px-4 py-5 max-w-2xl mx-auto" id="main-container">
