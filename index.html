@@ -24,6 +24,7 @@
 
     <aside id="archive-drawer" class="archive-drawer rounded-2xl p-3" aria-label="已結束面試紀錄" aria-hidden="true" inert>
         <div class="flex items-center justify-between px-2 pb-2"><p class="text-xs font-black text-slate-700">已結束面試</p><button data-action="toggle-archive" aria-label="關閉已結束面試紀錄" class="text-slate-400 hover:text-slate-700"><span data-icon="times" class=""></span></button></div>
+        <button data-action="switch-company" data-company="assembly" data-close-archive="true" class="w-full text-left rounded-xl px-3 py-2 hover:bg-slate-100 text-sm font-bold text-slate-600">ASML Assembly <span class="float-right text-[10px] font-medium">已封存</span></button>
         <button data-action="switch-company" data-company="micron" data-close-archive="true" class="w-full text-left rounded-xl px-3 py-2 hover:bg-slate-100 text-sm font-bold text-slate-600">美光 <span class="float-right text-[10px] font-medium">已複盤</span></button>
         <button data-action="switch-company" data-company="swancor" data-close-archive="true" class="w-full text-left rounded-xl px-3 py-2 hover:bg-slate-100 text-sm font-bold text-slate-600">上緯 <span class="float-right text-[10px] font-medium">已複盤</span></button>
         <button data-action="switch-company" data-company="skyeuv" data-close-archive="true" class="w-full text-left rounded-xl px-3 py-2 hover:bg-slate-100 text-sm font-bold text-slate-600">天虹 <span class="float-right text-[10px] font-medium">已複盤</span></button>
@@ -49,20 +50,7 @@
             <div class="flex gap-2"><button data-action="expand-all" aria-label="展開目前題庫" class="text-xs bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-200 transition btn-press"><span data-icon="layer-group" class=""></span></button><button data-action="toggle-archive" aria-expanded="false" aria-controls="archive-drawer" class="text-xs bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-200 transition btn-press">歷史紀錄</button></div>
         </div>
         
-        <nav class="mobile-company-nav flex px-1 border-b border-slate-200 overflow-x-auto hide-scrollbar" data-primary-company-nav="mobile" aria-label="公司導覽" role="tablist">
-            <button data-action="switch-company" data-company="asml" id="comp-asml" role="tab" aria-selected="true" aria-current="page" class="company-tab active active-asml flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
-                <span data-icon="microchip" class="text-lg mb-0.5"></span> ASML UIR
-            </button>
-            <button data-action="switch-company" data-company="assembly" id="comp-assembly" role="tab" aria-selected="false" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
-                <span data-icon="screwdriver-wrench" class="text-lg mb-0.5"></span> ASML Assembly
-            </button>
-            <button data-action="switch-company" data-company="fstech" id="comp-fstech" role="tab" aria-selected="false" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
-                <span data-icon="chart-line" class="text-lg mb-0.5"></span> 台塑勝高
-            </button>
-            <button data-action="switch-company" data-company="benq" id="comp-benq" role="tab" aria-selected="false" class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1">
-                <span data-icon="layer-group" class="text-lg mb-0.5"></span> 明基材料
-            </button>
-        </nav>
+        <nav id="mobile-company-nav" class="mobile-company-nav flex px-1 border-b border-slate-200 overflow-x-auto hide-scrollbar" data-primary-company-nav="mobile" aria-label="公司導覽" role="tablist"></nav>
     </header>
 
     <main class="px-4 py-5 max-w-2xl mx-auto" id="main-container">
@@ -82,7 +70,8 @@
         <!-- ========================================================= -->
         <!--                      COMPANY 1: ASML                      -->
         <!-- ========================================================= -->
-        <div id="section-asml" class="company-section block"></div>
+        <div id="section-lam" class="company-section block"></div>
+        <div id="section-asml" class="company-section hidden"></div>
 
         <div id="section-assembly" class="company-section hidden"></div>
         <div id="section-fstech" class="company-section hidden"></div>
@@ -94,6 +83,8 @@
 
     </main>
 
+    <script src="js/company-registry.js" defer></script>
+    <script src="js/lam-bank.js" defer></script>
     <script src="js/app.js" defer></script>
     <script src="js/icons.js" defer></script>
     <script src="js/legacy-data.js" defer></script>

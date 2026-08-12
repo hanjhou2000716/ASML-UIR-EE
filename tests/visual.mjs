@@ -64,7 +64,7 @@ try {
   for (const viewport of viewports) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
     await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('#section-asml .qa-card');
+    await page.waitForSelector('#section-lam .qa-card');
     const idAudit = await page.evaluate(() => {
       const ids = Object.values(window.InterviewQuestionIds || {}).flatMap(company => Object.values(company).flat());
       const roleQuestions = Object.values(window.InterviewQuestionBanks || {}).flatMap(company => Object.entries(company).filter(([, value]) => Array.isArray(value)).flatMap(([category, entries]) => entries.map((_, index) => `${category}:${index}`)));
@@ -107,18 +107,19 @@ try {
     assert.ok(baseline.scrollWidth <= viewport.width, `${viewport.name}px has no horizontal overflow`);
     const clickCompany = async company => {
       const headerTab = page.locator(`.company-tab[data-company="${company}"]`);
-      if (await headerTab.isVisible()) return headerTab.click();
-      return page.locator(`[data-rail-company="${company}"]`).click();
+      if (await headerTab.isVisible()) await headerTab.click({ force: true });
+      else await page.locator(`.company-nav-card[data-rail-company="${company}"]`).click({ force: true });
+      await page.waitForFunction(id => document.querySelector(`#section-${id}`)?.classList.contains('block'), company);
     };
     await compareScreenshot(page, 'main', viewport.name);
     await page.locator('#workspace-insights').waitFor({ state: 'visible' });
     await compareScreenshot(page, 'analytics', viewport.name);
+    await clickCompany('lam');
+    await page.waitForSelector('#section-lam .sub-tab-btn');
+    await compareScreenshot(page, 'lam', viewport.name);
     await clickCompany('asml');
     await page.waitForSelector('#section-asml .sub-tab-btn');
     await compareScreenshot(page, 'asml', viewport.name);
-    await clickCompany('assembly');
-    await page.waitForSelector('#section-assembly .sub-tab-btn');
-    await compareScreenshot(page, 'assembly', viewport.name);
     await clickCompany('fstech');
     await page.waitForSelector('#section-fstech .sub-tab-btn');
     await compareScreenshot(page, 'fstech', viewport.name);
@@ -137,7 +138,7 @@ try {
     await page.waitForSelector('#global-search-results:not([hidden]) .global-search-empty');
     await compareScreenshot(page, 'empty-search', viewport.name);
     await globalSearch.fill('');
-    const masteredCard = page.locator('#section-benq .qa-card').first();
+    const masteredCard = page.locator('#section-benq .qa-card:visible').first();
     await masteredCard.locator('[data-action="toggle-card"]').click();
     await masteredCard.locator('[data-action="mastered"]').click();
     await compareScreenshot(page, 'mastered', viewport.name);
@@ -148,6 +149,11 @@ try {
     await page.locator('[data-action="toggle-archive"][aria-controls="archive-drawer"]').click();
     await page.waitForSelector('#archive-drawer:not(.hidden)');
     await compareScreenshot(page, 'archive', viewport.name);
+    await page.locator('#archive-drawer [data-company="assembly"]').click();
+    await page.waitForSelector('#section-assembly .sub-tab-btn');
+    await compareScreenshot(page, 'archive-assembly', viewport.name);
+    await clickCompany('benq');
+    await page.waitForSelector('#section-benq .sub-tab-btn');
     await page.close();
   }
   const screenshots = await fs.readdir(output);

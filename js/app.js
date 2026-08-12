@@ -5,12 +5,20 @@
         window.addEventListener('DOMContentLoaded', () => {
             ensureRoleBanks();
             document.querySelectorAll('.qa-card > button').forEach(button => button.setAttribute('aria-expanded', 'false'));
-            switchCompany(window.InterviewState?.state.activeCompanyId || 'asml');
+            switchCompany(window.InterviewState?.state.activeCompanyId || 'lam');
         });
 
         function ensureRoleBanks() {
             if (roleBanksReady) return;
             deployRoleQuestionBanks();
+            if (window.LamQuestionBank && window.InterviewQuestionBanks) {
+                const tabs = [['script', '專屬劇本', 'script'], ['tech', '專業邏輯', 'wrench'], ['product', '職務速覽', 'microchip'], ['motiv', '動機特質', 'motivation'], ['behav', '經歷行為', 'briefcase'], ['sit', '情境應變', 'shield'], ['combat', '實戰攻防', 'combat']];
+                window.InterviewQuestionIds.lam = window.LamQuestionIds;
+                window.InterviewQuestionBanks.lam = window.LamQuestionBank;
+                const categories = tabs.map(([id, label, icon]) => ({ id, label, icon, introHtml: id === 'script' ? `<div class="workspace-hero rounded-2xl shadow-md p-5 text-white mb-4"><div class="flex items-start justify-between gap-3"><div><p class="text-[11px] font-bold tracking-[.14em] text-[#d8e4d5]">${window.LamQuestionBank.eyebrow}</p><h2 class="text-xl font-black mt-1">${window.LamQuestionBank.title}</h2></div><span class="role-meta">${window.AppIcons?.render('layers') || ''} 76 題</span></div><p class="mt-2 text-[13px] text-slate-200 leading-relaxed">${window.LamQuestionBank.summary}</p><div class="mt-4 grid gap-2 sm:grid-cols-2">${window.LamQuestionBank.jobMeta.items.map(item => `<div class="rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-[11px] leading-relaxed text-slate-100">${item}</div>`).join('')}</div></div>` : '', questions: window.LamQuestionBank[id].map((entry, index) => ({ id: window.LamQuestionIds[id][index], question: entry[0], answerHtml: `<p>${entry[1][0]}</p><p class="answer-tip">${entry[1][1]}</p>`, priority: id === 'combat' ? 'high' : 'standard', language: /[A-Za-z]/.test(entry[0]) && !/[\u4e00-\u9fff]/.test(entry[0]) ? 'en' : 'zh-TW', tags: [] })) }));
+                const section = document.getElementById('section-lam');
+                if (section && window.InterviewRenderer) window.InterviewRenderer.renderCompanySection({ section, companyId: 'lam', company: { name: 'Lam CE', categories }, theme: 'lam-theme' });
+            }
             roleBanksReady = true;
             injectPracticeTools();
             window.AppIcons?.hydrate(document);
@@ -418,7 +426,7 @@
         function switchCompany(companyId) {
             if (['assembly', 'fstech', 'benq'].includes(companyId)) ensureRoleBanks();
             document.querySelectorAll('.company-tab').forEach(el => {
-                el.classList.remove('active', 'active-asml', 'active-swancor', 'active-skyeuv', 'active-micron', 'active-assembly', 'active-fstech', 'active-benq');
+                el.classList.remove('active', 'active-lam', 'active-asml', 'active-swancor', 'active-skyeuv', 'active-micron', 'active-assembly', 'active-fstech', 'active-benq');
                 el.setAttribute('aria-selected', 'false');
                 el.removeAttribute('aria-current');
             });

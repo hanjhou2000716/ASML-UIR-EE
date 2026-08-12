@@ -3,13 +3,13 @@
   const KEY = 'interview-workspace-state';
   const LEGACY_ACTIVE = 'interview-active-company';
   const LEGACY_PREFIX = 'interview-mastered-';
-  const VALID_COMPANIES = new Set(['asml', 'assembly', 'fstech', 'benq', 'micron', 'swancor', 'skyeuv']);
+  const VALID_COMPANIES = new Set(Object.keys(window.CompanyRegistry?.companies || { lam: 1, asml: 1, assembly: 1, fstech: 1, benq: 1, micron: 1, swancor: 1, skyeuv: 1 }));
   const memoryStore = new Map();
   let practiceSession = null;
   let practiceTrigger = null;
   const state = {
     schemaVersion: 2,
-    activeCompanyId: 'asml',
+    activeCompanyId: 'lam',
     activeCategoryByCompany: {},
     questions: {},
     practiceHistory: []
@@ -21,7 +21,8 @@
   const normalise = (candidate) => {
     const next = { ...state, ...(candidate && typeof candidate === 'object' ? candidate : {}) };
     next.schemaVersion = 2;
-    next.activeCompanyId = VALID_COMPANIES.has(next.activeCompanyId) ? next.activeCompanyId : 'asml';
+    if (next.activeCompanyId === 'assembly') next.activeCompanyId = 'lam';
+    next.activeCompanyId = VALID_COMPANIES.has(next.activeCompanyId) ? next.activeCompanyId : 'lam';
     next.activeCategoryByCompany = next.activeCategoryByCompany && typeof next.activeCategoryByCompany === 'object' ? next.activeCategoryByCompany : {};
     const questionMap = window.LegacyQuestionIdMap || {};
     const rawQuestions = next.questions && typeof next.questions === 'object' ? next.questions : {};
@@ -43,7 +44,7 @@
     const candidate = read();
     Object.assign(state, normalise(candidate));
     const legacyActive = storageGet(LEGACY_ACTIVE);
-    if (!candidate && VALID_COMPANIES.has(legacyActive)) state.activeCompanyId = legacyActive;
+    if (!candidate && VALID_COMPANIES.has(legacyActive)) state.activeCompanyId = legacyActive === 'assembly' ? 'lam' : legacyActive;
     document.querySelectorAll('.qa-card').forEach(card => {
       const id = card.dataset.questionId;
       if (!id) return;
@@ -123,6 +124,11 @@
     window.ensureRoleBanks?.();
     const legacyCompanies = window.LegacyQuestionData?.companies || {};
     Object.keys(legacyCompanies).forEach(companyId => legacyCompanies[companyId].categories?.forEach(category => window.renderLegacyCategory?.(companyId, category.id)));
+    const registry = window.InterviewQuestionRegistry?.companies || {};
+    Object.entries(registry).forEach(([companyId, company]) => company.categories?.forEach(category => {
+      const section = document.getElementById(`section-${companyId}`);
+      if (section && !document.getElementById(`content-${companyId}-${category.id}`)) window.switchSubTab?.(companyId, category.id);
+    }));
     const cards = [...document.querySelectorAll('.qa-card')].filter(card => (card.textContent || '').toLocaleLowerCase().includes(query));
     const summary = document.createElement('p');
     summary.className = 'global-search-summary';
@@ -170,11 +176,26 @@
     main.classList.add('workspace-main');
     const rail = document.createElement('aside');
     rail.id = 'workspace-rail'; rail.className = 'workspace-rail'; rail.setAttribute('aria-label', '面試職缺導覽');
-    rail.innerHTML = `<div class="rail-brand"><span class="rail-mark">LZ</span><div><b>Interview<br>Workspace</b><small>local-first</small></div></div><p class="rail-label">準備中</p><nav class="rail-links" data-primary-company-nav="desktop" aria-label="公司導覽" role="tablist">${[['asml','ASML UIR','microchip'],['assembly','ASML Assembly','screwdriver-wrench'],['fstech','台塑勝高','chart-line'],['benq','明基材料｜塗佈','layer-group']].map(([id, label, icon]) => `<button class="company-nav-card" data-rail-company="${id}" data-company="${id}" role="tab" aria-selected="${id === state.activeCompanyId}"${id === state.activeCompanyId ? ' aria-current="page"' : ''}><span data-icon="${icon}" aria-hidden="true"></span><span>${label}</span></button>`).join('')}</nav><p class="rail-label">已完成面試</p><button class="rail-archive" data-rail-archive>美光・上緯・天虹</button>`;
+    const registry = window.CompanyRegistry;
+    const activeCompanies = registry?.active?.() || [['lam', 'Lam CE', 'screwdriver-wrench'], ['asml', 'ASML UIR', 'microchip'], ['fstech', '台塑勝高', 'chart-line'], ['benq', '明基材料｜塗佈', 'layer-group']].map(([id, name, icon]) => ({ id, name, icon }));
+    const archivedCompanies = registry?.archived?.() || [];
+    const mobileNav = document.getElementById('mobile-company-nav');
+    if (mobileNav) {
+      mobileNav.innerHTML = activeCompanies.map(company => `<button data-action="switch-company" data-company="${company.id}" id="comp-${company.id}" role="tab" aria-controls="section-${company.id}" aria-selected="${company.id === state.activeCompanyId}"${company.id === state.activeCompanyId ? ' aria-current="page"' : ''} class="company-tab flex-shrink-0 min-w-[80px] flex-1 py-3 text-[13px] font-bold text-center focus:outline-none flex flex-col items-center gap-1"><span data-icon="${company.icon || 'layers'}" class="text-lg mb-0.5"></span>${company.shortName || company.name}</button>`).join('');
+      window.AppIcons?.hydrate(mobileNav);
+    }
+    const archiveDrawer = document.getElementById('archive-drawer');
+    if (archiveDrawer) {
+      const close = archiveDrawer.querySelector('[data-action="toggle-archive"]');
+      archiveDrawer.querySelectorAll('[data-action="switch-company"]').forEach(button => button.remove());
+      [...archivedCompanies].forEach(company => { const button = document.createElement('button'); button.type = 'button'; button.dataset.action = 'switch-company'; button.dataset.company = company.id; button.dataset.closeArchive = 'true'; button.className = 'w-full text-left rounded-xl px-3 py-2 hover:bg-slate-100 text-sm font-bold text-slate-600'; button.innerHTML = `<span data-icon="${company.icon || 'layers'}" aria-hidden="true"></span>${company.name}<span class="float-right text-[10px] font-medium">已封存</span>`; archiveDrawer.insertBefore(button, close?.parentElement?.nextSibling || null); });
+      window.AppIcons?.hydrate(archiveDrawer);
+    }
+    rail.innerHTML = `<div class="rail-brand"><span class="rail-mark">LZ</span><div><b>Interview<br>Workspace</b><small>local-first</small></div></div><p class="rail-label">準備中</p><nav class="rail-links" data-primary-company-nav="desktop" aria-label="公司導覽" role="tablist">${activeCompanies.map(company => `<button class="company-nav-card" data-rail-company="${company.id}" data-company="${company.id}" role="tab" aria-controls="section-${company.id}" aria-selected="${company.id === state.activeCompanyId}"${company.id === state.activeCompanyId ? ' aria-current="page"' : ''}><span data-icon="${company.icon || 'layers'}" aria-hidden="true"></span><span>${company.shortName || company.name}</span></button>`).join('')}</nav><p class="rail-label">已完成面試</p><div class="rail-archive-list">${archivedCompanies.map(company => `<button class="rail-archive" data-rail-company="${company.id}" data-close-archive="true"><span data-icon="${company.icon || 'layers'}" aria-hidden="true"></span>${company.shortName || company.name}</button>`).join('')}</div>`;
     window.AppIcons?.hydrate(rail);
     main.parentNode.insertBefore(rail, main);
     rail.querySelectorAll('[data-rail-company]').forEach(button => button.addEventListener('click', () => window.switchCompany(button.dataset.railCompany)));
-    rail.querySelector('[data-rail-archive]').addEventListener('click', () => window.toggleArchive());
+    rail.querySelectorAll('[data-close-archive]').forEach(button => button.addEventListener('click', () => window.switchCompany(button.dataset.railCompany)));
     const shell = document.createElement('div'); shell.className = 'workspace-layout';
     main.parentNode.insertBefore(shell, rail); shell.appendChild(rail); shell.appendChild(main);
     const context = document.createElement('aside'); context.id = 'workspace-context'; context.className = 'workspace-context'; context.setAttribute('aria-label', '練習進度與快速操作');
@@ -191,7 +212,7 @@
       setTimeout(() => card?.classList.remove('practice-highlight'), 2200);
     });
     shell.appendChild(context);
-    const syncRail = () => rail.querySelectorAll('[data-rail-company]').forEach(button => { const active = button.dataset.railCompany === state.activeCompanyId; button.classList.toggle('active', active); button.setAttribute('aria-selected', String(active)); if (active) button.setAttribute('aria-current', 'page'); else button.removeAttribute('aria-current'); });
+    const syncRail = () => rail.querySelectorAll('.company-nav-card[data-rail-company]').forEach(button => { const active = button.dataset.railCompany === state.activeCompanyId; button.classList.toggle('active', active); button.setAttribute('aria-selected', String(active)); if (active) button.setAttribute('aria-current', 'page'); else button.removeAttribute('aria-current'); });
     syncRail();
     window.addEventListener('interview-state-change', syncRail);
   };
@@ -233,6 +254,11 @@
       }));
       registry.companies[companyId] = { id: companyId, name: config.name || companyId, shortName: companyId, status: 'active', role: '', eyebrow: config.eyebrow || '', title: config.title || '', summary: config.summary || '', accent: 'navy', categories };
     });
+    Object.entries(window.CompanyRegistry?.companies || {}).forEach(([companyId, metadata]) => {
+      registry.companies[companyId] ||= { id: companyId, categories: [] };
+      Object.assign(registry.companies[companyId], metadata);
+    });
+    if (window.LamQuestionBank && !registry.companies.lam?.categories?.length) registry.companies.lam = { ...window.CompanyRegistry.get('lam'), categories: [] };
     window.InterviewQuestionRegistry = registry;
     return registry;
   };
